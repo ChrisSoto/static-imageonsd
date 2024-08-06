@@ -17,5 +17,5 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USER }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /public_html/staging.imageonsd.com
+        server-dir: /public_html/staging.imageonsd.com/
         local-dir: dist/
