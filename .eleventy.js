@@ -50,6 +50,8 @@ function getHeroImagesFromModifierData(dataArr, service) {
   return heroImageData;
 }
 
+// just testing git
+
 function getGallerySectionFromModifierData(dataArr, service) {
   let gallerySectionData;
   for (let i = 0; i < dataArr.length; i++) {
