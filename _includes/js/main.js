@@ -1,3 +1,69 @@
+function setupStickyForm() {
+  const $header = $('.sticky-header');
+  const $contactFormWrapper = $('.contact-form-wrapper');
+
+  if ($contactFormWrapper.length === 0) {
+    return false;
+  }
+
+  const $contactForm = $('.contact-form');
+  const $footer = $('footer');
+
+  let headerHeight = $header.outerHeight();
+  let formOriginalTop = $contactFormWrapper.offset().top;
+  let footerTop = $footer.offset().top;
+
+  return {
+    header: $header,
+    contactFormWrapper: $contactFormWrapper,
+    contactForm: $contactForm,
+    footer: $footer,
+    headerHeight: headerHeight,
+    formOriginalTop: formOriginalTop,
+    footerTop: footerTop
+  };
+}
+
+function updateStickyForm(data) {
+  let scrollTop = $(window).scrollTop();
+  let viewportHeight = $(window).height();
+  let formHeight = data.contactForm.outerHeight();
+
+  // Update headerHeight and footerTop on scroll, as they might change on responsive layouts
+  headerHeight = data.header.outerHeight();
+  footerTop = data.footer.offset().top;
+
+  if (scrollTop + data.headerHeight > data.formOriginalTop) {
+    // Make the form sticky
+    data.contactForm.addClass('sticky').css({
+      position: 'fixed',
+      top: data.headerHeight,
+      width: data.contactFormWrapper.width()
+    });
+
+    // Check if the form is about to overlap with the footer
+    if (scrollTop + data.headerHeight + formHeight > footerTop) {
+      let bottomPosition = viewportHeight - (footerTop - scrollTop);
+      data.contactForm.css({
+        top: 'auto',
+        bottom: bottomPosition
+      });
+    } else {
+      data.contactForm.css({
+        top: headerHeight,
+        bottom: 'auto'
+      });
+    }
+  } else {
+    // Return the form to its original position
+    data.contactForm.removeClass('sticky').css({
+      position: 'static',
+      top: 'auto',
+      bottom: 'auto',
+      width: 'auto'
+    });
+  }
+}
 
 function setupAccordion() {
   const accordion = $('.accordion');
@@ -120,6 +186,13 @@ function writeToLocalStorage(id) {
 window.onload = function () {
   setupShadowBox();
   setupAccordion();
+
+  // const stickyForm = setupStickyForm();
+  // if (stickyForm) {
+  //   updateStickyForm(stickyForm);
+  //   $(window).on('scroll resize', updateStickyForm(stickyForm));
+  // }
+
   $('#contact-submit').on('click', submitForm);
 }
 

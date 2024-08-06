@@ -125,3 +125,7 @@ main h4 {
 #faq .accordion .accordion-title:first-of-type {
   @apply border-t-0 mt-5;
 }
+
+.text-shadow {
+  text-shadow: 3px 1px 5px rgba(0, 0, 0, 0.79);
+}
