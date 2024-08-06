@@ -1,0 +1,107 @@
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "image": [
+    "https://example.com/photos/1x1/photo.jpg",
+    "https://example.com/photos/4x3/photo.jpg",
+    "https://example.com/photos/16x9/photo.jpg"
+  ],
+  "name": "ImageOn Custom T-shirts and Embroidery",
+  "description": "Custom T-shirts, embroidery, banners, and more. Same-day service available.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "235 Town Center Parkway",
+    "addressLocality": "Santee",
+    "addressRegion": "CA",
+    "postalCode": "92071",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 32.841388805737715,
+    "longitude": -116.98557028944589
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Organization",
+        "name": "https://www.yelp.com/biz/image-on-santee-3"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "4.9"
+      },
+      "datePublished": "2024-07-25"
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Organization",
+        "name": "https://maps.app.goo.gl/xx3zKgsh7HmahgTj6"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "4.7"
+      },
+      "datePublished": "2024-07-25"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "bestRating": "5",
+    "ratingCount": "45"
+  },
+  "url": "https://imageonsd.com",
+  "priceRange": "$$",
+  "telephone": "+16193120941",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "9:00",
+      "closes": "19:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Saturday"
+      ],
+      "opens": "9:00",
+      "closes": "16:30"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Service",
+  "serviceType": "Custom T-Shirts and Embroidery Service",
+  "provider": {
+    "@id": "https://imageonsd.com/#localBusiness"
+  },
+  "areaServed": [
+    {%- include "schemas/area-served.njk" -%}
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Custom Apparel",
+    "itemListElement": [
+      {%- include "schemas/custom-shirt-services.njk" -%},
+      {%- include "schemas/custom-embroidery-services.njk" -%},
+      {%- include "schemas/custom-banner-services.njk" -%},
+      {%- include "schemas/engraving-services.njk" -%}
+    ]
+  }
+}
+</script>

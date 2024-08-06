@@ -1,0 +1,23 @@
+<header class="banner sticky top-0 z-[100] px-4 bg-gray-950">
+  <div class="flex flex-col sm:flex-row justify-between items-center w-full max-w-screen-xl mx-auto">
+    
+    <a class="brand pt-4 sm:py-4" href="{{ site.url }}">
+      <img width="211" height="50" src="/assets/imageon-header-logo.webp" class="attachment-logo-small size-logo-small" alt="ImageOn San Diego A custom t-shirt and embroidery service shop" decoding="async" loading="lazy">
+    </a>
+
+    <nav class="nav-primary" aria-label="Main Menu">
+        <div class="container">
+          <ul id="main-menu" class="nav flex flex-row gap-x-1 md:gap-x-2 pt-2 text-white">
+
+            {% for menuItem in home.menu.fields.menuItems %}
+              <li class="{{ 'active' if menuItem.fields.slug in page.url }} menu-item justify-center items-center bg-gray-950 h-full p-1 sm:p-3 border-b-4 border-gray-800 hover:border-blue-800 text-gray-200 text-lg hover:text-white transition-all duration-300 whitespace-nowrap">
+                <a href="{{ site.url }}/services/{{ menuItem.fields.slug }}">{{ menuItem.fields.name | safe }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+    </nav>
+
+  </div>
+  {# <div class="sticky top-0 z-50 h-2 bg-red-300 sm:bg-orange-300 md:bg-yellow-300 lg:bg-green-300 xl:bg-blue-300 2xl:bg-indigo-300"></div> #}
+</header>

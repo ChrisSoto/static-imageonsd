@@ -1,0 +1,8 @@
+ <div class="phone flex flex-col sm:flex-row justify-center items-center sm:justify-end gap-x-4 p-4">
+  <span class="flex gap-x-2 text-sm sm:text-base sm:pb-0">
+    <a id="call-now-link" class="text-red-500 no-underline" href="tel:{{ home.phoneNumber }}">{{ home.phoneNumber }}</a>
+  </span>
+  <span class="address flex gap-x-2 text-sm sm:text-base">
+    <a class="text-gray-800 no-underline" href="{{ home.googleMap }}">{{ home.address }}</a>
+  </span>
+</div>

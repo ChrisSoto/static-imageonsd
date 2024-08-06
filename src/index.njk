@@ -1,0 +1,12 @@
+---
+layout: base.njk
+---
+
+{% from 'macros/default-layout-selector.njk' import defaultLayoutSelector %}
+
+{{ defaultLayoutSelector(
+    hero=home.heroSection.fields,
+    gallery=home.gallerySection.fields,
+    copy=home.copySection.fields,
+    faq=home.faqSection.fields)
+}}

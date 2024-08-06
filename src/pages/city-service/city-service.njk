@@ -1,0 +1,21 @@
+---
+pagination:
+  data: cityServices
+  size: 1
+  alias: cityService
+permalink: "services/{{ cityService.serviceSlug }}/{{ cityService.city | slugify }}/"
+layout: base.njk
+eleventyComputed:
+  title: "{{ cityService.metaTitle or home.metaTitle }}"
+  description: "{{ cityService.metaDescription or home.metaDescription }}"
+  map: "{{ cityService.cityMap }}"
+---
+
+{% from 'macros/default-layout-selector.njk' import defaultLayoutSelector %}
+
+{{ defaultLayoutSelector(
+    hero=cityService.heroSection.fields,
+    gallery=cityService.gallerySection.fields,
+    copy=cityService.copySection.fields, 
+    faq=cityService.faqSection.fields)
+}}

@@ -1,0 +1,37 @@
+---
+pagination:
+  data: blog
+  size: 6
+  alias: posts
+  reverse: true
+layout: base.njk
+title: "ImageOn Blog | Your source for custom printed t-shirts and embroidery services in San Diego, CA"
+description: "Get primo blogging with no minimum orders, fast turnaround, and guaranteed quality. Visit ImageOn San Diego today!"
+---
+
+<div class="section">
+  <div class="flex flex-col m-4">
+    <h1 class="text-red-500 text-5xl font-bold mb-8">Blog</h1>
+
+    {% for post in posts %}
+
+    <div class="post flex flex-col sm:flex-row mb-4 items-center">
+      <div class="flex flex-col mb-4 sm:mr-4 sm:w-3/4">
+        <h2 class="text-red-400 hover:underline hover:text-red-500 text-3xl font-bold cursor-pointer mb-2"><a href="/blog/{{ post.fields.title | slugify }}">{{ post.fields.title }}</a></h2>
+        <p class="text-pretty">{{ post.fields.excerpt | safe }} <span class="text-red-400 italic font-thin hover:underline hover:text-red-500" ><a href="/blog/{{ post.fields.title | slugify }}">...Read More</a></span> </p>
+      </div>
+      <img class="object-center w-full sm:w-1/4" src="https:{{ post.fields.featuredImage.fields.file.url }}?w=300&h=300&fit=thumb" alt="{{ post.fields.title }}">
+    </div>
+
+    {% endfor %}
+  </div>
+
+  <nav aria-labelledby="my-pagination" class="w-full my-8 p-4">
+    <ol class="flex flex-row justify-end gap-4">
+    {%- for pageEntry in pagination.pages %}
+      <li><a class="bg-red-500 text-white text-lg rounded-full p-2 px-6" href="{{ pagination.hrefs[ loop.index0 ] }}"{% if page.url == pagination.hrefs[ loop.index0 ] %} aria-current="page"{% endif %}>Page {{ loop.index }}</a></li>
+    {%- endfor %}
+    </ol>
+  </nav>
+
+</div>

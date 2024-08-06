@@ -1,0 +1,20 @@
+---
+pagination:
+  data: services
+  size: 1
+  alias: service
+permalink: "services/{{ service.fields.slug }}/"
+layout: base.njk
+eleventyComputed:
+  title: "{{ service.fields.metaTitle or home.metaTitle }}"
+  description: "{{ service.fields.metaDescription or home.metaDescription }}"
+---
+
+{% from 'macros/default-layout-selector.njk' import defaultLayoutSelector %}
+
+{{ defaultLayoutSelector(
+    hero=service.fields.heroSection.fields,
+    gallery=service.fields.gallerySection.fields,
+    copy=service.fields.copySection.fields, 
+    faq=service.fields.faqSection.fields)
+}}

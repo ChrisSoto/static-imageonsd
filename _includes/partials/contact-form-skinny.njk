@@ -1,0 +1,37 @@
+<div class="flex justify-center items-center lg:max-w-screen-md xl:max-w-screen-lg md:max-w-screen-sm bg-red-500 w-full md:rounded-3xl shadow-md mx-auto mb-16">
+  <div class="flex flex-col justify-center w-full p-4">
+
+    <b class="pb-2 text-3xl text-gray-100 text-center poppins-bold">Get a Free Quote!</b>
+
+    <form id="contact-form" name="contact" method="post" enctype="multipart/form-data" action="https://us-central1-imageonsd-af038.cloudfunctions.net/addContact/" novalidate="">
+      <div class="form_fields">
+
+        <div class="field">
+          <label class="field_label block mb-2 text-sm text-gray-100 font-bold " for="full-name">Full Name<span class="required text-yellow-500 mb-2 text-sm font-medium italic pl-2">(Required)</span></label>
+          <input name="full_name" id="full-name" type="text" onblur="writeToLocalStorage('full-name')" required class="shadow-sm bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-3" placeholder="John Doe">
+        </div>
+
+        <div class="field">
+          <label class="field_label block mb-2 text-sm text-gray-100 font-bold" for="e-mail">Email<span class="required text-yellow-500 mb-2 text-sm font-medium italic pl-2">(Required)</span></label>
+          <input name="e_mail" id="e-mail" type="email" onblur="writeToLocalStorage('e-mail')" required class="shadow-sm bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-3" placeholder="john.doe@gmail.com">
+        </div>
+
+        <div class="field">
+          <label class="field_label block mb-2 text-sm text-gray-100 font-bold" for="phone-number">Phone</label>
+          <input name="phone_number" id="phone-number" type="tel" onblur="writeToLocalStorage('phone-number')" class="shadow-sm bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-3" placeholder="ex. 619-312-0941" aria-invalid="false">
+        </div>
+
+        <div class="field mb-4">
+          <label class="field_label block mb-2 text-sm text-gray-100 font-bold" for="project-details">Project Details<span class="required text-yellow-500 mb-2 text-sm font-medium italic pl-2">(Required)</span></label>
+          <textarea name="project_details" id="project-details" onblur="writeToLocalStorage('project-details')" required class="textarea shadow-sm bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-3"
+            placeholder="8x4 banner, 2 colors, by next thursday" rows="5" cols="50"></textarea>
+        </div>
+
+      </div>
+
+      <input class="form_footer w-full flex flex-row justify-center items-center w-full cursor-pointer text-sm uppercase bg-yellow-400 text-red-500 p-4 rounded-full font-medium hover:bg-red-700 transition-colors duration-300" id="contact-submit" type="submit" class="button uppercase" value="Submit" >
+
+    </form>
+
+  </div>
+</div>

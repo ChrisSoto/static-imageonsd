@@ -1,0 +1,20 @@
+{%- macro gallerySection(fields) -%}
+
+{%- if fields -%}
+
+<div id="shadowbox">
+  <img id="shadowbox-image" src="/assets/temp.webp" alt="Shadowbox Image">
+</div>
+
+<div class="examples my-8 mb-16">
+  <h3 class="text-3xl bg-zinc-900 font-bold p-4 text-white text-center sm:text-left mb-0">{{ fields.name }}</h3>
+  <div class="flex flex-row justify-around items-center flex-wrap bg-zinc-600 pointer">
+    {%- for image in fields.images -%}
+    <img id="{{image.fields.file.url}}" eleventy:widths="450" class="w-full sm:w-1/2 md:w-1/4 lg:w-1/5 thumbnail" src="https:{{ image.fields.file.url }}" alt="{{ image.fields.title }}">
+    {%- endfor -%}
+  </div>
+</div>
+
+{%- endif -%}
+
+{%- endmacro -%}

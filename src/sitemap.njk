@@ -1,0 +1,46 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+      <loc>{{ site.url }}/</loc>
+      <lastmod>{{ site.time }}</lastmod>
+  </url>
+
+{% for page in services %}
+  <url>
+      <loc>{{ site.url }}/services/{{ page.fields.slug }}/</loc>
+      <lastmod>{{ page.sys.updatedAt | w3c }}</lastmod>
+  </url>
+{% endfor %}
+
+{% for page in cityServices %}
+  <url>
+      <loc>{{ site.url }}/city/{{ page.city | slugify }}/{{ page.serviceSlug }}/</loc>
+      <lastmod>{{ page.sys.updatedAt | w3c }}</lastmod>
+  </url>
+{% endfor %}
+
+
+{% for page in seoPages %}
+  <url>
+      <loc>{{ site.url }}/{{ page.fields.title | slugify }}/</loc>
+      <lastmod>{{ page.sys.updatedAt | w3c }}</lastmod>
+  </url>
+{% endfor %}
+
+  <url>
+      <loc>{{ site.url }}/blog/</loc>
+  </url>
+
+{% for page in blog %}
+  <url>
+      <loc>{{ site.url }}/blog/{{ page.fields.title | slugify }}/</loc>
+      <lastmod>{{ page.sys.updatedAt | w3c }}</lastmod>
+  </url>
+{% endfor %}
+
+</urlset>

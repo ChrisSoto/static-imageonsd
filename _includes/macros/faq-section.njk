@@ -1,0 +1,34 @@
+{%- macro faqSection(fields) -%}
+
+{%- if fields -%}
+
+{% from 'macros/faq-schema.njk' import faqSchema %}
+{{ faqSchema(fields.questions) }}
+
+<div id="faq" class="section mx-4 p-4 mb-16 bg-zinc-50 rounded border">
+
+  <h2 class="text-red-500 text-4xl font-bold text-center sm:text-left mb-8">Frequently Asked Questions</h2>
+
+  <div class="accordion">
+    {%- if fields.title -%}
+    <h3 class="text-red-400 text-3xl font-bold mb-4">{{ fields.title }}</h3>
+    {%- endif -%}
+    {%- if fields.intro -%}
+    {{ fields.intro | md | safe }}
+    {%- endif -%}
+    {%- for question in fields.questions -%}
+      <h4 class="accordion-title text-red-400 text-2xl font-bold">{{ question.fields.question }}</h4>
+      <div class="accordion-panel">
+        {{ question.fields.faqAnswer | md | safe }}
+      </div>
+    {%- endfor -%}
+    {%- if fields.outro -%}
+    {{ fields.outro | md | safe }}
+    {%- endif -%}
+  </div>
+
+</div>
+
+{%- endif -%}
+
+{%- endmacro -%}

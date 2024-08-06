@@ -1,0 +1,22 @@
+---
+pagination:
+  data: blog
+  size: 1
+  alias: post
+  reverse: true
+permalink: "blog/{{ post.fields.title | slugify }}/"
+layout: base.njk
+eleventyComputed:
+  title: "{{ post.fields.title }} | ImageOn San Diego Blog"
+  description: "{{ post.fields.excerpt }}"
+---
+
+<div id="blog-post" class="section p-4 xl:p-0">
+  <h1 class="text-red-500 text-5xl font-bold mb-8">{{ post.fields.title }}</h1>
+
+  {{ post.fields.text | richText | safe }}
+  
+  <div class="pt-24">
+    {% include "partials/contact-form-wide.njk" %}
+  </div>
+</div>

@@ -1,0 +1,62 @@
+---
+eleventyComputed:
+  title: "{{ home.metaTitle }}"
+  description: "{{ home.metaDescription }}"
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="{{ description }}">
+  <title>{{ title }}</title>
+
+  <link rel="canonical" href="{{site.url}}{{ page.url }}" />
+
+  {% set css %} {% include "css/css.njk" %} {% endset %}
+  <style>
+    {{ css | cssmin | safe }}
+  </style>
+
+  {% if site.env == "production" %}
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-976P3SJ94R"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-976P3SJ94R');
+  </script>
+  {% endif %}
+
+</head>
+
+<body>
+
+  {%- include "sections/0-header.njk" -%}
+
+  <main>
+
+    <div class="section">
+    {%- include "partials/phone-address.njk" -%}
+    </div>
+    
+    {{ content | safe }}
+    
+  </main>
+
+  {%- include "sections/7-footer.njk" -%}
+
+</body>
+
+<script defer src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<script>{% include "js/main.js" %}</script>
+
+{%- include "schemas/schemas.njk" -%}
+
+</html>

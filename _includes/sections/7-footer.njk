@@ -1,0 +1,52 @@
+<footer class="flex justify-center p-6 pb-2 bg-gray-900">
+  <div class="flex flex-col lg:flex-row gap-4 justify-between sm:items-start items-center w-full max-w-screen-xl mx-auto">
+
+    <div class="flex sm:flex-row flex-col w-full lg:w-1/2 mb-4 lg:mb-0">
+      <div class="flex flex-row justify-around w-full lg:w-1/2">
+        <div class="flex flex-col text-white">
+          <div class="font-bold pb-4">Custom T-Shirts</div>
+          <div class="flex flex-col">
+            {%-  for city in cities %}
+              <a href="{{ site.url }}/services/custom-t-shirts/{{ city.city | slugify }}/" class="text-gray-500 hover:text-gray-400 pb-1">{{ city.city }}</a>
+            {%-  endfor %}
+          </div>
+        </div>
+        <div class="flex flex-col text-white">
+          <div class="font-bold pb-4">Embroidery</div>
+          <div class="flex flex-col">
+            {%-  for city in cities %}
+              <a href="{{ site.url }}/services/embroidery/{{ city.city | slugify }}/" class="text-gray-500 hover:text-gray-400 pb-1">{{ city.city }}</a>
+            {%-  endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center w-full lg:w-1/2">
+        <div class="flex flex-col items-center pb-4 pt-4 sm:pt-0 w-full" style="border-bottom: 1px solid gray">
+          <h3 class="text-2xl font-bold text-gray-200 pb-2">Hours</h3>
+          <time class="text-gray-200 tracking-widest" datetime="Mo, Tu, We, Th, Fr 09:00-19:00">Monday - Friday: 9am-7pm</time>
+          <time class="text-gray-200 tracking-widest" datetime="Sa 09:00-16:30">Saturday: 9am-4:30pm</time>
+        </div>
+
+        <a href="{{ site.url }}/blog/" class="text-gray-500 hover:text-gray-400 mt-4">Check Out Our Blog</a>
+
+      </div>
+    </div>
+    
+    <div class="map w-full lg:w-1/2 pb-4">
+
+      {%- if map -%}
+        <iframe width="100%" height="450" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{{ map }}"></iframe>      
+      {%- else -%}
+        <iframe width="100%" height="450" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3352.1450379035978!2d-116.9882310228081!3d32.84141127363686!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80dbfd552f3f92dd%3A0x9ad812eb2b47a615!2s235%20Town%20Center%20Pkwy%2C%20Santee%2C%20CA%2092071!5e0!3m2!1sen!2sus!4v1708550794779!5m2!1sen!2sus"></iframe>      
+      {%- endif -%}
+
+    </div>
+  </div>
+</footer>
+<div class="flex justify-center p-2 bg-gray-950 text-gray-500 font-light">
+  <div class="flex flex-col sm:flex-row justify-between items-center max-w-screen-xl w-full">
+    <a href="mailto:imageonsantee@gmail.com">imageonsantee@gmail.com</a>
+    <div>©2024 Image On Inc. All Rights Reserved</div>
+  </div>
+</div>

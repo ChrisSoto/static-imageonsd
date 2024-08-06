@@ -1,0 +1,20 @@
+{%- macro defaultLayoutSelector(hero, gallery, copy, faq) -%}
+
+{% from 'macros/hero-section.njk' import heroSection %}
+{{ heroSection(hero) }}
+
+{% include "sections/1-contact-form.njk" %}
+{% include "sections/2-products.njk" %}
+
+{% from 'macros/gallery-section.njk' import gallerySection %}
+{{ gallerySection(gallery) }}
+
+<div class="section px-4 xl:px-0">
+{% from 'macros/copy-section.njk' import copySection %}
+{{ copySection(copy) }}
+</div>
+
+{% from 'macros/faq-section.njk' import faqSection %}
+{{ faqSection(faq) }}
+
+{%- endmacro -%}

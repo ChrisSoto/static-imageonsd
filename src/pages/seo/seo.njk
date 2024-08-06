@@ -1,0 +1,21 @@
+---
+pagination:
+  data: seoPages
+  size: 1
+  alias: page
+permalink: "{{ page.fields.title | slugify }}/"
+layout: base.njk
+eleventyComputed:
+  title: "{{ page.fields.metaTitle or home.metaTitle }}"
+  description: "{{ page.fields.metaDescription or home.metaDescription }}"
+---
+
+{% from 'macros/seo-page-layout-selector.njk' import seoPageLayoutSelector %}
+
+{{ seoPageLayoutSelector(
+    title=page.fields.title,
+    banner=page.fields.banner.fields,
+    copy=page.fields.copySection.fields, 
+    gallery=page.fields.gallerySection.fields,
+    faq=page.fields.faqSection.fields)
+}}

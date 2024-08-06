@@ -1,0 +1,11 @@
+{%- macro copySection(fields) -%}
+
+{%- if fields -%}
+
+  <div id="copy-section" class="mb-8 text-pretty">
+    {{ fields.text | richText | safe }}
+  </div>
+
+{%- endif -%}
+
+{%- endmacro -%}

@@ -1,0 +1,23 @@
+---
+pagination:
+  data: cities
+  size: 1
+  alias: city
+permalink: "city/{{city.city | slugify }}/"
+layout: base.njk
+eleventyComputed:
+  title: "{{ city.metaTitle or home.metaTitle }}"
+  description: "{{ city.metaDescription or home.metaDescription }}"
+  map: "{{ cityService.googleMap }}"
+---
+
+{# because city data is being processed by the cityServiceBuilder it has an unusual data structure, you should check the cityServiceBuilder
+function in the eleventy config for more details #}
+
+{% from 'macros/default-layout-selector.njk' import defaultLayoutSelector %}
+{{ defaultLayoutSelector(
+    hero=city.heroSection.fields,
+    gallery=city.gallerySection.fields,
+    copy=city.copySection.fields,
+    faq=city.faqSection.fields)
+}}
