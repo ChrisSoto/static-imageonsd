@@ -14,7 +14,11 @@ eleventyComputed:
   <meta name="description" content="{{ description }}">
   <title>{{ title }}</title>
 
+  {% if '/blog/' in page.url %}
+  <link rel="canonical" href="{{site.url}}/blog/" />
+  {% else %}
   <link rel="canonical" href="{{site.url}}{{ page.url }}" />
+  {% endif %}
 
   {% set css %} {% include "css/css.njk" %} {% endset %}
   <style>
