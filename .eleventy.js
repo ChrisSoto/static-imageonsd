@@ -365,7 +365,6 @@ export default function (eleventyConfig) {
   })
 
   eleventyConfig.addPassthroughCopy({ "src/favicon": "/" });
-  eleventyConfig.addPassthroughCopy("src/robots.txt");
   eleventyConfig.addPassthroughCopy("src/.htaccess");
 
   eleventyConfig.addFilter("cssmin", function (code) {
