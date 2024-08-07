@@ -1,0 +1,51 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+# rewrites so all url ends with a slash
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} !/$
+    RewriteRule ^(.*)$ /$1/ [R=301,L]
+
+# rewrites from old old wordpress site
+    Redirect 301 /contact-2/ https://imageonsd.com
+    Redirect 301 /design_studio/ https://imageonsd.com
+    Redirect 301 /products/ https://imageonsd.com
+    
+    Redirect 301 /embroidery-and-laser-engraving-services-oceanside/ https://imageonsd.com/services/embroidery/oceanside
+    Redirect 301 /embroidery-and-laser-engraving-services-miramar/ https://imageonsd.com/services/embroidery/miramar
+    Redirect 301 /embroidery-and-laser-engraving-services-san-diego/ https://imageonsd.com/services/embroidery/san-diego
+    Redirect 301 /embroidery-and-laser-engraving-services-el-cajon/ https://imageonsd.com/services/embroidery/el-cajon
+    Redirect 301 /embroidery-and-laser-engraving-services-la-mesa/ https://imageonsd.com/services/embroidery/la-mesa
+    
+    Redirect 301 /oceanside-custom-embroidery-and-laser-engraving-services/ https://imageonsd.com/services/embroidery/oceanside
+    Redirect 301 /la-jollas-number-one-tshirt-design-shop/ https://imageonsd.com/services/custom-t-shirts/la-jolla
+    Redirect 301 /t-shirt-printing-in-santee-custom-t-shirt-design-made-shirt/ https://imageonsd.com/services/custom-t-shirts/santee
+    Redirect 301 /custom-t-shirt-printing-rancho-san-diego/ https://imageonsd.com/services/custom-t-shirts/rancho-san-diego
+    
+    Redirect 301 /custom-made-signs-and-banners-in-oceanside/ https://imageonsd.com/banners-and-stickers/oceanside
+    Redirect 301 /custom-made-signs-and-banners-in-santee/ https://imageonsd.com/services/banners-and-stickers/santee
+    
+    Redirect 301 /custom-made-shirt-custom-t-shirt-design-print-in-oceanside/ https://imageonsd.com/services/custom-t-shirts/oceanside
+    Redirect 301 /custom-made-shirt-custom-t-shirt-design-print-in-la-miramar/ https://imageonsd.com/services/custom-t-shirts/miramar
+    Redirect 301 /custom-made-shirt-custom-t-shirt-design-print-in-el-cajon/ https://imageonsd.com/services/custom-t-shirts/el-cajon
+    Redirect 301 /custom-made-shirt-custom-t-shirt-design-print-in-la-mesa/ https://imageonsd.com/services/custom-t-shirts/la-mesa
+    Redirect 301 /custom-made-shirt-custom-t-shirt-design-print-in-san-diego-2/ https://imageonsd.com/services/custom-t-shirts/san-diego
+    
+    Redirect 301 /custom-t-shirt-printing-la-jolla/ https://imageonsd.com/services/custom-t-shirts/la-jolla
+    Redirect 301 /t-shirt-printing-in-santee-custom-made-shirt/ https://imageonsd.com/services/custom-t-shirts/santee
+    Redirect 301 /custom-t-shirt-printing-oceanside/ https://imageonsd.com/services/custom-t-shirts/oceanside
+    Redirect 301 /carmel_mountain/ https://imageonsd.com/city/carmel-mountain
+    Redirect 301 /t-shirt-printing-el-cajon/ https://imageonsd.com/services/custom-t-shirts/el-cajon
+    Redirect 301 /rancho-bernardo-t-shirt-printing-embroidery/ https://imageonsd.com/services/custom-t-shirts/rancho-bernardo
+    
+    Redirect 301 /best-tshirt-shop-la-jolla/ https://imageonsd.com/services/custom-t-shirts/la-jolla
+    Redirect 301 /t-shirt-printing-in-santee/ https://imageonsd.com/services/custom-t-shirts/santee
+    Redirect 301 /custom-t-shirt-embroidery-and-print/la-jolla/ https://imageonsd.com/services/custom-t-shirts/la-jolla
+    Redirect 301 /san-diego-t-shirt-printing/ https://imageonsd.com/services/custom-t-shirts/san-diego
+    
+# makes sure all http protocals are secured
+    RewriteCond %{HTTP_HOST} ^www.imageonesd.com [NC]
+    RewriteRule ^(.*)$ https://imageonsd.com/$1 [L,R=301]
+    
+</IfModule>
