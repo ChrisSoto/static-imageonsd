@@ -12,6 +12,18 @@
   </div>
 </div>
 
+{% if gallery or faq %}
+<nav class="section flex flex-row justify-start items-center mt-8 mb-8 p-4 bg-zinc-100 gap-4">
+  <span class="font-bold text-zinc-500">Go to:</span>
+  {% if gallery %}
+  <a href="#gallery">Gallery</a>
+  {% endif %}
+  {% if faq %}
+  <a href="#faq">FAQ</a>
+  {% endif %}
+</nav>
+{% endif %}
+
 <div class="section">
   <div class="flex flex-col md:flex-row p-4 pt-0">
     <div class="seo-page-content w-full md:w-7/12 pr-4">
