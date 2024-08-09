@@ -90,7 +90,7 @@
 
 <div class="section">
   <div class="flex flex-col md:flex-row p-4 pt-0">
-    <div class="w-full md:w-7/12 pr-4">
+    <div class="seo-page-content w-full md:w-7/12 pr-4">
     <h1 class="md:hidden">Custom Embroidery Services</h1>
       
       <div id="copy-section" class="mb-8 text-pretty">
@@ -222,10 +222,16 @@
 <script>function setupStickyForm() {
   const $header = $('.sticky-header');
   const $contactFormWrapper = $('.contact-form-wrapper');
+  const $seoPageContent = $('.seo-page-content')
 
-  if ($contactFormWrapper.length === 0) {
+  // get screen width
+  let screenWidth = $(window).outerWidth();
+
+  if (screenWidth < 767 || $contactFormWrapper.length === 0 || $seoPageContent.length === 0) {
     return false;
   }
+
+  console.log('has a contact form wrapper');
 
   const $contactForm = $('.contact-form');
   const $footer = $('footer');
@@ -247,37 +253,36 @@
 
 function updateStickyForm(data) {
   let scrollTop = $(window).scrollTop();
-  let viewportHeight = $(window).height();
   let formHeight = data.contactForm.outerHeight();
+  let bannerHeight = $('#banner').outerHeight();
+  let seoPageHeight = $('.seo-page-content').outerHeight();
 
   // Update headerHeight and footerTop on scroll, as they might change on responsive layouts
   headerHeight = data.header.outerHeight();
   footerTop = data.footer.offset().top;
 
-  if (scrollTop + data.headerHeight > data.formOriginalTop) {
+  if (scrollTop + headerHeight > data.formOriginalTop) {
     // Make the form sticky
-    data.contactForm.addClass('sticky').css({
+    data.contactFormWrapper.addClass('sticky').css({
       position: 'fixed',
-      top: data.headerHeight,
+      top: data.headerHeight + 35,
       width: data.contactFormWrapper.width()
     });
 
-    // Check if the form is about to overlap with the footer
-    if (scrollTop + data.headerHeight + formHeight > footerTop) {
-      let bottomPosition = viewportHeight - (footerTop - scrollTop);
-      data.contactForm.css({
-        top: 'auto',
-        bottom: bottomPosition
-      });
-    } else {
-      data.contactForm.css({
-        top: headerHeight,
-        bottom: 'auto'
+    const formStop = seoPageHeight + bannerHeight - 35;
+    const diff = scrollTop + formHeight - formStop;
+    let formStopPosition = headerHeight + 35 - diff;
+
+    if (scrollTop + formHeight > formStop) {
+      data.contactFormWrapper.addClass('sticky').css({
+        position: 'fixed',
+        top: formStopPosition,
+        width: data.contactFormWrapper.width()
       });
     }
   } else {
     // Return the form to its original position
-    data.contactForm.removeClass('sticky').css({
+    data.contactFormWrapper.removeClass('sticky').css({
       position: 'static',
       top: 'auto',
       bottom: 'auto',
@@ -408,11 +413,14 @@ window.onload = function () {
   setupShadowBox();
   setupAccordion();
 
-  // const stickyForm = setupStickyForm();
-  // if (stickyForm) {
-  //   updateStickyForm(stickyForm);
-  //   $(window).on('scroll resize', updateStickyForm(stickyForm));
-  // }
+  const stickyForm = setupStickyForm();
+
+  if (stickyForm) {
+    updateStickyForm(stickyForm);
+    $(window).on('scroll resize', () => {
+      updateStickyForm(stickyForm)
+    });
+  }
 
   $('#contact-submit').on('click', submitForm);
 }
