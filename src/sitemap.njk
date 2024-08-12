@@ -19,7 +19,7 @@ eleventyExcludeFromCollections: true
 
 {% for page in cityServices %}
   <url>
-      <loc>{{ site.url }}/city/{{ page.city | slugify }}/{{ page.serviceSlug }}/</loc>
+      <loc>{{ site.url }}/services/{{ page.serviceSlug }}/{{ page.city | slugify }}/</loc>
       <lastmod>{{ page.sys.updatedAt | w3c }}</lastmod>
   </url>
 {% endfor %}
