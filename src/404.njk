@@ -3,5 +3,16 @@ permalink: /404.shtml
 layout: base.njk
 ---
 
-<h1>404</h1>
-<p>Page not found</p>
+<div class="section p-4">
+
+  <h1 class="text-center">Sorry, we couldn't find that page</h1>
+  <p>Try going back to the <a href="/">homepage</a>.</p>
+  <p>Or, check out one of these pages:</p>
+
+  <ul>
+  {%- for pages in seoPages -%}
+    <li><a href="/{{ pages.fields.title | slugify }}/">{{ pages.fields.title }}</a></li>
+  {%- endfor -%}
+  </ul>
+  
+</div>

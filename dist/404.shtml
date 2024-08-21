@@ -85,8 +85,15 @@
 </div>
     
     
-<h1>404</h1>
-<p>Page not found</p>
+<div class="section p-4">
+
+  <h1 class="text-center">Sorry, we couldn't find that page</h1>
+  <p>Try going back to the <a href="/">homepage</a>.</p>
+  <p>Or, check out one of these pages:</p>
+
+  <ul><li><a href="/custom-t-shirt-printing/">Custom T-Shirt Printing</a></li><li><a href="/custom-embroidery-services/">Custom Embroidery Services</a></li><li><a href="/custom-hat-embroidery-san-diego/">Custom Hat Embroidery San Diego</a></li><li><a href="/custom-banners-and-same-day-printing-in-spring-valley/">Custom Banners and Same Day Printing in Spring Valley</a></li><li><a href="/custom-printing-embroidery-and-engraving-services-in-el-cajon/">Custom Printing, Embroidery, and Engraving Services in El Cajon</a></li><li><a href="/boost-your-santee-business-with-custom-banners-and-stickers/">Boost Your Santee Business with Custom Banners and Stickers</a></li><li><a href="/same-day-embroidery-and-monogramming-near-me-custom-apparel-fast/">Same-Day Embroidery &amp; Monogramming Near Me – Custom Apparel Fast</a></li></ul>
+  
+</div>
     
   </main><footer class="flex justify-center p-6 pb-2 bg-gray-900">
   <div class="flex flex-col lg:flex-row gap-4 justify-between sm:items-start items-center w-full max-w-screen-xl mx-auto">
