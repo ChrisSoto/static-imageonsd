@@ -12,14 +12,12 @@
 const {initializeApp} = require("firebase-admin/app");
 const {onRequest} = require("firebase-functions/v2/https");
 const {getFirestore} = require("firebase-admin/firestore");
-const {debug} = require("firebase-functions/logger");
 
 initializeApp();
 
 exports.addContact = onRequest(
     {cors: ["https://imageonsd.com", "https://dev.imageonsd.com", "https://staging.imageonsd.com", "http://localhost:8080"]},
     async (request, response) => {
-      debug("log add contact - 99", request.body);
       const {name, email, phone, details} = request.body;
 
       let writeResult = null;
@@ -51,33 +49,37 @@ exports.addContact = onRequest(
 exports.addPPDContact = onRequest(
     {cors: ["http://localhost:8080", "https://pepperfarmdeli.com"]},
     async (request, response) => {
-      debug("log add contact - 79", request.body);
       const {name, email, phone, question} = request.body;
 
-      const writeResult = await getFirestore()
-          .collection("contacts")
-          .add({
-            to: "pepperfarmdeli@gmail.com",
-            message: {
-              subject: `Question from: ${name}`,
-              body: `Name: ${name}\n
-                Phone: ${phone}\n
-                Email: ${email}\n
-                Question: ${question}`,
-              html: `<p>Name: ${name}</p><br>
-                <p>Email: <a href="mailto:${email}">${email}</a></p><br>
-                <p>Phone: <a href="tel:${phone}">${phone}</a></p><br>
-                <p>Question: ${question}</p>`,
-            },
-          });
-      response.json({result: `Message written with ID: ${writeResult.id}`});
+      let writeResult = null;
+
+      if (!email) {
+        response.status(400).json({error: "Missing required fields"});
+      } else {
+        writeResult = await getFirestore()
+            .collection("contacts")
+            .add({
+              to: "pepperfarmdeli@gmail.com",
+              message: {
+                subject: `Question from: ${name}`,
+                body: `Name: ${name}\n
+                  Phone: ${phone}\n
+                  Email: ${email}\n
+                  Question: ${question}`,
+                html: `<p>Name: ${name}</p><br>
+                  <p>Email: <a href="mailto:${email}">${email}</a></p><br>
+                  <p>Phone: <a href="tel:${phone}">${phone}</a></p><br>
+                  <p>Question: ${question}</p>`,
+              },
+            });
+        response.json({result: `Message written with ID: ${writeResult.id}`});
+      }
     });
 
 
 exports.addPPDCateringContact = onRequest(
     {cors: ["http://localhost:8080", "https://pepperfarmdeli.com"]},
     async (request, response) => {
-      debug("log add catering - 69", request.body);
       const {
         name,
         email,
@@ -90,31 +92,123 @@ exports.addPPDCateringContact = onRequest(
         comments,
       } = request.body;
 
-      const writeResult = await getFirestore()
-          .collection("contacts")
-          .add({
-            to: "pepperfarmdeli@gmail.com",
-            message: {
-              subject: `Catering Inquiry from: ${name}`,
-              body: `Name: ${name}\n
-                Phone: ${phone}\n
-                Email: ${email}\n
-                Event Date: ${eventDate}\n
-                Guests: ${guests}\n
-                Event Type: ${eventType}\n
-                Pickup: ${pickup}\n
-                Location: ${location}\n
-                Comments: ${comments}`,
-              html: `<p>Name: ${name}</p><br>
-                <p>Email: <a href="mailto:${email}">${email}</a></p><br>
-                <p>Phone: <a href="tel:${phone}">${phone}</a></p><br>
-                <p>Event Date: ${eventDate}</p><br>
-                <p>Guests: ${guests}</p><br>
-                <p>Event Type: ${eventType}</p><br>
-                <p>Pickup: ${pickup}</p><br>
-                <p>Location: ${location}</p><br>
-                <p>Comments: ${comments}</p>`,
-            },
-          });
-      response.json({result: `Message written with ID: ${writeResult.id}`});
+      let writeResult = null;
+
+      if (!email) {
+        response.status(400).json({error: "Missing required fields"});
+      } else {
+        writeResult = await getFirestore()
+            .collection("contacts")
+            .add({
+              to: "pepperfarmdeli@gmail.com",
+              message: {
+                subject: `Catering Inquiry from: ${name}`,
+                body: `Name: ${name}\n
+                  Phone: ${phone}\n
+                  Email: ${email}\n
+                  Event Date: ${eventDate}\n
+                  Guests: ${guests}\n
+                  Event Type: ${eventType}\n
+                  Pickup: ${pickup}\n
+                  Location: ${location}\n
+                  Comments: ${comments}`,
+                html: `<p>Name: ${name}</p><br>
+                  <p>Email: <a href="mailto:${email}">${email}</a></p><br>
+                  <p>Phone: <a href="tel:${phone}">${phone}</a></p><br>
+                  <p>Event Date: ${eventDate}</p><br>
+                  <p>Guests: ${guests}</p><br>
+                  <p>Event Type: ${eventType}</p><br>
+                  <p>Pickup: ${pickup}</p><br>
+                  <p>Location: ${location}</p><br>
+                  <p>Comments: ${comments}</p>`,
+              },
+            });
+        response.json({result: `Message written with ID: ${writeResult.id}`});
+      }
+    });
+
+// because I changed the way data gets parsed by the javascript on the website,
+// I'm not using the same destructuring as the one above
+
+exports.addC9DContact = onRequest(
+    {cors: ["http://localhost:8080", "https://cloud9delisd.com"]},
+    async (request, response) => {
+      const {fullName, eMail, phoneNumber, question} = request.body;
+
+      let writeResult = null;
+
+      if (!eMail) {
+        response.status(400).json({error: "Missing required fields"});
+      } else {
+        writeResult = await getFirestore()
+            .collection("contacts")
+            .add({
+              to: "cloud9delisd@gmail.com",
+              message: {
+                subject: `Question from: ${fullName}`,
+                body: `Name: ${fullName}\n
+                  Phone: ${phoneNumber}\n
+                  Email: ${eMail}\n
+                  Question: ${question}`,
+                html: `<p>Name: ${fullName}</p><br>
+                  <p>Email: <a href="mailto:${eMail}">${eMail}</a></p><br>
+                  <p>Phone: <a href="tel:${phoneNumber}">
+                    ${phoneNumber}</a></p><br>
+                  <p>Question: ${question}</p>`,
+              },
+            });
+        response.json({result: `Message written with ID: ${writeResult.id}`});
+      }
+    });
+
+
+exports.addC9DCateringContact = onRequest(
+    {cors: ["http://localhost:8080", "https://cloud9delisd.com"]},
+    async (request, response) => {
+      const {
+        fullName,
+        eMail,
+        phoneNumber,
+        eventDate,
+        noOfGuests,
+        eventType,
+        pickup,
+        eventLocation,
+        comments,
+      } = request.body;
+
+      let writeResult = null;
+
+      if (!eMail) {
+        response.status(400).json({error: "Missing required fields"});
+      } else {
+        writeResult = await getFirestore()
+            .collection("contacts")
+            .add({
+              to: "cloud9delisd@gmail.com",
+              message: {
+                subject: `Catering Inquiry from: ${fullName}`,
+                body: `Name: ${fullName}\n
+                  Phone: ${phoneNumber}\n
+                  Email: ${eMail}\n
+                  Event Date: ${eventDate}\n
+                  Guests: ${noOfGuests}\n
+                  Event Type: ${eventType}\n
+                  Pickup: ${pickup}\n
+                  Location: ${eventLocation}\n
+                  Comments: ${comments}`,
+                html: `<p>Name: ${fullName}</p><br>
+                  <p>Email: <a href="mailto:${eMail}">${eMail}</a></p><br>
+                  <p>Phone: <a href="tel:${phoneNumber}">
+                    ${phoneNumber}</a></p><br>
+                  <p>Event Date: ${eventDate}</p><br>
+                  <p>Guests: ${noOfGuests}</p><br>
+                  <p>Event Type: ${eventType}</p><br>
+                  <p>Pickup: ${pickup}</p><br>
+                  <p>Location: ${eventLocation}</p><br>
+                  <p>Comments: ${comments}</p>`,
+              },
+            });
+        response.json({result: `Message written with ID: ${writeResult.id}`});
+      }
     });
