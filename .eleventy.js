@@ -8,6 +8,8 @@ import dotenv from "dotenv";
 import contentful from "contentful";
 import getW3CDate from "./helper.js";
 
+// update
+
 dotenv.config({ path: "./.env" });
 
 const client = contentful.createClient({
