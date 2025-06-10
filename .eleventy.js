@@ -92,7 +92,8 @@ function buildCityService(city, oService) {
 
   let cityService = {
     city: city.fields.name,
-    cityMap: city.fields.googleMap,
+    googleMap: city.fields.googleMap,
+    cityMap: city.fields.cityMap
   };
 
   // I pass the home page for city only pages

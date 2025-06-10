@@ -8,13 +8,12 @@ layout: base.njk
 eleventyComputed:
   title: "{{ city.metaTitle or home.metaTitle }}"
   description: "{{ city.metaDescription or home.metaDescription }}"
-  map: "{{ cityService.googleMap }}"
+  email: "{{ city.eMail or home.eMail }}"
+  phoneNumber: "{{ city.phoneNumber or home.phoneNumber }}"
+  googleMap: "{{ city.googleMap or home.googleMap }}"
+  cityMap: "{{ city.cityMap or home.cityMap }}"
+  address: "{{ city.address or home.address }}"
 ---
-
-{% set email = city.eMail or home.eMail %}
-{% set phoneNumber = city.phoneNumber or home.phoneNumber %}
-{% set googleMap = city.googleMap or home.googleMap %}
-{% set address = city.address or home.address %}
 
 {%- include "partials/phone-address.njk" -%}
 

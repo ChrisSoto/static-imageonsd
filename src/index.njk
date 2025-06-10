@@ -1,8 +1,13 @@
 ---
 layout: base.njk
+eleventyComputed:
+  email: "{{ home.eMail }}"
+  phoneNumber: "{{ home.phoneNumber }}"
+  googleMap: "{{ home.googleMap }}"
+  cityMap: "{{ home.cityMap }}"
+  address: "{{ home.address }}"
 ---
-
-<div class="mt-4"></div>
+{%- include "partials/phone-address.njk" -%}
 
 {% from 'macros/default-layout-selector.njk' import defaultLayoutSelector %}
 

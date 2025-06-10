@@ -8,12 +8,12 @@ layout: base.njk
 eleventyComputed:
   title: "{{ service.fields.metaTitle or home.metaTitle }}"
   description: "{{ service.fields.metaDescription or home.metaDescription }}"
+  email: "{{ home.eMail }}"
+  phoneNumber: "{{ home.phoneNumber }}"
+  googleMap: "{{ home.googleMap }}"
+  cityMap: "{{ home.cityMap }}"
+  address: "{{ home.address }}"
 ---
-
-{% set email = home.eMail %}
-{% set phoneNumber = home.phoneNumber %}
-{% set googleMap = home.googleMap %}
-{% set address = home.address %}
 
 {%- include "partials/phone-address.njk" -%}
 
@@ -23,5 +23,6 @@ eleventyComputed:
     hero=service.fields.heroSection.fields,
     gallery=service.fields.gallerySection.fields,
     copy=service.fields.copySection.fields, 
-    faq=service.fields.faqSection.fields)
+    faq=service.fields.faqSection.fields,
+    phone=phoneNumber)
 }}
