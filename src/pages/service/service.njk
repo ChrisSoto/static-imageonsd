@@ -10,6 +10,13 @@ eleventyComputed:
   description: "{{ service.fields.metaDescription or home.metaDescription }}"
 ---
 
+{% set email = home.eMail %}
+{% set phoneNumber = home.phoneNumber %}
+{% set googleMap = home.googleMap %}
+{% set address = home.address %}
+
+{%- include "partials/phone-address.njk" -%}
+
 {% from 'macros/default-layout-selector.njk' import defaultLayoutSelector %}
 
 {{ defaultLayoutSelector(

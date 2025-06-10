@@ -18,17 +18,27 @@ initializeApp();
 exports.addContact = onRequest(
     {cors: ["https://imageonsd.com", "https://dev.imageonsd.com", "https://staging.imageonsd.com", "http://localhost:8080"]},
     async (request, response) => {
-      const {name, email, phone, details} = request.body;
+      const {name, email, phone, location, details} = request.body;
 
       let writeResult = null;
 
       if (!email) {
         response.status(400).json({error: "Missing required fields"});
       } else {
+
+        let emails = "";
+        if (location == "Santee") {
+          emails = "imageonprintingservice@gmail.com, admin@imageonsd.com";
+        } else if (location == "Oceanside") {
+          emails = "imageon.sandiego@gmail.com, admin@imageonsd.com";
+        } else {
+          emails = "admin@imageonsd.com";
+        }
+
         writeResult = await getFirestore()
             .collection("contacts")
             .add({
-              to: "imageonprintingservice@gmail.com, admin@imageonsd.com",
+              to: emails,
               message: {
                 subject: `Lead from Site: ${name}`,
                 body: `Name: ${name}\n

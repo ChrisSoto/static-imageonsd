@@ -173,6 +173,18 @@ function buildCityService(city, oService) {
     cityService.faqSection = city.fields.faqSection;
   }
 
+  if ("phoneNumber" in city.fields) {
+    cityService.phoneNumber = city.fields.phoneNumber;
+  }
+
+  if ("address" in city.fields) {
+    cityService.address = city.fields.address;
+  }
+
+  if ("eMail" in city.fields) {
+    cityService.eMail = city.fields.eMail;
+  }
+
   // chech for [[service]] in metatitle and description
   // this extra flexibility is needed because John likes
   // to change all the titles and descriptions

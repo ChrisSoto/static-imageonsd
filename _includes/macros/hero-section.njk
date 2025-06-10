@@ -1,4 +1,4 @@
-{%- macro heroSection(fields) -%}
+{%- macro heroSection(fields, phone) -%}
 
 <div class="section-full">
   <div class="section flex flex-row px-4 xl:px-0">
@@ -15,10 +15,12 @@
       <h1 class="text-black text-3xl mb-4">{{ fields.h1 | safe }}</h1>
       <div class="sub-heading font-bold mb-4">{{ fields.subHeading | safe }}</div>
 
+      {% if phone %}
       <div class="flex gap-x-4">
-        <a href="tel:619-312-0941" class="text-white bg-red-500 hover:bg-red-500 hover:text-white hover:underline hover:shadow-none text-sm sm:text-lg rounded-full mb-4 p-2 px-6 sm:text-sm poppins-medium shadow-md">CALL @ 619-312-0941</a>
+        <a href="tel:{{phone}}" class="text-white bg-red-500 hover:bg-red-500 hover:text-white hover:underline hover:shadow-none text-sm rounded-full mb-4 p-2 px-6 sm:text-sm poppins-medium shadow-md">CALL @ {{phone}}</a>
         <img class="object-none object-left" src="/assets/phone-arrow.webp" alt="arrow point to phone number">
       </div>
+      {% endif %}
 
       <div class="short-copy font-bold">
         {{ fields.text |safe }}

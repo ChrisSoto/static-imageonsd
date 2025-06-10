@@ -1,7 +1,7 @@
-{%- macro defaultLayoutSelector(hero, gallery, copy, faq) -%}
+{%- macro defaultLayoutSelector(hero, gallery, copy, faq, phone) -%}
 
 {% from 'macros/hero-section.njk' import heroSection %}
-{{ heroSection(hero) }}
+{{ heroSection(hero, phone) }}
 
 {% include "sections/1-contact-form.njk" %}
 {% include "sections/2-products.njk" %}

@@ -11,6 +11,13 @@ eleventyComputed:
   map: "{{ cityService.googleMap }}"
 ---
 
+{% set email = city.eMail or home.eMail %}
+{% set phoneNumber = city.phoneNumber or home.phoneNumber %}
+{% set googleMap = city.googleMap or home.googleMap %}
+{% set address = city.address or home.address %}
+
+{%- include "partials/phone-address.njk" -%}
+
 {# because city data is being processed by the cityServiceBuilder it has an unusual data structure, you should check the cityServiceBuilder
 function in the eleventy config for more details #}
 
@@ -19,5 +26,6 @@ function in the eleventy config for more details #}
     hero=city.heroSection.fields,
     gallery=city.gallerySection.fields,
     copy=city.copySection.fields,
-    faq=city.faqSection.fields)
+    faq=city.faqSection.fields,
+    phone=phoneNumber)
 }}

@@ -151,7 +151,8 @@ function getData(data) {
   let name = data[0].value;
   let email = data[1].value;
   let phone = data[2].value;
-  let details = data[3].value;
+  let location = data[3].value;
+  let details = data[4].value;
 
   if (!name) {
     name = localStorage.getItem('full-name');
@@ -162,6 +163,9 @@ function getData(data) {
   if (!phone) {
     phone = localStorage.getItem('phone-number');
   }
+  if (!location) {
+    location = localStorage.getItem('location');
+  }
   if (!details) {
     details = localStorage.getItem('project-details');
   }
@@ -170,6 +174,7 @@ function getData(data) {
     name,
     email,
     phone,
+    location,
     details
   };
 }

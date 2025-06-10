@@ -11,11 +11,19 @@ eleventyComputed:
   map: "{{ cityService.cityMap }}"
 ---
 
+{% set email = cityService.eMail or home.eMail %}
+{% set phoneNumber = cityService.phoneNumber or home.phoneNumber %}
+{% set googleMap = cityService.googleMap or home.googleMap %}
+{% set address = cityService.address or home.address %}
+
+{%- include "partials/phone-address.njk" -%}
+
 {% from 'macros/default-layout-selector.njk' import defaultLayoutSelector %}
 
 {{ defaultLayoutSelector(
     hero=cityService.heroSection.fields,
     gallery=cityService.gallerySection.fields,
     copy=cityService.copySection.fields, 
-    faq=cityService.faqSection.fields)
+    faq=cityService.faqSection.fields,
+    phone=phoneNumber)
 }}

@@ -36,6 +36,18 @@
 
         </div>
 
+        <div class="mb-4">
+          <label class="field_label block mb-2 text-sm text-gray-100 font-bold" for="location">Location</label>
+          <select
+          name="location"
+          id="location"
+          class="bg-gray-100 border border-gray-300 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-3"
+        >
+            <option selected value="Santee">Santee</option>
+            <option value="Oceanside">Oceanside</option>
+        </select>
+        </div>
+
         <div class="field mb-4">
           <label class="field_label block mb-2 text-sm text-gray-100 font-bold" for="project-details">Project Details<span class="required text-yellow-500 mb-2 text-sm font-medium italic pl-2">(Required)</span></label>
           <textarea name="project_details" id="project-details" onblur="writeToLocalStorage('project-details')" required class="textarea shadow-sm bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-3"
@@ -44,7 +56,7 @@
 
       </div>
 
-      <input class="form_footer w-full flex flex-row justify-center items-center w-full cursor-pointer text-sm uppercase bg-yellow-400 text-red-500 p-4 rounded-full font-medium hover:bg-red-700 transition-colors duration-300" id="contact-submit" type="submit" class="button uppercase" value="Submit" >
+      <input class="form_footer w-full flex flex-row justify-center items-center cursor-pointer text-sm uppercase bg-yellow-400 text-red-500 p-4 rounded-full font-medium hover:bg-red-700 transition-colors duration-300" id="contact-submit" type="submit" class="button uppercase" value="Submit" >
 
     </form>
 
