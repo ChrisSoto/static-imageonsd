@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-Shirt Pricing Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen py-8">
+    <div id="root"></div>
+    
+<script type="text/babel">
+
+        const { useState, useEffect } = React;
+
+        const EXTRA_COLOR_COST = 2;
+        const WHITE_BASE_COST = 3.5;
+        const LARGE_PLACEMENT_COST = 12;
+        const SMALL_PLACEMENT_COST = 6;
+        const LOW_QUANTITY_PENALTY = 1.25;
+        const LOW_QUANTITY_THRESHOLD = 7;
+
+        const PRICE_TIER_1 = {
+            quantity: 6,
+            discount: 1
+        };
+        const PRICE_TIER_2 = {
+            quantity: 12,
+            discount: 0.9
+        };
+        const PRICE_TIER_3 = {
+            quantity: 25,
+            discount: 0.85
+        };
+        const PRICE_TIER_4 = {
+            quantity: 50,
+            discount: 0.80
+        };
+        const PRICE_TIER_5 = {
+            quantity: 100,
+            discount: 0.75
+        };
+
+        const TShirtPricingCalculator = () => {
+            const [tShirtCost, setTShirtCost] = useState(8);
+            const [colors, setColors] = useState(1);
+            const [quantity, setQuantity] = useState(1);
+            const [needsWhiteBase, setNeedsWhiteBase] = useState(false);
+            const [isMultiColor, setIsMultiColor] = useState(false);
+            
+            
+            // Multi-color shirt configurations
+            const [shirtConfigs, setShirtConfigs] = useState([
+                { color: 'Blue', quantity: 5, needsWhiteBase: false }
+            ]);
+            
+            // Placement checkboxes
+            const [placements, setPlacements] = useState({
+                largeFront: false,
+                largeBack: false,
+                frontCorner: false,
+                leftSleeve: false,
+                rightSleeve: false,
+                backCorner: false
+            });
+            
+            // Other placements
+            const [smallOthers, setSmallOthers] = useState(0);
+            const [largeOthers, setLargeOthers] = useState(0);
+            
+            const [totalPrice, setTotalPrice] = useState(0);
+            const [profit, setProfit] = useState(0);
+            const [pricePerShirt, setPricePerShirt] = useState(0);
+            const [multiColorBreakdown, setMultiColorBreakdown] = useState([]);
+
+            // Save/Load functionality
+            const [currentConfigName, setCurrentConfigName] = useState('');
+            const [savedConfigs, setSavedConfigs] = useState([]);
+            const [selectedConfig, setSelectedConfig] = useState('');
+            const [lastSaved, setLastSaved] = useState(null);
+
+            // Load saved configurations on component mount
+            useEffect(() => {
+                loadSavedConfigs();
+            }, []);
+
+            const loadSavedConfigs = () => {
+                try {
+                    const saved = localStorage.getItem('tshirt_configs');
+                    if (saved) {
+                        const configs = JSON.parse(saved);
+                        setSavedConfigs(configs);
+                    }
+                } catch (error) {
+                    console.error('Error loading saved configurations:', error);
+                }
+            };
+
+            const getCurrentConfig = () => {
+                return {
+                    tShirtCost,
+                    colors,
+                    quantity,
+                    needsWhiteBase,
+                    isMultiColor,
+                    shirtConfigs,
+                    placements,
+                    smallOthers,
+                    largeOthers,
+                    timestamp: new Date().toISOString(),
+                    name: currentConfigName || `Config ${new Date().toLocaleString()}`
+                };
+            };
+
+            const saveCurrentConfig = () => {
+                const config = getCurrentConfig();
+                const configName = currentConfigName || `Config ${new Date().toLocaleString()}`;
+                
+                try {
+                    const existingConfigs = [...savedConfigs];
+                    const newConfig = { ...config, name: configName, id: Date.now() };
+                    existingConfigs.push(newConfig);
+                    
+                    // Keep only the last 50 configurations
+                    const limitedConfigs = existingConfigs.slice(-50);
+                    
+                    localStorage.setItem('tshirt_configs', JSON.stringify(limitedConfigs));
+                    setSavedConfigs(limitedConfigs);
+                    setLastSaved(new Date());
+                    
+                    if (!currentConfigName) {
+                        setCurrentConfigName(configName);
+                    }
+                } catch (error) {
+                    console.error('Error saving configuration:', error);
+                }
+            };
+
+            const loadConfig = (configId) => {
+                const config = savedConfigs.find(c => c.id === parseInt(configId));
+                if (config) {
+                    setTShirtCost(config.tShirtCost);
+                    setColors(config.colors);
+                    setQuantity(config.quantity);
+                    setNeedsWhiteBase(config.needsWhiteBase);
+                    setIsMultiColor(config.isMultiColor);
+                    setShirtConfigs(config.shirtConfigs);
+                    setPlacements(config.placements);
+                    setSmallOthers(config.smallOthers);
+                    setLargeOthers(config.largeOthers);
+                    setCurrentConfigName(config.name);
+                    setSelectedConfig(configId);
+                }
+            };
+
+            const updateCurrentConfig = () => {
+                if (selectedConfig) {
+                    const config = getCurrentConfig();
+                    const configId = parseInt(selectedConfig);
+                    
+                    try {
+                        const updatedConfigs = savedConfigs.map(c => 
+                            c.id === configId ? { ...config, id: configId, name: currentConfigName } : c
+                        );
+                        
+                        localStorage.setItem('tshirt_configs', JSON.stringify(updatedConfigs));
+                        setSavedConfigs(updatedConfigs);
+                        setLastSaved(new Date());
+                    } catch (error) {
+                        console.error('Error updating configuration:', error);
+                    }
+                }
+            };
+
+            const deleteConfig = (configId) => {
+                try {
+                    const updatedConfigs = savedConfigs.filter(c => c.id !== configId);
+                    localStorage.setItem('tshirt_configs', JSON.stringify(updatedConfigs));
+                    setSavedConfigs(updatedConfigs);
+                    
+                    if (selectedConfig === configId.toString()) {
+                        setSelectedConfig('');
+                        setCurrentConfigName('');
+                    }
+                } catch (error) {
+                    console.error('Error deleting configuration:', error);
+                }
+            };
+
+            const startNewConfig = () => {
+                setSelectedConfig('');
+                setCurrentConfigName('');
+                setLastSaved(null);
+                
+                // Reset to defaults
+                setTShirtCost(8);
+                setColors(1);
+                setQuantity(1);
+                setNeedsWhiteBase(false);
+                setIsMultiColor(false);
+                setShirtConfigs([
+                    { color: 'Black', quantity: 1, needsWhiteBase: false },
+                ]);
+                setPlacements({
+                    largeFront: false,
+                    largeBack: false,
+                    frontCorner: false,
+                    leftSleeve: false,
+                    rightSleeve: false,
+                    backCorner: false
+                });
+                setSmallOthers(0);
+                setLargeOthers(0);
+            };
+
+            const calculatePrice = () => {
+                // Count placements
+                const largePlacements = (placements.largeFront ? 1 : 0) + 
+                                      (placements.largeBack ? 1 : 0) + 
+                                      largeOthers;
+                
+                const smallPlacements = (placements.frontCorner ? 1 : 0) + 
+                                      (placements.leftSleeve ? 1 : 0) + 
+                                      (placements.rightSleeve ? 1 : 0) + 
+                                      (placements.backCorner ? 1 : 0) + 
+                                      smallOthers;
+
+                const totalPlacements = largePlacements + smallPlacements;
+
+                const discountCalc = (quantity) => {
+                    if (quantity >= PRICE_TIER_5.quantity) {
+                        return PRICE_TIER_5.discount;
+                    } else if (quantity >= PRICE_TIER_4.quantity) {
+                        return PRICE_TIER_4.discount;
+                    } else if (quantity >= PRICE_TIER_3.quantity) {
+                        return PRICE_TIER_3.discount;
+                    } else if (quantity >= PRICE_TIER_2.quantity) {
+                        return PRICE_TIER_2.discount;
+                    } else if (quantity >= PRICE_TIER_1.quantity) {
+                        return PRICE_TIER_1.discount;
+                    } else {
+                        return LOW_QUANTITY_PENALTY;
+                    }
+                };
+
+                if (isMultiColor) {
+                    // Multi-color calculation
+                    const totalQuantity = shirtConfigs.reduce((sum, config) => sum + config.quantity, 0);
+                    
+                    if (totalPlacements === 0) {
+                        const breakdown = shirtConfigs.map(config => ({
+                            ...config,
+                            pricePerShirt: tShirtCost,
+                            totalPrice: tShirtCost * config.quantity
+                        }));
+                        setMultiColorBreakdown(breakdown);
+                        setTotalPrice(breakdown.reduce((sum, item) => sum + item.totalPrice, 0));
+                        setPricePerShirt(totalQuantity > 0 ? breakdown.reduce((sum, item) => sum + item.totalPrice, 0) / totalQuantity : 0);
+                        setProfit(0)
+                        return;
+                    }
+
+                    // Base design cost per shirt
+                    let baseDesignCost = (largePlacements * LARGE_PLACEMENT_COST) + (smallPlacements * SMALL_PLACEMENT_COST);
+
+                    // Quantity discount based on total quantity
+                    let discount = discountCalc(totalQuantity);
+
+                    const breakdown = shirtConfigs.map(config => {
+                        let shirtPrice = baseDesignCost + tShirtCost;
+                        
+                        // Additional colors (assuming $2 per extra color)
+                        if (colors > 1) {
+                            shirtPrice += (colors - 1) * EXTRA_COLOR_COST;
+                        }
+                        
+                        // White base cost
+                        if (config.needsWhiteBase) {
+                            shirtPrice += WHITE_BASE_COST;
+                        }
+                        
+                        const finalPricePerShirt = shirtPrice * discount;
+                        const totalPrice = finalPricePerShirt * config.quantity;
+                        
+                        return {
+                            ...config,
+                            pricePerShirt: finalPricePerShirt,
+                            totalPrice: totalPrice
+                        };
+                    });
+
+                    setMultiColorBreakdown(breakdown);
+                    const grandTotal = breakdown.reduce((sum, item) => sum + item.totalPrice, 0);
+                    setTotalPrice(grandTotal);
+                    setPricePerShirt(totalQuantity > 0 ? grandTotal / totalQuantity : 0);
+                    setProfit(grandTotal - (tShirtCost * totalQuantity));
+
+                } else {
+                    // Single color calculation (original logic)
+                    if (totalPlacements === 0) {
+                        setPricePerShirt(tShirtCost);
+                        setTotalPrice(tShirtCost * quantity);
+                        setProfit(0);
+                        return;
+                    }
+
+                    // Base pricing per placement
+                    let designCost = (largePlacements * LARGE_PLACEMENT_COST) + (smallPlacements * SMALL_PLACEMENT_COST);
+                    
+                    // Single shirt penalty to encourage bulk orders
+
+
+                    // Calculate base shirt price
+                    let shirtPrice = designCost + tShirtCost;
+
+                    // Additional colors (assuming $2 per extra color)
+                    if (colors > 1) {
+                        shirtPrice += (colors - 1) * EXTRA_COLOR_COST;
+                    }
+
+                    // White base cost
+                    if (needsWhiteBase) {
+                        shirtPrice += WHITE_BASE_COST;
+                    }
+
+                    // Quantity discounts
+                    let discount = discountCalc(quantity);
+
+                    const finalPricePerShirt = shirtPrice * discount;
+                    const finalTotalPrice = finalPricePerShirt * quantity;
+
+                    setPricePerShirt(finalPricePerShirt);
+                    setTotalPrice(finalTotalPrice);
+                    setProfit(finalTotalPrice - (tShirtCost * quantity));
+                }
+            };
+
+            useEffect(() => {
+                calculatePrice();
+            }, [tShirtCost, colors, placements, smallOthers, largeOthers, quantity, needsWhiteBase, isMultiColor, shirtConfigs]);
+
+            const handlePlacementChange = (placement) => {
+                setPlacements(prev => ({
+                    ...prev,
+                    [placement]: !prev[placement]
+                }));
+            };
+
+            const getQuantityDiscountText = () => {
+                const totalQty = isMultiColor ? shirtConfigs.reduce((sum, config) => sum + config.quantity, 0) : quantity;
+                if (totalQty >= PRICE_TIER_5.quantity) return (Math.abs((PRICE_TIER_5.discount - 1)) * 100).toFixed(2) + "% quantity discount applied";
+                if (totalQty >= PRICE_TIER_4.quantity) return (Math.abs((PRICE_TIER_4.discount - 1)) * 100).toFixed(2) + "% quantity discount applied";
+                if (totalQty >= PRICE_TIER_3.quantity) return (Math.abs((PRICE_TIER_3.discount - 1)) * 100).toFixed(2) + "% quantity discount applied";
+                if (totalQty >= PRICE_TIER_2.quantity) return (Math.abs((PRICE_TIER_2.discount - 1)) * 100).toFixed(2) + "% quantity discount applied";
+                if (totalQty >= PRICE_TIER_1.quantity) return (Math.abs((PRICE_TIER_1.discount - 1)) * 100).toFixed(2) + "% quantity discount applied";
+                return "+" + ((LOW_QUANTITY_PENALTY - 1) * 100).toFixed(2) + "% low quantity penalty applied";
+            };
+
+            const getSingleShirtPenalty = () => {
+                
+                const largePlacements = (placements.largeFront ? 1 : 0) + 
+                                      (placements.largeBack ? 1 : 0) + 
+                                      largeOthers;
+                
+                const smallPlacements = (placements.frontCorner ? 1 : 0) + 
+                                      (placements.leftSleeve ? 1 : 0) + 
+                                      (placements.rightSleeve ? 1 : 0) + 
+                                      (placements.backCorner ? 1 : 0) + 
+                                      smallOthers;
+
+                return quantity < LOW_QUANTITY_THRESHOLD && (largePlacements + smallPlacements) > 0;
+            };
+
+            const addShirtConfig = () => {
+                setShirtConfigs([...shirtConfigs, { color: '', quantity: 1, needsWhiteBase: false }]);
+            };
+
+            const removeShirtConfig = (index) => {
+                setShirtConfigs(shirtConfigs.filter((_, i) => i !== index));
+            };
+
+            const updateShirtConfig = (index, field, value) => {
+                const updated = [...shirtConfigs];
+                updated[index] = { ...updated[index], [field]: value };
+                setShirtConfigs(updated);
+            };
+
+            return (
+                <div className="max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+                    {/* Save/Load Controls */}
+                    <div className="mb-6 p-4 bg-gray-50 rounded-lg border">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-3">Configuration Management</h2>
+                        
+                        <div className="grid md:grid-cols-2 gap-4">
+                            <div className="space-y-3">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Configuration Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={currentConfigName}
+                                        onChange={(e) => setCurrentConfigName(e.target.value)}
+                                        placeholder="Enter configuration name..."
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                
+                                <div className="flex space-x-2">
+                                    <button
+                                        onClick={saveCurrentConfig}
+                                        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
+                                    >
+                                        Save as New
+                                    </button>
+                                    {selectedConfig && (
+                                        <button
+                                            onClick={updateCurrentConfig}
+                                            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 text-sm"
+                                        >
+                                            Update Current
+                                        </button>
+                                    )}
+                                    <button
+                                        onClick={startNewConfig}
+                                        className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 text-sm"
+                                    >
+                                        New Config
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div className="space-y-3">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Load Saved Configuration
+                                    </label>
+                                    <select
+                                        value={selectedConfig}
+                                        onChange={(e) => {
+                                            if (e.target.value) {
+                                                loadConfig(e.target.value);
+                                            }
+                                        }}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    >
+                                        <option value="">Select a saved configuration...</option>
+                                        {savedConfigs.map((config) => (
+                                            <option key={config.id} value={config.id}>
+                                                {config.name} - {new Date(config.timestamp).toLocaleString()}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                
+                                {selectedConfig && (
+                                    <button
+                                        onClick={() => deleteConfig(parseInt(selectedConfig))}
+                                        className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
+                                    >
+                                        Delete Selected
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                        
+                        {lastSaved && (
+                            <div className="mt-3 text-sm text-green-600">
+                                ✓ Last saved: {lastSaved.toLocaleString()}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Order Type Toggle */}
+                    <div className="mb-6 p-4 bg-blue-50 rounded-lg">
+                        <div className="flex items-center space-x-4">
+                            <label className="flex items-center">
+                                <input
+                                    type="radio"
+                                    name="orderType"
+                                    checked={!isMultiColor}
+                                    onChange={() => setIsMultiColor(false)}
+                                    className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500"
+                                />
+                                <span className="text-sm font-medium text-gray-700">Single Color Order</span>
+                            </label>
+                            <label className="flex items-center">
+                                <input
+                                    type="radio"
+                                    name="orderType"
+                                    checked={isMultiColor}
+                                    onChange={() => setIsMultiColor(true)}
+                                    className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500"
+                                />
+                                <span className="text-sm font-medium text-gray-700">Multi-Color Order</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div className="grid lg:grid-cols-4 gap-6">
+                        {/* Left column - Basic Options */}
+                        <div className="space-y-4">
+                            <h2 className="text-lg font-semibold text-gray-800 mb-3">Basic Options</h2>
+                            
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    T-Shirt Cost ($)
+                                </label>
+                                <input
+                                    type="number"
+                                    step="0.50"
+                                    value={tShirtCost}
+                                    onChange={(e) => setTShirtCost(parseFloat(e.target.value) || 0)}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Number of Colors (Design)
+                                </label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    value={colors}
+                                    onChange={(e) => setColors(parseInt(e.target.value) || 1)}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+
+                            {!isMultiColor && (
+                                <>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            Quantity
+                                        </label>
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            value={quantity}
+                                            onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        />
+                                    </div>
+
+                                    <div className="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            id="whiteBase"
+                                            checked={needsWhiteBase}
+                                            onChange={(e) => setNeedsWhiteBase(e.target.checked)}
+                                            className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                        />
+                                        <label htmlFor="whiteBase" className="text-sm font-medium text-gray-700">
+                                            Needs White Base (+${WHITE_BASE_COST})
+                                        </label>
+                                    </div>
+                                </>
+                            )}
+
+                            {isMultiColor && (
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-center">
+                                        <h3 className="text-md font-medium text-gray-700">Shirt Configurations</h3>
+                                        <button
+                                            onClick={addShirtConfig}
+                                            className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600"
+                                        >
+                                            Add Color
+                                        </button>
+                                    </div>
+                                    
+                                    {shirtConfigs.map((config, index) => (
+                                        <div key={index} className="p-3 border border-gray-200 rounded space-y-2">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-sm font-medium text-gray-600">Color {index + 1}</span>
+                                                {shirtConfigs.length > 1 && (
+                                                    <button
+                                                        onClick={() => removeShirtConfig(index)}
+                                                        className="text-red-500 hover:text-red-700 text-sm"
+                                                    >
+                                                        Remove
+                                                    </button>
+                                                )}
+                                            </div>
+                                            
+                                            <input
+                                                type="text"
+                                                placeholder="Color name (e.g., Blue, Black)"
+                                                value={config.color}
+                                                onChange={(e) => updateShirtConfig(index, 'color', e.target.value)}
+                                                className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                                            />
+                                            
+                                            <div className="flex space-x-2">
+                                                <div className="flex-1">
+                                                    <label className="block text-xs text-gray-600">Quantity</label>
+                                                    <input
+                                                        type="number"
+                                                        min="1"
+                                                        value={config.quantity}
+                                                        onChange={(e) => updateShirtConfig(index, 'quantity', parseInt(e.target.value) || 1)}
+                                                        className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                                                    />
+                                                </div>
+                                                
+                                                <div className="flex items-end">
+                                                    <label className="flex items-center text-xs">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={config.needsWhiteBase}
+                                                            onChange={(e) => updateShirtConfig(index, 'needsWhiteBase', e.target.checked)}
+                                                            className="mr-1 h-3 w-3 text-blue-600"
+                                                        />
+                                                        White Base
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Middle column - Placements */}
+                        <div className="space-y-4">
+                            <h2 className="text-lg font-semibold text-gray-800 mb-3">Design Placements</h2>
+                            
+                            <div className="space-y-3">
+                                <h3 className="text-md font-medium text-gray-700">Large Placements (+${LARGE_PLACEMENT_COST} each)</h3>
+                                <div className="space-y-2">
+                                    <label className="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            checked={placements.largeFront}
+                                            onChange={() => handlePlacementChange('largeFront')}
+                                            className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                        />
+                                        <span className="text-sm text-gray-700">Large Front</span>
+                                    </label>
+                                    <label className="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            checked={placements.largeBack}
+                                            onChange={() => handlePlacementChange('largeBack')}
+                                            className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                        />
+                                        <span className="text-sm text-gray-700">Large Back</span>
+                                    </label>
+                                </div>
+
+                                <div className="space-y-3">
+                                    <h3 className="text-md font-medium text-gray-700">Small Placements (+${SMALL_PLACEMENT_COST} each)</h3>
+                                    <div className="space-y-2">
+                                        <label className="flex items-center">
+                                            <input
+                                                type="checkbox"
+                                                checked={placements.frontCorner}
+                                                onChange={() => handlePlacementChange('frontCorner')}
+                                                className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            />
+                                            <span className="text-sm text-gray-700">Front Corner</span>
+                                        </label>
+                                        <label className="flex items-center">
+                                            <input
+                                                type="checkbox"
+                                                checked={placements.leftSleeve}
+                                                onChange={() => handlePlacementChange('leftSleeve')}
+                                                className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            />
+                                            <span className="text-sm text-gray-700">Left Sleeve</span>
+                                        </label>
+                                        <label className="flex items-center">
+                                            <input
+                                                type="checkbox"
+                                                checked={placements.rightSleeve}
+                                                onChange={() => handlePlacementChange('rightSleeve')}
+                                                className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            />
+                                            <span className="text-sm text-gray-700">Right Sleeve</span>
+                                        </label>
+                                        <label className="flex items-center">
+                                            <input
+                                                type="checkbox"
+                                                checked={placements.backCorner}
+                                                onChange={() => handlePlacementChange('backCorner')}
+                                                className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            />
+                                            <span className="text-sm text-gray-700">Back Corner</span>
+                                        </label>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            Small Other Placements
+                                        </label>
+                                        <select
+                                            value={smallOthers}
+                                            onChange={(e) => setSmallOthers(parseInt(e.target.value))}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        >
+                                            {[...Array(11)].map((_, i) => (
+                                                <option key={i} value={i}>{i}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right column - Results */}
+                        <div className="lg:col-span-2 bg-gray-50 p-6 rounded-lg">
+                            <h2 className="text-xl font-semibold text-gray-800 mb-4">Pricing Breakdown</h2>
+
+                            <div className="space-y-3">
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">Large Placements:</span>
+                                    <span className="font-medium">
+                                        {(placements.largeFront ? 1 : 0) + (placements.largeBack ? 1 : 0) + largeOthers}
+                                    </span>
+                                </div>
+
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">Small Placements:</span>
+                                    <span className="font-medium">
+                                        {(placements.frontCorner ? 1 : 0) + (placements.leftSleeve ? 1 : 0) + 
+                                         (placements.rightSleeve ? 1 : 0) + (placements.backCorner ? 1 : 0) + smallOthers}
+                                    </span>
+                                </div>
+
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">Design Colors:</span>
+                                    <span className="font-medium">{colors}</span>
+                                </div>
+
+                                {!isMultiColor && (
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-600">White Base:</span>
+                                        <span className="font-medium">{needsWhiteBase ? 'Yes' : 'No'}</span>
+                                    </div>
+                                )}
+
+                                {isMultiColor && multiColorBreakdown.length > 0 && (
+                                    <div className="border-t pt-3">
+                                        <h3 className="text-md font-semibold text-gray-700 mb-3">Color Breakdown:</h3>
+                                        {multiColorBreakdown.map((item, index) => (
+                                            <div key={index} className="mb-3 p-3 bg-white rounded border">
+                                                <div className="flex justify-between items-center mb-1">
+                                                    <span className="font-medium text-gray-800">
+                                                        {item.color || `Color ${index + 1}`} ({item.quantity} shirts)
+                                                    </span>
+                                                    <span className="font-bold text-blue-600">
+                                                        ${item.totalPrice.toFixed(2)}
+                                                    </span>
+                                                </div>
+                                                <div className="text-sm text-gray-600 flex justify-between">
+                                                    <span>${item.pricePerShirt.toFixed(2)} each</span>
+                                                    {item.needsWhiteBase && <span className="text-orange-600">White Base</span>}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                <div className="border-t pt-3">
+                                    <div className="flex justify-between text-lg">
+                                        <span className="text-gray-700">Average per shirt:</span>
+                                        <span className="font-bold text-blue-600">${pricePerShirt.toFixed(2)}</span>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-between text-xl">
+                                    <span className="text-gray-800 font-semibold">
+                                        Total ({isMultiColor ? shirtConfigs.reduce((sum, config) => sum + config.quantity, 0) : quantity} shirts):
+                                    </span>
+                                    <span className="font-bold text-gray-600">${totalPrice.toFixed(2)}</span>
+                                </div>
+
+                                <div className="text-sm text-gray-500 mt-2">
+                                    {getQuantityDiscountText()}
+                                </div>
+
+                                <div className="border-t pt-3">
+                                    <div className="flex justify-between text-lg">
+                                        <span className="text-gray-700">Profit:</span>
+                                        <span className="font-bold text-green-600">${profit.toFixed(2)}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Pricing Guide */}
+                            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                                <h3 className="text-sm font-semibold text-blue-800 mb-2">Pricing Guide:</h3>
+                                <div className="text-xs text-blue-700 space-y-1">
+                                    <div>Large placements: ${LARGE_PLACEMENT_COST} each</div>
+                                    <div>Small placements: ${SMALL_PLACEMENT_COST} each</div>
+                                    <div>Less than {LOW_QUANTITY_THRESHOLD} shirts: +{((LOW_QUANTITY_PENALTY-1)*100).toFixed(2)}% design cost</div>
+                                    <div>Extra design colors: +$2 each</div>
+                                    <div>White base: +${WHITE_BASE_COST} per shirt</div>
+                                </div>
+                            </div>
+
+                            {/* Quantity Discount Guide */}
+                            <div className="mt-4 p-4 bg-green-50 rounded-lg">
+                                <h3 className="text-sm font-semibold text-green-800 mb-2">Quantity Discounts:</h3>
+                                <div className="text-xs text-green-700 space-y-1">
+                                    <div>6-11 shirts: 10% off</div>
+                                    <div>12-24 shirts: 15% off</div>
+                                    <div>25-49 shirts: 20% off</div>
+                                    <div>50+ shirts: 25% off</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+
+    ReactDOM.render(<TShirtPricingCalculator />, document.getElementById('root'));
+</script>
+</body>
+</html>

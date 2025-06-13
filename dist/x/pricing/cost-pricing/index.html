@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-Shirt Pricing Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen py-8">
+    <div id="root"></div>
+    
+<script type="text/babel">
+
+    const { useState, useEffect } = React;
+
+    const DTGCostCalculator = () => {
+        // Cost inputs
+        const [shirtCost, setShirtCost] = useState(8);
+        const [inkCostPerCC, setInkCostPerCC] = useState(0.14);
+        const [pretreatCostPer20kg, setPretreatCostPer20kg] = useState(350);
+        const [laborRate, setLaborRate] = useState(16.50);
+        
+        // Print specifications
+        const [printWidth, setPrintWidth] = useState(8);
+        const [printHeight, setPrintHeight] = useState(10);
+        const [needsWhiteBase, setNeedsWhiteBase] = useState(true);
+        const [designColors, setDesignColors] = useState(1);
+        const [quantity, setQuantity] = useState(1);
+        
+        // Pricing strategy
+        const [targetProfitMargin, setTargetProfitMargin] = useState(0.5); // 50%
+        const [setupFeeStrategy, setSetupFeeStrategy] = useState('amortized'); // 'fixed' or 'amortized'
+        const [fixedSetupFee, setFixedSetupFee] = useState(25);
+        
+        // Calculated values
+        const [printArea, setPrintArea] = useState(0);
+        const [inkUsage, setInkUsage] = useState(0);
+        const [totalCost, setTotalCost] = useState(0);
+        const [suggestedPrice, setSuggestedPrice] = useState(0);
+        const [profitPerShirt, setProfitPerShirt] = useState(0);
+        const [breakdown, setBreakdown] = useState({});
+
+        // Constants
+        const DESIGN_SETUP_TIME = 10; // minutes
+        const SHIRT_SETUP_TIME = 1; // minutes
+        const PRETREAT_HEAT_TIME = 0.5; // minutes
+        const CURE_TIME = 1.5; // minutes
+        const PRETREAT_GRAMS_PER_SHIRT = 20;
+        const PRINT_SPEED = 1.49; // square inches per second
+
+        useEffect(() => {
+            calculateCosts();
+        }, [shirtCost, inkCostPerCC, pretreatCostPer20kg, laborRate, printWidth, printHeight, 
+            needsWhiteBase, designColors, quantity, targetProfitMargin, setupFeeStrategy, fixedSetupFee]);
+
+        const calculateCosts = () => {
+            // Calculate print area
+            const area = printWidth * printHeight;
+            setPrintArea(area);
+
+            // Calculate ink usage based on print area and white base
+            let inkCC;
+            if (needsWhiteBase) {
+                // Scale from 16cc for A4-A3 sized print (assume 80 sq in average)
+                const baseInkForWhite = 14.4; // 90% of 16cc
+                const colorInk = 1.6; // 10% of 16cc
+                inkCC = (baseInkForWhite * (area / 80)) + colorInk;
+            } else {
+                // Just color ink, scaled by area
+                inkCC = 1.6 * (area / 12); // assume 12 sq in for small print baseline
+            }
+            setInkUsage(inkCC);
+
+            // Calculate costs
+            const materialCosts = {
+                shirt: shirtCost,
+                ink: inkCC * inkCostPerCC,
+                pretreatment: (pretreatCostPer20kg / 20000) * PRETREAT_GRAMS_PER_SHIRT
+            };
+
+            const laborCosts = {
+                designSetup: setupFeeStrategy === 'amortized' ? 
+                    (DESIGN_SETUP_TIME / 60) * laborRate / quantity : 
+                    fixedSetupFee / quantity,
+                shirtSetup: (SHIRT_SETUP_TIME / 60) * laborRate,
+                pretreatHeat: (PRETREAT_HEAT_TIME / 60) * laborRate,
+                printing: ((area / PRINT_SPEED) / 60) * (laborRate/60),
+                curing: (CURE_TIME / 60) * laborRate
+            };
+
+            const totalMaterialCost = Object.values(materialCosts).reduce((sum, cost) => sum + cost, 0);
+            const totalLaborCost = Object.values(laborCosts).reduce((sum, cost) => sum + cost, 0);
+            const totalCostPerShirt = totalMaterialCost + totalLaborCost;
+            
+            const suggestedPricePerShirt = totalCostPerShirt * (1 + targetProfitMargin);
+            const profitPerShirtCalc = suggestedPricePerShirt - totalCostPerShirt;
+
+            setTotalCost(totalCostPerShirt);
+            setSuggestedPrice(suggestedPricePerShirt);
+            setProfitPerShirt(profitPerShirtCalc);
+            
+            setBreakdown({
+                materials: materialCosts,
+                labor: laborCosts,
+                totalMaterial: totalMaterialCost,
+                totalLabor: totalLaborCost,
+                totalCost: totalCostPerShirt,
+                suggestedPrice: suggestedPricePerShirt,
+                totalProfit: profitPerShirtCalc * quantity,
+                totalRevenue: suggestedPricePerShirt * quantity
+            });
+        };
+
+        const resetToSmallPrint = () => {
+            setPrintWidth(3);
+            setPrintHeight(4);
+            setNeedsWhiteBase(false);
+            setDesignColors(1);
+        };
+
+        const resetToLargePrint = () => {
+            setPrintWidth(8);
+            setPrintHeight(10);
+            setNeedsWhiteBase(true);
+            setDesignColors(2);
+        };
+
+        return (
+            <div className="max-w-7xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+                <h1 className="text-2xl font-bold text-gray-800 mb-6">DTG Cost & Pricing Calculator</h1>
+                
+                <div className="grid lg:grid-cols-3 gap-6">
+                    {/* Cost Inputs */}
+                    <div className="space-y-4">
+                        <h2 className="text-lg font-semibold text-gray-800">Cost Inputs</h2>
+                        
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Shirt Cost ($)
+                            </label>
+                            <input
+                                type="number"
+                                step="0.50"
+                                value={shirtCost}
+                                onChange={(e) => setShirtCost(parseFloat(e.target.value) || 0)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Ink Cost per CC ($)
+                            </label>
+                            <input
+                                type="number"
+                                step="0.01"
+                                value={inkCostPerCC}
+                                onChange={(e) => setInkCostPerCC(parseFloat(e.target.value) || 0)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Pretreatment Cost per 20kg ($)
+                            </label>
+                            <input
+                                type="number"
+                                step="10"
+                                value={pretreatCostPer20kg}
+                                onChange={(e) => setPretreatCostPer20kg(parseFloat(e.target.value) || 0)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Labor Rate ($/hour)
+                            </label>
+                            <input
+                                type="number"
+                                step="0.25"
+                                value={laborRate}
+                                onChange={(e) => setLaborRate(parseFloat(e.target.value) || 0)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Target Profit Margin (%)
+                            </label>
+                            <input
+                                type="number"
+                                step="5"
+                                value={targetProfitMargin * 100}
+                                onChange={(e) => setTargetProfitMargin((parseFloat(e.target.value) || 0) / 100)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Print Specifications */}
+                    <div className="space-y-4">
+                        <h2 className="text-lg font-semibold text-gray-800">Print Specifications</h2>
+                        
+                        <div className="flex space-x-2">
+                            <button
+                                onClick={resetToSmallPrint}
+                                className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600"
+                            >
+                                Small Print Preset
+                            </button>
+                            <button
+                                onClick={resetToLargePrint}
+                                className="px-3 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600"
+                            >
+                                Large Print Preset
+                            </button>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    Width (inches)
+                                </label>
+                                <input
+                                    type="number"
+                                    step="0.5"
+                                    value={printWidth}
+                                    onChange={(e) => setPrintWidth(parseFloat(e.target.value) || 0)}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    Height (inches)
+                                </label>
+                                <input
+                                    type="number"
+                                    step="0.5"
+                                    value={printHeight}
+                                    onChange={(e) => setPrintHeight(parseFloat(e.target.value) || 0)}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex items-center">
+                            <input
+                                type="checkbox"
+                                id="whiteBase"
+                                checked={needsWhiteBase}
+                                onChange={(e) => setNeedsWhiteBase(e.target.checked)}
+                                className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            />
+                            <label htmlFor="whiteBase" className="text-sm font-medium text-gray-700">
+                                Needs White Base (darker shirts)
+                            </label>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Design Colors
+                            </label>
+                            <input
+                                type="number"
+                                min="1"
+                                value={designColors}
+                                onChange={(e) => setDesignColors(parseInt(e.target.value) || 1)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Quantity
+                            </label>
+                            <input
+                                type="number"
+                                min="1"
+                                value={quantity}
+                                onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Setup Fee Strategy
+                            </label>
+                            <select
+                                value={setupFeeStrategy}
+                                onChange={(e) => setSetupFeeStrategy(e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="amortized">Amortized (time-based)</option>
+                                <option value="fixed">Fixed Setup Fee</option>
+                            </select>
+                        </div>
+
+                        {setupFeeStrategy === 'fixed' && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    Fixed Setup Fee ($)
+                                </label>
+                                <input
+                                    type="number"
+                                    step="5"
+                                    value={fixedSetupFee}
+                                    onChange={(e) => setFixedSetupFee(parseFloat(e.target.value) || 0)}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Results */}
+                    <div className="bg-gray-50 p-6 rounded-lg">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">Cost Analysis</h2>
+
+                        <div className="space-y-3 mb-6">
+                            <div className="flex justify-between text-sm">
+                                <span className="text-gray-600">Print Area:</span>
+                                <span className="font-medium">{printArea.toFixed(1)} sq in</span>
+                            </div>
+                            <div className="flex justify-between text-sm">
+                                <span className="text-gray-600">Estimated Ink Usage:</span>
+                                <span className="font-medium">{inkUsage.toFixed(1)} cc</span>
+                            </div>
+                        </div>
+
+                        <div className="space-y-2 mb-4">
+                            <h3 className="text-md font-semibold text-gray-700">Materials per Shirt:</h3>
+                            <div className="text-sm space-y-1 pl-4">
+                                <div className="flex justify-between">
+                                    <span>Shirt:</span>
+                                    <span>${breakdown.materials?.shirt?.toFixed(2)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span>Ink:</span>
+                                    <span>${breakdown.materials?.ink?.toFixed(2)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span>Pretreatment:</span>
+                                    <span>${breakdown.materials?.pretreatment?.toFixed(2)}</span>
+                                </div>
+                                <div className="flex justify-between font-medium border-t pt-1">
+                                    <span>Subtotal:</span>
+                                    <span>${breakdown.totalMaterial?.toFixed(2)}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="space-y-2 mb-4">
+                            <h3 className="text-md font-semibold text-gray-700">Labor per Shirt:</h3>
+                            <div className="text-sm space-y-1 pl-4">
+                                <div className="flex justify-between">
+                                    <span>Design Setup:</span>
+                                    <span>${breakdown.labor?.designSetup?.toFixed(2)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span>Shirt Setup:</span>
+                                    <span>${breakdown.labor?.shirtSetup?.toFixed(2)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span>Pretreat Heat:</span>
+                                    <span>${breakdown.labor?.pretreatHeat?.toFixed(2)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span>Printing:</span>
+                                    <span>${breakdown.labor?.printing?.toFixed(2)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span>Curing:</span>
+                                    <span>${breakdown.labor?.curing?.toFixed(2)}</span>
+                                </div>
+                                <div className="flex justify-between font-medium border-t pt-1">
+                                    <span>Subtotal:</span>
+                                    <span>${breakdown.totalLabor?.toFixed(2)}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="border-t pt-4 space-y-3">
+                            <div className="flex justify-between text-lg">
+                                <span className="font-semibold">Total Cost per Shirt:</span>
+                                <span className="font-bold text-red-600">${totalCost.toFixed(2)}</span>
+                            </div>
+                            <div className="flex justify-between text-lg">
+                                <span className="font-semibold">Suggested Price per Shirt:</span>
+                                <span className="font-bold text-green-600">${suggestedPrice.toFixed(2)}</span>
+                            </div>
+                            <div className="flex justify-between text-lg">
+                                <span className="font-semibold">Profit per Shirt:</span>
+                                <span className="font-bold text-blue-600">${profitPerShirt.toFixed(2)}</span>
+                            </div>
+                        </div>
+
+                        <div className="border-t pt-4 mt-4">
+                            <h3 className="text-md font-semibold text-gray-700 mb-2">Order Totals ({quantity} shirts):</h3>
+                            <div className="space-y-1 text-sm">
+                                <div className="flex justify-between">
+                                    <span>Total Revenue:</span>
+                                    <span className="font-bold text-green-600">${breakdown.totalRevenue?.toFixed(2)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span>Total Profit:</span>
+                                    <span className="font-bold text-blue-600">${breakdown.totalProfit?.toFixed(2)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span>Profit Margin:</span>
+                                    <span className="font-medium">{(targetProfitMargin * 100).toFixed(0)}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="mt-6 p-4 bg-yellow-50 rounded-lg">
+                    <h3 className="text-sm font-semibold text-yellow-800 mb-2">Key Insights:</h3>
+                    <div className="text-xs text-yellow-700 space-y-1">
+                        <div>• White base prints use significantly more ink ({needsWhiteBase ? 'HIGH' : 'LOW'} ink usage)</div>
+                        <div>• Curing time (1.5 min) is fixed regardless of print size</div>
+                        <div>• Setup costs are {setupFeeStrategy === 'amortized' ? 'amortized' : 'fixed'} across quantity</div>
+                        <div>• Ink represents {((breakdown.materials?.ink / totalCost) * 100).toFixed(0)}% of total cost</div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    ReactDOM.render(<DTGCostCalculator />, document.getElementById('root'));
+</script>
+</body>
+</html>
