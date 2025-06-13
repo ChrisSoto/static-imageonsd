@@ -1,9 +1,33 @@
+
+
 <div id="products" class="flex justify-center mb-16 mt-10 sm:mt-0 sm:mb-12">
   <div class="max-w-screen-xl w-full">
     <div class="flex flex-row justify-center">
-      <a target="_blank" href="https://www.companycasuals.com/imageon/start.jsp" class="flex flex-row justify-center px-2 mx-4 py-4 bg-red-500 w-full sm:w-1/2 rounded-xl md:rounded-full shadow-md hover:bg-white transition-colors duration-100 border-4 text-white border-red-500 border-4 hover:text-red-500">
-        <span class="text-3xl text-center font-bold">Click Here to See Our Product Catalog</span>
+      <a id="flashing-link" target="_blank" href="https://www.companycasuals.com/imageon/start.jsp" class="flex flex-row justify-center px-2 mx-4 py-4 w-full sm:w-1/2 rounded-xl md:rounded-full shadow-md  transition-colors duration-100 text-white border-red-500 border-4">
+        <span  class="text-3xl text-center font-bold">Click Here to See Our Product Catalog</span>
       </a>
     </div>
   </div>
 </div>
+
+<script>
+  // Find the anchor tag (assuming it's the only one with this specific class combination)
+  const flashingLink = document.querySelector('a#flashing-link');
+
+  // Set up the flashing interval
+  let isFlashed = false;
+
+  const flashInterval = setInterval(() => {
+    if (isFlashed) {
+      // Reset to original state: red background, white text
+      flashingLink.classList.remove('bg-white', 'text-red-500');
+      flashingLink.classList.add('bg-red-500', 'text-white');
+    } else {
+      // Flash state: white background, red text
+      flashingLink.classList.remove('bg-red-500', 'text-white');
+      flashingLink.classList.add('bg-white', 'text-red-500');
+    }
+    
+    isFlashed = !isFlashed;
+  }, 500);
+</script>

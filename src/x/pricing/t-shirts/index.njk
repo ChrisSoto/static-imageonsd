@@ -40,6 +40,8 @@ layout: react-base.njk
             const [quantity, setQuantity] = useState(1);
             const [needsWhiteBase, setNeedsWhiteBase] = useState(false);
             const [isMultiColor, setIsMultiColor] = useState(false);
+            const [providingShirts, setProvidingShirts] = useState(false);
+            const [showQuantityTable, setShowQuantityTable] = useState(false);
             
             
             // Multi-color shirt configurations
@@ -329,8 +331,12 @@ layout: react-base.njk
             };
 
             useEffect(() => {
+                if (providingShirts) setTShirtCost(5.6);
+            }, [providingShirts]);
+
+            useEffect(() => {
                 calculatePrice();
-            }, [tShirtCost, colors, placements, smallOthers, largeOthers, quantity, needsWhiteBase, isMultiColor, shirtConfigs]);
+            }, [tShirtCost, colors, placements, smallOthers, largeOthers, quantity, needsWhiteBase, providingShirts, isMultiColor, shirtConfigs]);
 
             const handlePlacementChange = (placement) => {
                 setPlacements(prev => ({
@@ -376,6 +382,68 @@ layout: react-base.njk
                 const updated = [...shirtConfigs];
                 updated[index] = { ...updated[index], [field]: value };
                 setShirtConfigs(updated);
+            };
+
+            const generateQuantityTable = () => {
+                if (isMultiColor) return [];
+                
+                const quantities = [];
+                for (let qty = 5; qty <= 100; qty += 5) {
+                    quantities.push(qty);
+                }
+                
+                return quantities.map(qty => {
+                    // Calculate pricing for this quantity
+                    const largePlacements = (placements.largeFront ? 1 : 0) + 
+                                        (placements.largeBack ? 1 : 0) + 
+                                        largeOthers;
+                    
+                    const smallPlacements = (placements.frontCorner ? 1 : 0) + 
+                                        (placements.leftSleeve ? 1 : 0) + 
+                                        (placements.rightSleeve ? 1 : 0) + 
+                                        (placements.backCorner ? 1 : 0) + 
+                                        smallOthers;
+
+                    const totalPlacements = largePlacements + smallPlacements;
+
+                    if (totalPlacements === 0) {
+                        return {
+                            quantity: qty,
+                            pricePerShirt: tShirtCost,
+                            totalPrice: tShirtCost * qty
+                        };
+                    }
+
+                    const discountCalc = (quantity) => {
+                        if (quantity >= PRICE_TIER_5.quantity) return PRICE_TIER_5.discount;
+                        if (quantity >= PRICE_TIER_4.quantity) return PRICE_TIER_4.discount;
+                        if (quantity >= PRICE_TIER_3.quantity) return PRICE_TIER_3.discount;
+                        if (quantity >= PRICE_TIER_2.quantity) return PRICE_TIER_2.discount;
+                        if (quantity >= PRICE_TIER_1.quantity) return PRICE_TIER_1.discount;
+                        return LOW_QUANTITY_PENALTY;
+                    };
+
+                    let designCost = (largePlacements * LARGE_PLACEMENT_COST) + (smallPlacements * SMALL_PLACEMENT_COST);
+                    let shirtPrice = designCost + tShirtCost;
+
+                    if (colors > 1) {
+                        shirtPrice += (colors - 1) * EXTRA_COLOR_COST;
+                    }
+
+                    if (needsWhiteBase) {
+                        shirtPrice += WHITE_BASE_COST;
+                    }
+
+                    let discount = discountCalc(qty);
+                    const finalPricePerShirt = shirtPrice * discount;
+                    const finalTotalPrice = finalPricePerShirt * qty;
+
+                    return {
+                        quantity: qty,
+                        pricePerShirt: finalPricePerShirt,
+                        totalPrice: finalTotalPrice
+                    };
+                });
             };
 
             return (
@@ -494,6 +562,19 @@ layout: react-base.njk
                         {/* Left column - Basic Options */}
                         <div className="space-y-4">
                             <h2 className="text-lg font-semibold text-gray-800 mb-3">Basic Options</h2>
+
+                            <div className="flex items-center">
+                                <input
+                                    type="checkbox"
+                                    id="providingShirts"
+                                    checked={providingShirts}
+                                    onChange={(e) => setProvidingShirts(e.target.checked)}
+                                    className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                />
+                                <label htmlFor="providingShirts" className="text-sm font-medium text-gray-700">
+                                    Providing Shirts
+                                </label>
+                            </div>
                             
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -501,8 +582,10 @@ layout: react-base.njk
                                 </label>
                                 <input
                                     type="number"
+                                    pattern="[0-9]*"
                                     step="0.50"
                                     value={tShirtCost}
+                                    disabled={providingShirts}
                                     onChange={(e) => setTShirtCost(parseFloat(e.target.value) || 0)}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
@@ -514,6 +597,7 @@ layout: react-base.njk
                                 </label>
                                 <input
                                     type="number"
+                                    pattern="[0-9]*"
                                     min="1"
                                     value={colors}
                                     onChange={(e) => setColors(parseInt(e.target.value) || 1)}
@@ -529,6 +613,7 @@ layout: react-base.njk
                                         </label>
                                         <input
                                             type="number"
+                                            pattern="[0-9]*"
                                             min="1"
                                             value={quantity}
                                             onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
@@ -797,13 +882,64 @@ layout: react-base.njk
                             <div className="mt-4 p-4 bg-green-50 rounded-lg">
                                 <h3 className="text-sm font-semibold text-green-800 mb-2">Quantity Discounts:</h3>
                                 <div className="text-xs text-green-700 space-y-1">
-                                    <div>6-11 shirts: 10% off</div>
-                                    <div>12-24 shirts: 15% off</div>
-                                    <div>25-49 shirts: 20% off</div>
-                                    <div>50+ shirts: 25% off</div>
+                                    <div>0-{PRICE_TIER_1.quantity} shirts: {((LOW_QUANTITY_PENALTY - 1) * 100).toFixed(2)}% added</div>
+                                    <div>{PRICE_TIER_1.quantity+1}-{PRICE_TIER_2.quantity} shirts: {(Math.abs((PRICE_TIER_1.discount - 1)) * 100).toFixed(2)}% off</div>
+                                    <div>{PRICE_TIER_2.quantity+1}-{PRICE_TIER_3.quantity} shirts: {(Math.abs((PRICE_TIER_2.discount - 1)) * 100).toFixed(2)}% off</div>
+                                    <div>{PRICE_TIER_3.quantity+1}-{PRICE_TIER_4.quantity} shirts: {(Math.abs((PRICE_TIER_3.discount - 1)) * 100).toFixed(2)}% off</div>
+                                    <div>{PRICE_TIER_4.quantity+1}-{PRICE_TIER_5.quantity} shirts: {(Math.abs((PRICE_TIER_4.discount - 1)) * 100).toFixed(2)}% off</div>
+                                    <div>{PRICE_TIER_5.quantity+1}-&#8734; shirts: {(Math.abs((PRICE_TIER_5.discount - 1)) * 100).toFixed(2)}% off</div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    {/* Quantity Table Section */}
+                    <div className="mt-6 border border-gray-200 rounded-lg">
+                        <button
+                            onClick={() => setShowQuantityTable(!showQuantityTable)}
+                            disabled={isMultiColor}
+                            className={`w-full px-4 py-3 text-left font-medium rounded-t-lg flex justify-between items-center ${
+                                isMultiColor 
+                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                                    : 'bg-gray-50 text-gray-800 hover:bg-gray-100'
+                            }`}
+                        >
+                            <span>Quantity Pricing Table (5-100 shirts)</span>
+                            <span className="text-sm">
+                                {isMultiColor ? '(Disabled for multi-color)' : (showQuantityTable ? '▼' : '▶')}
+                            </span>
+                        </button>
+                        
+                        {showQuantityTable && !isMultiColor && (
+                            <div className="p-4 border-t border-gray-200">
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-sm">
+                                        <thead>
+                                            <tr className="border-b border-gray-200">
+                                                <th className="text-left py-2 px-3 font-medium text-gray-700">Quantity</th>
+                                                <th className="text-right py-2 px-3 font-medium text-gray-700">Price Each</th>
+                                                <th className="text-right py-2 px-3 font-medium text-gray-700">Total Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {generateQuantityTable().map((row, index) => (
+                                                <tr key={row.quantity} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                                                    <td className="py-2 px-3 font-medium">{row.quantity}</td>
+                                                    <td className="py-2 px-3 text-right">${row.pricePerShirt.toFixed(2)}</td>
+                                                    <td className="py-2 px-3 text-right font-medium">${row.totalPrice.toFixed(2)}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div className="mt-3 text-xs text-gray-500">
+                                    * Pricing based on current configuration: {colors} color(s), {needsWhiteBase ? 'with' : 'without'} white base, 
+                                    {(placements.largeFront ? 1 : 0) + (placements.largeBack ? 1 : 0) + largeOthers} large placement(s), 
+                                    {(placements.frontCorner ? 1 : 0) + (placements.leftSleeve ? 1 : 0) + (placements.rightSleeve ? 1 : 0) + (placements.backCorner ? 1 : 0) + smallOthers} small placement(s)
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             );

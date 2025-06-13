@@ -1,6 +1,7 @@
 
 User-agent: *
 
-Disallow: /
+Allow: /
+Disallow: /x/*
 
 Sitemap: https://imageonsd.com/sitemap.xml
