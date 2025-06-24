@@ -1,0 +1,146 @@
+<div class="section">
+  <div class="flex flex-col md:flex-row justify-between items-center">
+    <a class="mt-4 md:mt-0 text-xl pl-4 xl:pl-0" href="mailto:"></a>
+    <div class="phone flex flex-col sm:flex-row justify-center items-center sm:justify-end gap-x-4 p-4 pt-0 md:pt-4">
+      <span class="flex gap-x-2 text-sm sm:text-base sm:pb-0">
+        <a id="call-now-link" class="text-red-500 no-underline" href="tel:"></a>
+      </span>
+      <span class="address flex gap-x-2 text-sm sm:text-base">
+        <a class="text-gray-800 no-underline" href=""></a>
+      </span>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="section-full">
+  <div class="section flex flex-row px-4 xl:px-0">
+
+    <div class="w-full sm:w-8/12 md:w-5/12 lg:w-4/12 relative">
+
+      <img loading="lazy" decoding="async" class="absolute z-[-10] bottom-0 right-0 object-scale-down object-right w-1/2" src="/img/rY-qEJF6dy-300.webp" alt="ImageOn San Diego custom t-shirt and embroidery service shop" width="300" height="360"><h1 class="text-black text-3xl mb-4"></h1>
+      <div class="sub-heading font-bold mb-4"></div>
+
+
+      <div class="flex gap-x-4">
+        <a href="tel:" class="text-white bg-red-500 hover:bg-red-500 hover:text-white hover:underline hover:shadow-none text-sm rounded-full mb-4 p-2 px-6 sm:text-sm poppins-medium shadow-md">CALL @ </a>
+        <img loading="lazy" decoding="async" class="object-none object-left" src="/img/0ku3hIpJJQ-121.webp" alt="arrow point to phone number" width="121" height="49">
+      </div>
+
+      <div class="short-copy font-bold">
+        
+      </div>
+    </div>
+
+    <div class="flex-1 relative">
+
+      <img loading="lazy" decoding="async" class="h-[500px] object-left object-none z-[-1]" src="/img/9boCixmOY3-790.webp" alt="ImageOn San Diego custom t-shirt and embroidery service shop" width="790" height="564"></div>
+
+  </div>
+</div>
+
+
+  <div class="flex items-center flex-col w-full -mt-[82px]">
+  <div class="flex justify-center items-center gap-x-4 p-4 bg-white/75 rounded-tr-xl rounded-tl-xl z-10">
+    <a class="cursor-pointer" href="https://www.yelp.com/biz/image-on-santee-3">
+      <img loading="lazy" decoding="async" src="/img/Ea8Su7HGth-100.webp" alt="click to see our yelp reviews" width="100" height="50">
+    </a>
+    <a class="cursor-pointer" href="https://maps.app.goo.gl/qWeb6zw45rcVYyP78">
+      <img loading="lazy" decoding="async" src="/img/Xy642XFz1w-100.webp" alt="click to see our google reviews" width="100" height="50">
+    </a>
+  </div>
+</div>
+
+<div class="flex justify-center items-center lg:max-w-screen-md xl:max-w-screen-lg md:max-w-screen-sm bg-red-500 w-full md:rounded-3xl shadow-md mx-auto mb-16">
+  <div class="flex flex-col justify-center w-full p-4">
+
+    <b class="pb-2 text-3xl text-gray-100 text-center poppins-bold">Get a Free Quote!</b>
+
+    <form id="contact-form" name="contact" method="post" enctype="multipart/form-data" action="https://us-central1-imageonsd-af038.cloudfunctions.net/addContact/" novalidate="">
+      <div class="form_fields">
+
+        <div class="grid sm:grid-cols-3 gap-2 sm:gap-4 mb-4">
+
+          <div class="field">
+            <label class="field_label block mb-2 text-sm text-gray-100 font-bold " for="full-name">Full Name<span class="required text-yellow-500 mb-2 text-sm font-medium italic pl-2">(Required)</span></label>
+            <input name="full_name" id="full-name" type="text" onblur="writeToLocalStorage('full-name')" required="" class="shadow-sm bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-3" placeholder="John Doe">
+          </div>
+
+          <div class="field">
+            <label class="field_label block mb-2 text-sm text-gray-100 font-bold" for="e-mail">Email<span class="required text-yellow-500 mb-2 text-sm font-medium italic pl-2">(Required)</span></label>
+            <input name="e_mail" id="e-mail" type="email" onblur="writeToLocalStorage('e-mail')" required="" class="shadow-sm bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-3" placeholder="john.doe@gmail.com">
+          </div>
+
+          <div class="field">
+            <label class="field_label block mb-2 text-sm text-gray-100 font-bold" for="phone-number">Phone</label>
+            <input name="phone_number" id="phone-number" type="tel" onblur="writeToLocalStorage('phone-number')" class="shadow-sm bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-3" placeholder="ex. 619-312-0941" aria-invalid="false">
+          </div>
+
+        </div>
+
+        <div class="mb-4">
+          <label class="field_label block mb-2 text-sm text-gray-100 font-bold" for="location">Location</label>
+          <select name="location" id="location" class="bg-gray-100 border border-gray-300 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-3">
+            <option selected="" value="Santee">Santee</option>
+            <option value="Oceanside">Oceanside</option>
+        </select>
+        </div>
+
+        <div class="field mb-4">
+          <label class="field_label block mb-2 text-sm text-gray-100 font-bold" for="project-details">Project Details<span class="required text-yellow-500 mb-2 text-sm font-medium italic pl-2">(Required)</span></label>
+          <textarea name="project_details" id="project-details" onblur="writeToLocalStorage('project-details')" required="" class="textarea shadow-sm bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-3" placeholder="8x4 banner, 2 colors, by next thursday" rows="5" cols="50"></textarea>
+        </div>
+
+      </div>
+
+      <input class="form_footer w-full flex flex-row justify-center items-center cursor-pointer text-sm uppercase bg-yellow-400 text-red-500 p-4 rounded-full font-medium hover:bg-red-700 transition-colors duration-300" id="contact-submit" type="submit" value="Submit">
+
+    </form>
+
+  </div>
+</div>
+
+
+
+<div id="products" class="flex justify-center mb-16 mt-10 sm:mt-0 sm:mb-12">
+  <div class="max-w-screen-xl w-full">
+    <div class="flex flex-row justify-center">
+      <a id="flashing-link" target="_blank" href="https://www.companycasuals.com/imageon/start.jsp" class="flex flex-row justify-center px-2 mx-4 py-4 w-full sm:w-1/2 rounded-xl md:rounded-full shadow-md  transition-colors duration-100 text-white border-red-500 border-4">
+        <span class="text-3xl text-center font-bold">Click Here to See Our Product Catalog</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Find the anchor tag (assuming it's the only one with this specific class combination)
+  const flashingLink = document.querySelector('a#flashing-link');
+
+  // Set up the flashing interval
+  let isFlashed = false;
+
+  const flashInterval = setInterval(() => {
+    if (isFlashed) {
+      // Reset to original state: red background, white text
+      flashingLink.classList.remove('bg-white', 'text-red-500');
+      flashingLink.classList.add('bg-red-500', 'text-white');
+    } else {
+      // Flash state: white background, red text
+      flashingLink.classList.remove('bg-red-500', 'text-white');
+      flashingLink.classList.add('bg-white', 'text-red-500');
+    }
+    
+    isFlashed = !isFlashed;
+  }, 500);
+</script>
+
+
+
+
+<div class="section px-4 xl:px-0">
+
+
+</div>
+
+

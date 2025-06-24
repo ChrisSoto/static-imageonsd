@@ -28,7 +28,7 @@ exports.addContact = onRequest(
 
         let emails = "";
         if (location == "Santee") {
-          emails = "imageonprintingservice@gmail.com, admin@imageonsd.com";
+          emails = "imageonsantee@gmail.com, admin@imageonsd.com";
         } else if (location == "Oceanside") {
           emails = "imageon.sandiego@gmail.com, admin@imageonsd.com";
         } else {
