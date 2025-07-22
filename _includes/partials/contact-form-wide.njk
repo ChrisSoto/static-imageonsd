@@ -83,14 +83,11 @@
             event.preventDefault();
             console.log('4. Default form submission prevented. Calling gtag event.'); // Marker 4
 
-            gtag('event', 'conversion', {
-                'send_to': 'AW-11030585322/zUnACNyf0PUaEOq_5Ysp',
-                'event_callback': function() {
-                  // This code runs AFTER Google Ads has processed the conversion event
-                  console.log('5. gtag event_callback fired. Submitting form.'); // Marker 5
-                  sendForm(event); // Call your existing sendForm function here
-                }
+            window.dataLayer.push({
+              'event': 'form_submission_success' // This MUST match the Event name in your GTM Custom Event Trigger
+              'email': contactForm.querySelector('input[name="email"]').value
             });
+            sendForm(event);
           });
         }
       });
