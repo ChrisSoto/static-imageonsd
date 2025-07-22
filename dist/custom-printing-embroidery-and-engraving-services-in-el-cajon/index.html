@@ -386,14 +386,14 @@ function sendForm(event) {
     .catch(err => alert(err));
 }
 // $('#contact-submit').on('click', sendForm);
-function submitForm(event) {
-  event.preventDefault();
-  if (inputValid('#full-name') && inputValid('#e-mail') && inputValid('#project-details')) {
-    sendForm(event);
-  } else {
-    alert('Please check your form for errors.');
-  }
-}
+// function submitForm(event) {
+//   event.preventDefault();
+//   if (inputValid('#full-name') && inputValid('#e-mail') && inputValid('#project-details')) {
+//     sendForm(event);
+//   } else {
+//     alert('Please check your form for errors.');
+//   }
+// }
 
 function clearForm() {
   $('#contact-form').trigger('reset');

@@ -67,6 +67,7 @@
 
         if (contactForm) {
           console.log('1. Form listener is attempting to attach.'); // Marker 1
+          console.log('1a. contactForm element found:', contactForm);
           
           contactForm.addEventListener('submit', function(event) {
             console.log('2. Form submit event triggered.'); // Marker 2
@@ -87,7 +88,7 @@
                 'event_callback': function() {
                   // This code runs AFTER Google Ads has processed the conversion event
                   console.log('5. gtag event_callback fired. Submitting form.'); // Marker 5
-                  contactForm.submit(); // Now, submit the form normally
+                  sendForm(event); // Call your existing sendForm function here
                 }
             });
           });

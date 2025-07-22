@@ -147,6 +147,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         if (contactForm) {
           console.log('1. Form listener is attempting to attach.'); // Marker 1
+          console.log('1a. contactForm element found:', contactForm);
           
           contactForm.addEventListener('submit', function(event) {
             console.log('2. Form submit event triggered.'); // Marker 2
@@ -167,7 +168,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 'event_callback': function() {
                   // This code runs AFTER Google Ads has processed the conversion event
                   console.log('5. gtag event_callback fired. Submitting form.'); // Marker 5
-                  contactForm.submit(); // Now, submit the form normally
+                  sendForm(event); // Call your existing sendForm function here
                 }
             });
           });
@@ -391,14 +392,14 @@ function sendForm(event) {
     .catch(err => alert(err));
 }
 // $('#contact-submit').on('click', sendForm);
-function submitForm(event) {
-  event.preventDefault();
-  if (inputValid('#full-name') && inputValid('#e-mail') && inputValid('#project-details')) {
-    sendForm(event);
-  } else {
-    alert('Please check your form for errors.');
-  }
-}
+// function submitForm(event) {
+//   event.preventDefault();
+//   if (inputValid('#full-name') && inputValid('#e-mail') && inputValid('#project-details')) {
+//     sendForm(event);
+//   } else {
+//     alert('Please check your form for errors.');
+//   }
+// }
 
 function clearForm() {
   $('#contact-form').trigger('reset');
