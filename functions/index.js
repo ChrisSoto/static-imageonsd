@@ -177,19 +177,15 @@ exports.addC9DCateringContact = onRequest(
     async (request, response) => {
       const {
         fullName,
-        eMail,
-        phoneNumber,
-        eventDate,
-        noOfGuests,
-        eventType,
-        pickup,
-        eventLocation,
+        email,
+        phone,
         comments,
+        summary,
       } = request.body;
 
       let writeResult = null;
 
-      if (!eMail) {
+      if (!email) {
         response.status(400).json({error: "Missing required fields"});
       } else {
         writeResult = await getFirestore()
@@ -199,24 +195,16 @@ exports.addC9DCateringContact = onRequest(
               message: {
                 subject: `Catering Inquiry from: ${fullName}`,
                 body: `Name: ${fullName}\n
-                  Phone: ${phoneNumber}\n
-                  Email: ${eMail}\n
-                  Event Date: ${eventDate}\n
-                  Guests: ${noOfGuests}\n
-                  Event Type: ${eventType}\n
-                  Pickup: ${pickup}\n
-                  Location: ${eventLocation}\n
-                  Comments: ${comments}`,
+                  Phone: ${phone}\n
+                  Email: ${email}\n
+                  Comments: ${comments}\n
+                  Summary: ${summary}`,
                 html: `<p>Name: ${fullName}</p><br>
-                  <p>Email: <a href="mailto:${eMail}">${eMail}</a></p><br>
-                  <p>Phone: <a href="tel:${phoneNumber}">
-                    ${phoneNumber}</a></p><br>
-                  <p>Event Date: ${eventDate}</p><br>
-                  <p>Guests: ${noOfGuests}</p><br>
-                  <p>Event Type: ${eventType}</p><br>
-                  <p>Pickup: ${pickup}</p><br>
-                  <p>Location: ${eventLocation}</p><br>
-                  <p>Comments: ${comments}</p>`,
+                  <p>Email: <a href="mailto:${email}">${email}</a></p><br>
+                  <p>Phone: <a href="tel:${phone}">
+                    ${phone}</a></p><br>
+                  <p>Comments: ${comments}</p><br><br>
+                  Summary: ${summary}`,
               },
             });
         response.json({result: `Message written with ID: ${writeResult.id}`});
