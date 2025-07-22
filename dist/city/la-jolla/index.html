@@ -178,7 +178,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
       </div>
 
-      <input class="form_footer w-full flex flex-row justify-center items-center cursor-pointer text-sm uppercase bg-yellow-400 text-red-500 p-4 rounded-full font-medium hover:bg-red-700 transition-colors duration-300" id="contact-submit" type="submit" value="Submit">
+      <input class="form_footer w-full flex flex-row justify-center items-center cursor-pointer text-sm uppercase bg-yellow-400 text-red-500 p-4 rounded-full font-medium hover:bg-red-700 transition-colors duration-300" id="contact-submit" type="submit" value="Submit" onclick="gtag_report_conversion()">
+
+      <!-- Event snippet for ImageOnLead conversion page
+      In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+      <script>
+      function gtag_report_conversion() {
+        gtag('event', 'conversion', {
+            'send_to': 'AW-11030585322/zUnACNyf0PUaEOq_5Ysp',
+            'event_callback': function() {
+              document.getElementById('contact-form').submit();
+            }
+        });
+        return false; // Prevent default submission
+      }
+      </script>
+
 
     </form>
 
