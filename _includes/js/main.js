@@ -206,6 +206,6 @@ window.onload = function () {
     });
   }
 
-  $('#contact-submit').on('click', submitForm);
+  // $('#contact-submit').on('click', submitForm);
 }
 

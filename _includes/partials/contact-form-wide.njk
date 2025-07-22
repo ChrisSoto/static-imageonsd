@@ -62,30 +62,14 @@
       In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
       <script>
       document.addEventListener('DOMContentLoaded', function() {
-
         const contactForm = document.getElementById('contact-form');
-
         if (contactForm) {
-          console.log('1. Form listener is attempting to attach.'); // Marker 1
-          console.log('1a. contactForm element found:', contactForm);
-          
           contactForm.addEventListener('submit', function(event) {
-            console.log('2. Form submit event triggered.'); // Marker 2
-
-            // Validate the form before processing
-            if (!contactForm.checkValidity()) {
-              console.log('3. Form validation failed. Stopping submit event.'); // Marker 3
-              // Allow the browser to show its native validation messages
-              return;
-            }
-
-            // Prevent the default form submission immediately
+            if (!contactForm.checkValidity()) return;
             event.preventDefault();
-            console.log('4. Default form submission prevented. Calling gtag event.'); // Marker 4
-
             window.dataLayer.push({
-              'event': 'form_submission_success' // This MUST match the Event name in your GTM Custom Event Trigger
-              'email': contactForm.querySelector('input[name="email"]').value
+              'event': 'form_submission_success', // This MUST match the Event name in your GTM Custom Event Trigger
+              'email': contactForm.querySelector('input[name="e_mail"]').value
             });
             sendForm(event);
           });
