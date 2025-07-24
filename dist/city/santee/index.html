@@ -83,8 +83,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <a id="call-now-link" class="text-red-500 no-underline" href="tel:(619) 312-0941">(619) 312-0941</a>
       </span>
       <span class="address flex gap-x-2 text-sm sm:text-base">
-        <a class="text-gray-800 no-underline" href="https://maps.app.goo.gl/wpLNPCe1UeuvVNkK7">235 Town Center Parkway, Santee, CA 92071</a>
+        <a onclick="gtag_phone_call();" class="text-gray-800 no-underline" href="https://maps.app.goo.gl/wpLNPCe1UeuvVNkK7">235 Town Center Parkway, Santee, CA 92071</a>
       </span>
+      <script>
+        function gtag_phone_call() {
+          window.dataLayer.push({
+            'event': 'phone_click'
+          })
+        }
+      </script>
     </div>
   </div>
 </div>
@@ -101,9 +108,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
       <div class="flex gap-x-4">
-        <a href="tel:(619) 312-0941" class="text-white bg-red-500 hover:bg-red-500 hover:text-white hover:underline hover:shadow-none text-sm rounded-full mb-4 p-2 px-6 sm:text-sm poppins-medium shadow-md">CALL @ (619) 312-0941</a>
+        <a onclick="gtag_phone_call();" href="tel:(619) 312-0941" class="text-white bg-red-500 hover:bg-red-500 hover:text-white hover:underline hover:shadow-none text-sm rounded-full mb-4 p-2 px-6 sm:text-sm poppins-medium shadow-md">CALL @ (619) 312-0941</a>
         <img loading="lazy" decoding="async" class="object-none object-left" src="/img/0ku3hIpJJQ-121.webp" alt="arrow point to phone number" width="121" height="49">
       </div>
+
+      <script>
+        function gtag_phone_call() {
+          window.dataLayer.push({
+            'event': 'phone_click'
+          })
+        }
+      </script>
 
       <div class="short-copy font-bold">
         <ul>

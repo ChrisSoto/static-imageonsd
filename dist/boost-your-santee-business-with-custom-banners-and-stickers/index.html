@@ -138,15 +138,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <!-- Event snippet for ImageOnLead conversion page
       In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
       <script>
-      function gtag_report_conversion() {
-        gtag('event', 'conversion', {
-            'send_to': 'AW-11030585322/zUnACNyf0PUaEOq_5Ysp',
-            'event_callback': function() {
-              document.getElementById('contact-form').submit();
-            }
-        });
-        return false; // Prevent default submission
-      }
+      document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+          contactForm.addEventListener('submit', function(event) {
+            if (!contactForm.checkValidity()) return;
+            event.preventDefault();
+            window.dataLayer.push({
+              'event': 'form_submission_success', // This MUST match the Event name in your GTM Custom Event Trigger
+              'email': contactForm.querySelector('input[name="e_mail"]').value
+            });
+            sendForm(event);
+          });
+        }
+      });
       </script>
 
     </form>

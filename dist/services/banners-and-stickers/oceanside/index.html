@@ -83,8 +83,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <a id="call-now-link" class="text-red-500 no-underline" href="tel:760-521-9422">760-521-9422</a>
       </span>
       <span class="address flex gap-x-2 text-sm sm:text-base">
-        <a class="text-gray-800 no-underline" href="https://maps.app.goo.gl/4sBx49M1Qb1Jvtr18">1837 S Coast Hwy Suite A, Oceanside, CA 92054</a>
+        <a onclick="gtag_phone_call();" class="text-gray-800 no-underline" href="https://maps.app.goo.gl/4sBx49M1Qb1Jvtr18">1837 S Coast Hwy Suite A, Oceanside, CA 92054</a>
       </span>
+      <script>
+        function gtag_phone_call() {
+          window.dataLayer.push({
+            'event': 'phone_click'
+          })
+        }
+      </script>
     </div>
   </div>
 </div>
@@ -100,9 +107,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
       <div class="flex gap-x-4">
-        <a href="tel:760-521-9422" class="text-white bg-red-500 hover:bg-red-500 hover:text-white hover:underline hover:shadow-none text-sm rounded-full mb-4 p-2 px-6 sm:text-sm poppins-medium shadow-md">CALL @ 760-521-9422</a>
+        <a onclick="gtag_phone_call();" href="tel:760-521-9422" class="text-white bg-red-500 hover:bg-red-500 hover:text-white hover:underline hover:shadow-none text-sm rounded-full mb-4 p-2 px-6 sm:text-sm poppins-medium shadow-md">CALL @ 760-521-9422</a>
         <img loading="lazy" decoding="async" class="object-none object-left" src="/img/0ku3hIpJJQ-121.webp" alt="arrow point to phone number" width="121" height="49">
       </div>
+
+      <script>
+        function gtag_phone_call() {
+          window.dataLayer.push({
+            'event': 'phone_click'
+          })
+        }
+      </script>
 
       <div class="short-copy font-bold">
         <ul>

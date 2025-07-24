@@ -17,9 +17,17 @@
 
 
       <div class="flex gap-x-4">
-        <a href="tel:{{phone}}" class="text-white bg-red-500 hover:bg-red-500 hover:text-white hover:underline hover:shadow-none text-sm rounded-full mb-4 p-2 px-6 sm:text-sm poppins-medium shadow-md">CALL @ {{phone}}</a>
+        <a onclick="gtag_phone_call();" href="tel:{{phone}}" class="text-white bg-red-500 hover:bg-red-500 hover:text-white hover:underline hover:shadow-none text-sm rounded-full mb-4 p-2 px-6 sm:text-sm poppins-medium shadow-md">CALL @ {{phone}}</a>
         <img class="object-none object-left" src="/assets/phone-arrow.webp" alt="arrow point to phone number">
       </div>
+
+      <script>
+        function gtag_phone_call() {
+          window.dataLayer.push({
+            'event': 'phone_click'
+          })
+        }
+      </script>
 
       <div class="short-copy font-bold">
         {{ fields.text |safe }}
