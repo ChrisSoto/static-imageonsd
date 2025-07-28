@@ -43,8 +43,27 @@
           id="location"
           class="bg-gray-100 border border-gray-300 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-3"
         >
+          {% if 'santee' in page.url %}
             <option selected value="Santee">Santee</option>
             <option value="Oceanside">Oceanside</option>
+            <option value="Downtown">Downtown</option>
+          {% elif 'oceanside' in page.url %}
+          <option selected value="Oceanside">Oceanside</option>
+            <option value="Santee">Santee</option>
+            
+            <option value="Downtown">Downtown</option>
+          {% elif 'downtown-san-diego' in page.url %}
+          <option selected value="Downtown">Downtown</option>
+            <option value="Santee">Santee</option>
+            <option value="Oceanside">Oceanside</option>
+
+          {% else %}
+            <option selected value="Santee">Santee</option>
+            <option value="Oceanside">Oceanside</option>
+            <option value="Downtown">Downtown</option>
+            
+          {% endif %}
+
         </select>
         </div>
 

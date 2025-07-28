@@ -38,7 +38,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <body>
   <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KB2XJ8GH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) --><header class="sticky-header sticky top-0 z-[100] px-4 bg-gray-950">
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+<header class="sticky-header sticky top-0 z-[100] px-4 bg-gray-950">
   <div class="flex flex-col sm:flex-row justify-between items-center w-full max-w-screen-xl mx-auto">
     
     <a class="brand pt-4 sm:py-4" href="https://imageonsd.com">
@@ -51,19 +55,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
             
               <li class=" menu-item justify-center items-center bg-gray-950 h-full p-1 sm:p-3 border-b-4 border-gray-800 hover:border-blue-800 text-gray-200 text-lg hover:text-white transition-all duration-300 whitespace-nowrap">
-                <a href="https://imageonsd.com/services/custom-t-shirts">T-shirts</a>
+                
+                <a href="https://imageonsd.com/services/custom-t-shirts/la-jolla">T-shirts</a>
+                
               </li>
             
               <li class=" menu-item justify-center items-center bg-gray-950 h-full p-1 sm:p-3 border-b-4 border-gray-800 hover:border-blue-800 text-gray-200 text-lg hover:text-white transition-all duration-300 whitespace-nowrap">
-                <a href="https://imageonsd.com/services/embroidery">Embroidery</a>
+                
+                <a href="https://imageonsd.com/services/embroidery/la-jolla">Embroidery</a>
+                
               </li>
             
               <li class=" menu-item justify-center items-center bg-gray-950 h-full p-1 sm:p-3 border-b-4 border-gray-800 hover:border-blue-800 text-gray-200 text-lg hover:text-white transition-all duration-300 whitespace-nowrap">
-                <a href="https://imageonsd.com/services/banners-and-stickers">Banners</a>
+                
+                <a href="https://imageonsd.com/services/banners-and-stickers/la-jolla">Banners</a>
+                
               </li>
             
               <li class="active menu-item justify-center items-center bg-gray-950 h-full p-1 sm:p-3 border-b-4 border-gray-800 hover:border-blue-800 text-gray-200 text-lg hover:text-white transition-all duration-300 whitespace-nowrap">
-                <a href="https://imageonsd.com/services/engraving">Engraving</a>
+                
+                <a href="https://imageonsd.com/services/engraving/la-jolla">Engraving</a>
+                
               </li>
             
           </ul>
@@ -75,26 +87,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </header>
 <main>
     
-    <div class="section">
-  <div class="flex flex-col md:flex-row justify-between items-center">
-    <a class="mt-4 md:mt-0 text-xl pl-4 xl:pl-0" href="mailto:imageonsantee@gmail.com">imageonsantee@gmail.com</a>
-    <div class="phone flex flex-col sm:flex-row justify-center items-center sm:justify-end gap-x-4 p-4 pt-0 md:pt-4">
-      <span class="flex gap-x-2 text-sm sm:text-base sm:pb-0">
-        <a id="call-now-link" class="text-red-500 no-underline" href="tel:(619) 312-0941">(619) 312-0941</a>
-      </span>
-      <span class="address flex gap-x-2 text-sm sm:text-base">
-        <a onclick="gtag_phone_call();" class="text-gray-800 no-underline" href="https://maps.app.goo.gl/wpLNPCe1UeuvVNkK7">235 Town Center Parkway, Santee, CA 92071</a>
-      </span>
-      <script>
-        function gtag_phone_call() {
-          window.dataLayer.push({
-            'event': 'phone_click'
-          })
-        }
-      </script>
-    </div>
+    
+
+<div class="section">
+  <div class="flex flex-col md:flex-row justify-center items-center text-xl font-bold gap-4 py-4">
+    Locations: <a href="/city/santee">Santee</a> | <a href="/city/oceanside">Oceanside</a> | <a href="/city/downtown-san-diego">Downtown San Diego</a>
   </div>
 </div>
+
+
 
 
 <div class="section-full">
@@ -137,8 +138,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   </div>
 </div>
 
-
-  <div class="flex items-center flex-col w-full -mt-[82px]">
+<div class="flex items-center flex-col w-full -mt-[82px]">
   <div class="flex justify-center items-center gap-x-4 p-4 bg-white/75 rounded-tr-xl rounded-tl-xl z-10">
     <a class="cursor-pointer" href="https://www.yelp.com/biz/image-on-santee-3">
       <img loading="lazy" decoding="async" src="/img/Ea8Su7HGth-100.webp" alt="click to see our yelp reviews" width="100" height="50">
@@ -179,8 +179,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div class="mb-4">
           <label class="field_label block mb-2 text-sm text-gray-100 font-bold" for="location">Location</label>
           <select name="location" id="location" class="bg-gray-100 border border-gray-300 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-3">
+          
             <option selected="" value="Santee">Santee</option>
             <option value="Oceanside">Oceanside</option>
+            <option value="Downtown">Downtown</option>
+            
+          
+
         </select>
         </div>
 
@@ -217,7 +222,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   </div>
 </div>
-
 
 
 <div id="products" class="flex justify-center mb-16 mt-10 sm:mt-0 sm:mb-12">

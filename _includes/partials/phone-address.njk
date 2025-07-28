@@ -1,3 +1,5 @@
+{% if  'santee' in page.url or 'oceanside' in page.url or 'downtown-san-diego' in page.url %}
+
 <div class="section">
   <div class="flex flex-col md:flex-row justify-between items-center">
     <a class="mt-4 md:mt-0 text-xl pl-4 xl:pl-0" href="mailto:{{ email }}">{{ email }}</a>
@@ -18,3 +20,13 @@
     </div>
   </div>
 </div>
+
+{% else %}
+
+<div class="section">
+  <div class="flex flex-col md:flex-row justify-center items-center text-xl font-bold gap-4 py-4">
+    Locations: <a href="/city/santee">Santee</a> | <a href="/city/oceanside">Oceanside</a> | <a href="/city/downtown-san-diego">Downtown San Diego</a>
+  </div>
+</div>
+
+{% endif %}
