@@ -31,6 +31,8 @@ exports.addContact = onRequest(
           emails = "imageonsantee@gmail.com, admin@imageonsd.com";
         } else if (location == "Oceanside") {
           emails = "imageon.sandiego@gmail.com, admin@imageonsd.com";
+        } else if (location == "Downtown") {
+          emails = "imageondowntown@gmail.com, admin@imageonsd.com";
         } else {
           emails = "admin@imageonsd.com";
         }
@@ -40,7 +42,7 @@ exports.addContact = onRequest(
             .add({
               to: emails,
               message: {
-                subject: `Lead from Site: ${name}`,
+                subject: `Lead from Site: ${name} @ ${location}`,
                 body: `Name: ${name}\n
                   Phone: ${phone}\n
                   Details: ${details}\n
