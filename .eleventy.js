@@ -74,9 +74,11 @@ function getCopySectionFromModifierData(dataArr, service) {
   let copySectionData;
   for (let i = 0; i < dataArr.length; i++) {
     const data = dataArr[i];
+    // general copy section
     if ("text" in data.fields) {
       copySectionData = data;
     }
+    // city service modifier
     if ("service" in data.fields) {
       if (data.fields.service.fields.name === service) {
         copySectionData = data.fields.section;
@@ -167,7 +169,9 @@ function buildCityService(city, oService) {
 
   if ("copySection" in city.fields) {
     const copyData = getCopySectionFromModifierData(city.fields.copySection, service.fields.name);
-    cityService.copySection = copyData;
+    if (copyData) {
+      cityService.copySection = copyData;
+    }
   }
   
   if ("faqSection" in city.fields) {
