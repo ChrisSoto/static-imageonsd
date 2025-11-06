@@ -1,9 +1,9 @@
 import { EleventyHtmlBasePlugin } from "@11ty/eleventy";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
-import MarkdownIt from 'markdown-it';
-import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-import { BLOCKS } from '@contentful/rich-text-types';
-import CleanCSS from 'clean-css';
+import MarkdownIt from "markdown-it";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import { BLOCKS } from "@contentful/rich-text-types";
+import CleanCSS from "clean-css";
 import dotenv from "dotenv";
 import contentful from "contentful";
 import getW3CDate from "./helper.js";
@@ -20,7 +20,6 @@ const client = contentful.createClient({
 function getHeroImagesFromModifierData(dataArr, service) {
   let heroImageData = {};
   for (let i = 0; i < dataArr.length; i++) {
-
     const data = dataArr[i];
 
     // first set it from services
@@ -35,9 +34,7 @@ function getHeroImagesFromModifierData(dataArr, service) {
 
     // if there is service specific data for the city
     if ("service" in data.fields) {
-
       if (data.fields.service.fields.name === service) {
-
         if ("desktop" in data.fields.section.fields) {
           heroImageData.desktop = data.fields.section.fields.desktop;
         }
@@ -59,7 +56,7 @@ function getGallerySectionFromModifierData(dataArr, service) {
   for (let i = 0; i < dataArr.length; i++) {
     const data = dataArr[i];
     if ("images" in data.fields) {
-      gallerySectionData = data;      
+      gallerySectionData = data;
     }
     if ("service" in data.fields) {
       if (data.fields.service.fields.name === service) {
@@ -95,7 +92,7 @@ function buildCityService(city, oService) {
   let cityService = {
     city: city.fields.name,
     googleMap: city.fields.googleMap,
-    cityMap: city.fields.cityMap
+    cityMap: city.fields.cityMap,
   };
 
   // I pass the home page for city only pages
@@ -122,15 +119,18 @@ function buildCityService(city, oService) {
 
     // need to replace hero images if they're specified in the city and service
     if ("heroImages" in city.fields && city.fields.heroImages.length > 0) {
-
-      let imageData = getHeroImagesFromModifierData(city.fields.heroImages, service.fields.name);
+      let imageData = getHeroImagesFromModifierData(
+        city.fields.heroImages,
+        service.fields.name
+      );
 
       // override hero images
-      if ('desktop' in imageData) {
-        cityService.heroSection.fields.images.fields.desktop = imageData.desktop;
+      if ("desktop" in imageData) {
+        cityService.heroSection.fields.images.fields.desktop =
+          imageData.desktop;
       }
 
-      if ('mobile' in imageData) {
+      if ("mobile" in imageData) {
         cityService.heroSection.fields.images.fields.mobile = imageData.mobile;
       }
     }
@@ -147,7 +147,7 @@ function buildCityService(city, oService) {
   if ("faqSection" in service.fields) {
     cityService.faqSection = service.fields.faqSection;
   }
-  
+
   //
   //
   // city overrides
@@ -163,17 +163,23 @@ function buildCityService(city, oService) {
 
   // these section have cityServiceModifiers that override depending on the service
   if ("gallerySection" in city.fields) {
-    const galleryData = getGallerySectionFromModifierData(city.fields.gallerySection, service.fields.name);
+    const galleryData = getGallerySectionFromModifierData(
+      city.fields.gallerySection,
+      service.fields.name
+    );
     cityService.gallerySection = galleryData;
   }
 
   if ("copySection" in city.fields) {
-    const copyData = getCopySectionFromModifierData(city.fields.copySection, service.fields.name);
+    const copyData = getCopySectionFromModifierData(
+      city.fields.copySection,
+      service.fields.name
+    );
     if (copyData) {
       cityService.copySection = copyData;
     }
   }
-  
+
   if ("faqSection" in city.fields) {
     cityService.faqSection = city.fields.faqSection;
   }
@@ -218,31 +224,55 @@ function findSectionsToReplaceCityName(data, city) {
 
   if ("heroSection" in data) {
     if ("h1" in data.heroSection.fields) {
-      data.heroSection.fields.h1 = replaceCityName(data.heroSection.fields.h1, city);
+      data.heroSection.fields.h1 = replaceCityName(
+        data.heroSection.fields.h1,
+        city
+      );
     }
     if ("subHeading" in data.heroSection.fields) {
-      data.heroSection.fields.subHeading = replaceCityName(data.heroSection.fields.subHeading, city);
+      data.heroSection.fields.subHeading = replaceCityName(
+        data.heroSection.fields.subHeading,
+        city
+      );
     }
     if ("text" in data.heroSection.fields) {
-      data.heroSection.fields.text = replaceCityName(data.heroSection.fields.text, city);
+      data.heroSection.fields.text = replaceCityName(
+        data.heroSection.fields.text,
+        city
+      );
     }
   }
 
   if ("faqSection" in data) {
     if ("title" in data.faqSection.fields) {
-      data.faqSection.fields.title = replaceCityName(data.faqSection.fields.title, city);
+      data.faqSection.fields.title = replaceCityName(
+        data.faqSection.fields.title,
+        city
+      );
     }
     if ("intro" in data.faqSection.fields) {
-      data.faqSection.fields.intro = replaceCityName(data.faqSection.fields.intro, city);
+      data.faqSection.fields.intro = replaceCityName(
+        data.faqSection.fields.intro,
+        city
+      );
     }
     if ("questions" in data.faqSection.fields) {
       for (let i = 0; i < data.faqSection.fields.questions.length; i++) {
-        data.faqSection.fields.questions[i].fields.question = replaceCityName(data.faqSection.fields.questions[i].fields.question, city);
-        data.faqSection.fields.questions[i].fields.faqAnswer = replaceCityName(data.faqSection.fields.questions[i].fields.faqAnswer, city);
+        data.faqSection.fields.questions[i].fields.question = replaceCityName(
+          data.faqSection.fields.questions[i].fields.question,
+          city
+        );
+        data.faqSection.fields.questions[i].fields.faqAnswer = replaceCityName(
+          data.faqSection.fields.questions[i].fields.faqAnswer,
+          city
+        );
       }
     }
     if ("outro" in data.faqSection.fields) {
-      data.faqSection.fields.outro = replaceCityName(data.faqSection.fields.outro, city);
+      data.faqSection.fields.outro = replaceCityName(
+        data.faqSection.fields.outro,
+        city
+      );
     }
   }
 
@@ -254,7 +284,10 @@ function replaceServiceForMeta(data, serviceName) {
     data.metaTitle = replaceServiceName(data.metaTitle, serviceName);
   }
   if ("metaDescription" in data) {
-    data.metaDescription = replaceServiceName(data.metaDescription, serviceName);
+    data.metaDescription = replaceServiceName(
+      data.metaDescription,
+      serviceName
+    );
   }
 
   return data;
@@ -270,64 +303,85 @@ function replaceServiceName(string, serviceName) {
 
 function loadData(eleventyConfig) {
   eleventyConfig.addGlobalData("home", () => {
-    return client.getEntries({ 'include': 2, 'sys.id': process.env.HOME_ID }).then((home) => {
-      const data = findSectionsToReplaceCityName(home.items[0].fields, "San Diego");
-      return data;
-    });
+    return client
+      .getEntries({ include: 2, "sys.id": process.env.HOME_ID })
+      .then((home) => {
+        const data = findSectionsToReplaceCityName(
+          home.items[0].fields,
+          "San Diego"
+        );
+        return data;
+      });
   });
 
   eleventyConfig.addGlobalData("services", () => {
-    return client.getEntries({ 'include': 3, 'sys.id': process.env.SERVICES_LIST_ID }).then((services) => {
-      const data = findSectionsToReplaceCityName(services.items[0].fields.pages, "San Diego");
-      return data;
-    });
+    return client
+      .getEntries({ include: 3, "sys.id": process.env.SERVICES_LIST_ID })
+      .then((services) => {
+        const data = findSectionsToReplaceCityName(
+          services.items[0].fields.pages,
+          "San Diego"
+        );
+        return data;
+      });
   });
 
   eleventyConfig.addGlobalData("cityServices", () => {
-    return client.getEntries({ 'include': 3, 'sys.id': process.env.SERVICES_LIST_ID }).then((services) => {
-      return client.getEntries({ 'include': 3, 'sys.id': process.env.CITIES_LIST_ID }).then((cities) => {
-        let cityServices = [];
+    return client
+      .getEntries({ include: 3, "sys.id": process.env.SERVICES_LIST_ID })
+      .then((services) => {
+        return client
+          .getEntries({ include: 3, "sys.id": process.env.CITIES_LIST_ID })
+          .then((cities) => {
+            let cityServices = [];
 
-        for (const service of services.items[0].fields.pages) {
-          for (const city of cities.items[0].fields.pages) {
-            cityServices.push(buildCityService(city, service));
-          }
-        }
+            for (const service of services.items[0].fields.pages) {
+              for (const city of cities.items[0].fields.pages) {
+                cityServices.push(buildCityService(city, service));
+              }
+            }
 
-        return cityServices;
+            return cityServices;
+          });
       });
-    });
   });
 
   eleventyConfig.addGlobalData("cities", () => {
-    return client.getEntries({ 'include': 2, 'sys.id': process.env.HOME_ID }).then((home) => {
+    return client
+      .getEntries({ include: 2, "sys.id": process.env.HOME_ID })
+      .then((home) => {
+        // I change the name of the home page because usually the service name is something like "T-Shirts" or "Embroidery"
+        // in the case of the home page it is descriptive, "Image On Home Page" so it needs to be changed
+        home.items[0].fields.name = "Custom T-Shirts Printing and Embroidery";
 
-      // I change the name of the home page because usually the service name is something like "T-Shirts" or "Embroidery"
-      // in the case of the home page it is descriptive, "Image On Home Page" so it needs to be changed
-      home.items[0].fields.name = "Custom T-Shirts Printing and Embroidery";
+        return client
+          .getEntries({ include: 3, "sys.id": process.env.CITIES_LIST_ID })
+          .then((cities) => {
+            let cityData = [];
 
-      return client.getEntries({ 'include': 3, 'sys.id': process.env.CITIES_LIST_ID }).then((cities) => {
-        let cityData = [];
+            for (const city of cities.items[0].fields.pages) {
+              cityData.push(buildCityService(city, home.items[0]));
+            }
 
-        for (const city of cities.items[0].fields.pages) {
-          cityData.push(buildCityService(city, home.items[0]));
-        }
-
-        return cityData;
+            return cityData;
+          });
       });
-    });
   });
 
   eleventyConfig.addGlobalData("blog", () => {
-    return client.getEntries({ 'include': 3, 'sys.id': process.env.BLOG_LIST_ID }).then((blog) => {
-      return blog.items[0].fields.pages;
-    });
+    return client
+      .getEntries({ include: 3, "sys.id": process.env.BLOG_LIST_ID })
+      .then((blog) => {
+        return blog.items[0].fields.pages;
+      });
   });
 
   eleventyConfig.addGlobalData("seoPages", () => {
-    return client.getEntries({ 'include': 3, 'sys.id': process.env.SEO_LIST_ID }).then((page) => {
-      return page.items[0].fields.pages;
-    });
+    return client
+      .getEntries({ include: 3, "sys.id": process.env.SEO_LIST_ID })
+      .then((page) => {
+        return page.items[0].fields.pages;
+      });
   });
 }
 
@@ -344,7 +398,6 @@ function richTextOptions() {
 }
 
 export default function (eleventyConfig) {
-
   loadData(eleventyConfig);
 
   eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
@@ -381,7 +434,7 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy({
     "src/assets": "assets",
-  })
+  });
 
   eleventyConfig.addPassthroughCopy({ "src/favicon": "/" });
   eleventyConfig.addPassthroughCopy("src/.htaccess");
@@ -396,7 +449,6 @@ export const config = {
     includes: "../_includes",
     data: "../_data",
     input: "src",
-    output: "dist"
-  }
+    output: "dist",
+  },
 };
-
