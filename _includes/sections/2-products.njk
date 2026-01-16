@@ -6,28 +6,33 @@
       <a id="flashing-link" target="_blank" href="https://www.companycasuals.com/imageon/start.jsp" class="flex flex-row justify-center px-2 mx-4 py-4 w-full sm:w-1/2 rounded-xl md:rounded-full shadow-md  transition-colors duration-100 text-white border-red-500 border-4">
         <span  class="text-3xl text-center font-bold">Click Here to See Our Product Catalog</span>
       </a>
+      <a id="flashing-link" target="_blank" href="https://design.imageonsd.com" class="flex flex-row justify-center px-2 mx-4 py-4 w-full sm:w-1/2 rounded-xl md:rounded-full shadow-md  transition-colors duration-100 text-white border-red-500 border-4">
+        <span  class="text-3xl text-center font-bold">Design and Order Your Own Product</span>
+      </a>
     </div>
   </div>
 </div>
 
 <script>
   // Find the anchor tag (assuming it's the only one with this specific class combination)
-  const flashingLink = document.querySelector('a#flashing-link');
+  const flashingLink = document.querySelectorAll('a#flashing-link');
 
   // Set up the flashing interval
   let isFlashed = false;
 
   const flashInterval = setInterval(() => {
-    if (isFlashed) {
-      // Reset to original state: red background, white text
-      flashingLink.classList.remove('bg-white', 'text-red-500');
-      flashingLink.classList.add('bg-red-500', 'text-white');
-    } else {
-      // Flash state: white background, red text
-      flashingLink.classList.remove('bg-red-500', 'text-white');
-      flashingLink.classList.add('bg-white', 'text-red-500');
+    for (let i = 0; i < flashingLink.length; i++) {
+      if (isFlashed) {
+        // Reset to original state: red background, white text
+        flashingLink[i].classList.remove('bg-white', 'text-red-500');
+        flashingLink[i].classList.add('bg-red-500', 'text-white');
+      } else {
+        // Flash state: white background, red text
+        flashingLink[i].classList.remove('bg-red-500', 'text-white');
+        flashingLink[i].classList.add('bg-white', 'text-red-500');
+      }
     }
-    
+
     isFlashed = !isFlashed;
   }, 500);
 </script>
