@@ -1,23 +1,21 @@
 {%- macro heroSection(fields, phone) -%}
 
-<div class="section-full relative h-[520px] overflow-clip">
-  <img src="/assets/sd_day_1.webp" alt="ImageOn San Diego custom t-shirt and embroidery service shop" class="absolute top-0 left-0 w-full h-[520px] object-cover z-[-10]">
+<div class="section-full relative h-[520px] md:h-[600px] overflow-clip">
+  <img src="/assets/sd_day_1.webp" alt="ImageOn San Diego custom t-shirt and embroidery service shop" class="absolute top-0 left-0 w-full h-[520px] md:h-[600px] object-cover z-[-10]">
   <div class="section flex flex-row px-4 xl:px-0">
 
     <div class="w-full sm:w-8/12 md:w-5/12 lg:w-4/12 relative">
 
-      
-
-      <h1 class="text-black text-2xl mt-4">{{ fields.h1 | safe }}</h1>
+      <h1 class="text-black text-2xl md:text-3xl mt-4">{{ fields.h1 | safe }}</h1>
       <a class="my-4" href="/reviews/">
-        <span class="text-3xl text-yellow-300 text-center poppins-bold" style="text-shadow: 2px 2px 0 black/20;">★★★★★</span>
-        <span class="text-2xl font-bold">4.6 <span class="text-sm font-normal">(90 Reviews)</span></span>
+        <span class="text-3xl md:text-4xl text-yellow-300 text-center poppins-bold" style="text-shadow: 2px 2px 0 black/20;">★★★★★</span>
+        <span class="text-2xl md:text-3xl font-bold">4.6 <span class="text-sm font-normal">(90 Reviews)</span></span>
       </a>
-      <div class="sub-heading font-bold mb-4 w-3/4 sm:w-full mt-4" style="text-shadow: 1px 1px 0 white;" >{{ fields.subHeading | safe }}</div>
+      <div class="sub-heading font-bold mb-4 w-3/4 sm:w-full mt-4 md:text-xl" style="text-shadow: 1px 1px 0 white;" >{{ fields.subHeading | safe }}</div>
 
 
       <div class="flex gap-x-4">
-        <a href="#quote" class="text-white bg-red-500 hover:bg-red-500 hover:text-white hover:underline hover:shadow-none text-sm rounded-full mb-4 p-2 px-6 sm:text-sm poppins-medium shadow-md">Get a Free Quote!</a>
+        <a href="#quote" class="text-white bg-red-500 hover:bg-red-500 hover:text-white hover:underline hover:shadow-none text-sm md:text-lg rounded-full mb-4 p-2 px-6 sm:text-sm poppins-medium shadow-md">Get a Free Quote!</a>
         {# <img class="object-none object-left" src="/assets/phone-arrow.webp" alt="arrow point to phone number"> #}
       </div>
 
@@ -29,7 +27,7 @@
         }
       </script>
 
-      <div class="short-copy font-bold" style="text-shadow: 1px 1px 0 white;">
+      <div class="short-copy font-bold md:text-xl" style="text-shadow: 1px 1px 0 white;">
         {{ fields.text |safe }}
       </div>
 
