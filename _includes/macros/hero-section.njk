@@ -1,24 +1,24 @@
 {%- macro heroSection(fields, phone) -%}
 
-<div class="section-full">
+<div class="section-full relative h-[520px] overflow-clip">
+  <img src="/assets/sd_day_1.webp" alt="ImageOn San Diego custom t-shirt and embroidery service shop" class="absolute top-0 left-0 w-full h-[520px] object-cover z-[-10]">
   <div class="section flex flex-row px-4 xl:px-0">
 
     <div class="w-full sm:w-8/12 md:w-5/12 lg:w-4/12 relative">
 
-      {# mobile image #}
-      {%- if fields.images.fields.mobile -%}
-        <img eleventy:widths="300" class="absolute z-[-10] bottom-0 right-0 object-scale-down object-right w-1/2" src="https:{{ fields.images.fields.mobile.fields.file.url }}" alt="ImageOn San Diego custom t-shirt and embroidery service shop">
-      {%- else -%}
-        <img eleventy:widths="300" class="absolute z-[-10] bottom-0 right-0 object-scale-down object-right w-1/2" src="/assets/mobile-background.webp" alt="ImageOn San Diego custom t-shirt and embroidery service shop">
-      {%- endif -%}
+      
 
-      <h1 class="text-black text-3xl mb-4">{{ fields.h1 | safe }}</h1>
-      <div class="sub-heading font-bold mb-4">{{ fields.subHeading | safe }}</div>
+      <h1 class="text-black text-2xl mt-4">{{ fields.h1 | safe }}</h1>
+      <a class="my-4" href="/reviews/">
+        <span class="text-3xl text-yellow-300 text-center poppins-bold" style="text-shadow: 2px 2px 0 black/20;">★★★★★</span>
+        <span class="text-2xl font-bold">4.6 <span class="text-sm font-normal">(90 Reviews)</span></span>
+      </a>
+      <div class="sub-heading font-bold mb-4 w-3/4 sm:w-full mt-4" style="text-shadow: 1px 1px 0 white;" >{{ fields.subHeading | safe }}</div>
 
 
       <div class="flex gap-x-4">
         <a href="#quote" class="text-white bg-red-500 hover:bg-red-500 hover:text-white hover:underline hover:shadow-none text-sm rounded-full mb-4 p-2 px-6 sm:text-sm poppins-medium shadow-md">Get a Free Quote!</a>
-        <img class="object-none object-left" src="/assets/phone-arrow.webp" alt="arrow point to phone number">
+        {# <img class="object-none object-left" src="/assets/phone-arrow.webp" alt="arrow point to phone number"> #}
       </div>
 
       <script>
@@ -29,21 +29,15 @@
         }
       </script>
 
-      <div class="short-copy font-bold">
+      <div class="short-copy font-bold" style="text-shadow: 1px 1px 0 white;">
         {{ fields.text |safe }}
       </div>
+
+
+
     </div>
 
-    <div class="flex-1 relative">
-
-      {# desktop images #}
-      {%- if fields.images.fields.desktop -%}
-        <img eleventy:widths="900" class="h-[500px] object-none object-left z-[-1]" src="https:{{ fields.images.fields.desktop.fields.file.url }}" alt="ImageOn San Diego custom t-shirt and embroidery service shop">
-      {%- else -%}
-        <img eleventy:widths="900" class="h-[500px] object-left object-none z-[-1]" src="/assets/imageon-custom-t-background.webp" alt="ImageOn San Diego custom t-shirt and embroidery service shop">
-      {%- endif -%}
-      
-    </div>
+    <img eleventy:widths="625" class="absolute z-[-10] bottom-0 right-[-150px] md:right-0 object-right" src="/assets/people.webp" alt="ImageOn San Diego custom t-shirt and embroidery service shop">
 
   </div>
 </div>
