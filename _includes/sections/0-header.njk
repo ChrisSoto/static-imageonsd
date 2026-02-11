@@ -24,6 +24,9 @@
                 {% endif %}
               </li>
             {% endfor %}
+              <li class="{{ 'active' if menuItem.fields.slug in page.url }} menu-item justify-center items-center bg-gray-950 h-full p-1 sm:p-3 border-b-4 border-gray-800 hover:border-blue-800 text-gray-200 text-lg hover:text-white transition-all duration-300 whitespace-nowrap">
+                <a href="/designer">Designer</a>
+              </li>
           </ul>
         </div>
     </nav>
