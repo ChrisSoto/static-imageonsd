@@ -21,6 +21,13 @@ initializeApp();
 
 const leadsDashboardPassword = defineSecret("LEADS_DASHBOARD_PASSWORD");
 const leadLocations = ["Santee", "Oceanside", "Downtown"];
+const leadsDashboardOrigins = [
+  "https://imageonsd.com",
+  "https://www.imageonsd.com",
+  "https://dev.imageonsd.com",
+  "https://staging.imageonsd.com",
+  "http://localhost:8080",
+];
 const sessionCookieName = "__Host-leads_session";
 const sessionLifetimeSeconds = 8 * 60 * 60;
 const pacificDateFormatter = new Intl.DateTimeFormat("en-CA", {
@@ -89,7 +96,10 @@ function readCookie(request, cookieName) {
 }
 
 function hasValidDashboardSession(request) {
-  const token = readCookie(request, sessionCookieName);
+  const authorization = request.get("authorization") || "";
+  const bearerMatch = authorization.match(/^Bearer\s+(.+)$/i);
+  const token = bearerMatch ? bearerMatch[1] :
+    readCookie(request, sessionCookieName);
   return isValidSessionToken(token, getDashboardSecret());
 }
 
@@ -463,7 +473,7 @@ exports.addC9DCateringContact = onRequest(
 
 
 exports.leadsLogin = onRequest(
-    {secrets: [leadsDashboardPassword]},
+    {cors: leadsDashboardOrigins, secrets: [leadsDashboardPassword]},
     async (request, response) => {
       setPrivateResponseHeaders(response);
       if (request.method !== "POST") {
@@ -489,13 +499,13 @@ exports.leadsLogin = onRequest(
         "Secure",
         "SameSite=Strict",
       ].join("; "));
-      response.json({authenticated: true});
+      response.json({authenticated: true, token});
     },
 );
 
 
 exports.leadsLogout = onRequest(
-    {secrets: [leadsDashboardPassword]},
+    {cors: leadsDashboardOrigins, secrets: [leadsDashboardPassword]},
     async (request, response) => {
       setPrivateResponseHeaders(response);
       if (request.method !== "POST") {
@@ -518,7 +528,11 @@ exports.leadsLogout = onRequest(
 
 
 exports.getLeadStats = onRequest(
-    {secrets: [leadsDashboardPassword], timeoutSeconds: 60},
+    {
+      cors: leadsDashboardOrigins,
+      secrets: [leadsDashboardPassword],
+      timeoutSeconds: 60,
+    },
     async (request, response) => {
       setPrivateResponseHeaders(response);
       if (request.method !== "GET") {

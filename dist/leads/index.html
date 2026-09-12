@@ -291,11 +291,16 @@
   <script>
     (() => {
       const api = {
-        login: "/api/leads/login",
-        logout: "/api/leads/logout",
-        stats: "/api/leads/stats",
+        login: "https://us-central1-imageonsd-af038.cloudfunctions.net/leadsLogin",
+        logout: "https://us-central1-imageonsd-af038.cloudfunctions.net/leadsLogout",
+        stats: "https://us-central1-imageonsd-af038.cloudfunctions.net/getLeadStats",
       };
-      const state = { records: [], series: [] };
+      const sessionStorageKey = "imageOnLeadsSession";
+      const state = {
+        records: [],
+        series: [],
+        token: window.sessionStorage.getItem(sessionStorageKey) || "",
+      };
       const elements = {
         auth: document.getElementById("auth-backdrop"),
         loginForm: document.getElementById("login-form"),
@@ -534,10 +539,14 @@
         });
         try {
           const response = await fetch(`${api.stats}?${parameters}`, {
-            credentials: "same-origin",
-            headers: { Accept: "application/json" },
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${state.token}`,
+            },
           });
           if (response.status === 401) {
+            state.token = "";
+            window.sessionStorage.removeItem(sessionStorageKey);
             showLogin();
             return;
           }
@@ -567,12 +576,13 @@
         try {
           const response = await fetch(api.login, {
             method: "POST",
-            credentials: "same-origin",
             headers: { "Content-Type": "application/json", Accept: "application/json" },
             body: JSON.stringify({ password: elements.password.value }),
           });
           const data = await response.json();
           if (!response.ok) throw new Error(data.error || "Unable to sign in");
+          state.token = data.token;
+          window.sessionStorage.setItem(sessionStorageKey, data.token);
           elements.password.value = "";
           elements.auth.hidden = true;
           await loadLeads();
@@ -585,8 +595,10 @@
       });
 
       elements.logout.addEventListener("click", async () => {
+        state.token = "";
+        window.sessionStorage.removeItem(sessionStorageKey);
         try {
-          await fetch(api.logout, { method: "POST", credentials: "same-origin" });
+          await fetch(api.logout, { method: "POST" });
         } finally {
           elements.content.hidden = true;
           showLogin();
@@ -603,7 +615,11 @@
       elements.end.value = today;
       elements.start.value = addDays(today, -29);
       elements.end.max = today;
-      loadLeads();
+      if (state.token) {
+        loadLeads();
+      } else {
+        showLogin();
+      }
     })();
   </script>
 </body>
