@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Lead Dashboard | ImageOn</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #e4e7ec;
+      --paper: #ffffff;
+      --canvas: #f4f6f8;
+      --brand: #e53935;
+      --brand-dark: #b91c1c;
+      --accent: #fbbf24;
+      --santee: #e53935;
+      --oceanside: #2563eb;
+      --downtown: #7c3aed;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--canvas); color: var(--ink); }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    [hidden] { display: none !important; }
+
+    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .topbar { background: #111827; color: white; }
+    .topbar-inner {
+      min-height: 72px; display: flex; align-items: center;
+      justify-content: space-between; gap: 20px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      display: grid; place-items: center; width: 38px; height: 38px;
+      background: var(--brand); border-radius: 11px; font-weight: 900;
+    }
+    .brand-name { margin: 0; font-size: 17px; font-weight: 750; }
+    .brand-subtitle { margin: 2px 0 0; color: #9ca3af; font-size: 12px; }
+    .logout {
+      border: 1px solid #374151; border-radius: 9px; background: transparent;
+      color: #d1d5db; padding: 9px 13px;
+    }
+    .logout:hover { border-color: #6b7280; color: white; }
+
+    main { padding: 42px 0 64px; }
+    .intro { display: flex; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+    h1 { margin: 0 0 7px; font-size: clamp(28px, 4vw, 40px); letter-spacing: -.03em; }
+    .intro p { margin: 0; color: var(--muted); }
+
+    .panel {
+      background: var(--paper); border: 1px solid var(--line);
+      border-radius: 16px; box-shadow: 0 1px 2px rgb(16 24 40 / 4%);
+    }
+    .filters {
+      display: grid; grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 14px; padding: 18px; margin-bottom: 20px; align-items: end;
+    }
+    label { display: block; color: #344054; font-size: 13px; font-weight: 650; }
+    input, select {
+      width: 100%; margin-top: 7px; border: 1px solid #d0d5dd;
+      border-radius: 9px; padding: 10px 12px; background: white; color: var(--ink);
+    }
+    input:focus, select:focus {
+      outline: 3px solid rgb(229 57 53 / 15%); border-color: var(--brand);
+    }
+    .primary {
+      min-height: 41px; border: 0; border-radius: 9px; padding: 10px 20px;
+      background: var(--brand); color: white; font-weight: 750;
+    }
+    .primary:hover { background: var(--brand-dark); }
+    .primary:disabled { cursor: wait; opacity: .65; }
+
+    .notice {
+      margin-bottom: 20px; padding: 13px 16px; border-radius: 10px;
+      background: #fff1f0; border: 1px solid #fecdca; color: #b42318;
+    }
+    .loading { color: var(--muted); margin: 18px 0; }
+
+    .stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+      margin-bottom: 20px;
+    }
+    .stat { padding: 18px; position: relative; overflow: hidden; }
+    .stat::before {
+      content: ""; position: absolute; inset: 0 auto 0 0; width: 4px;
+      background: var(--stat-color, #111827);
+    }
+    .stat-label { color: var(--muted); font-size: 13px; font-weight: 650; }
+    .stat-value { display: block; margin-top: 6px; font-size: 32px; font-weight: 800; }
+
+    .chart-panel { padding: 22px; margin-bottom: 20px; }
+    .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    h2 { margin: 0; font-size: 18px; }
+    .range-label { color: var(--muted); font-size: 13px; }
+    .chart { width: 100%; min-height: 280px; margin-top: 22px; overflow: hidden; }
+    .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .chart text { fill: var(--muted); font-size: 11px; }
+    .chart .grid-line { stroke: #eaecf0; stroke-width: 1; }
+    .chart .area { fill: rgb(229 57 53 / 10%); }
+    .chart .line {
+      fill: none; stroke: var(--brand); stroke-width: 3;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+    .chart .dot { fill: white; stroke: var(--brand); stroke-width: 2; }
+    .empty-chart {
+      min-height: 250px; display: grid; place-items: center;
+      color: var(--muted); text-align: center;
+    }
+
+    .leads-panel { overflow: hidden; }
+    .leads-toolbar {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; padding: 20px; border-bottom: 1px solid var(--line);
+    }
+    .search { width: min(340px, 100%); margin: 0; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 930px; }
+    th, td { padding: 14px 16px; border-bottom: 1px solid var(--line); text-align: left; }
+    th {
+      background: #f9fafb; color: #475467; font-size: 12px;
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    td { vertical-align: top; font-size: 14px; }
+    tbody tr:last-child td { border-bottom: 0; }
+    tbody tr:hover { background: #fcfcfd; }
+    .contact-name { font-weight: 700; }
+    .contact-link { display: block; color: #175cd3; text-decoration: none; margin-top: 4px; }
+    .contact-link:hover { text-decoration: underline; }
+    .details { min-width: 260px; max-width: 430px; white-space: pre-wrap; line-height: 1.45; }
+    .badge {
+      display: inline-block; border-radius: 999px; padding: 4px 9px;
+      background: #f2f4f7; font-size: 12px; font-weight: 700;
+    }
+    .no-results { padding: 42px 20px; text-align: center; color: var(--muted); }
+
+    .auth-backdrop {
+      position: fixed; inset: 0; z-index: 10; display: grid; place-items: center;
+      padding: 20px; background: #111827;
+    }
+    .auth-card {
+      width: min(420px, 100%); padding: 30px; background: white;
+      border-radius: 18px; box-shadow: 0 24px 48px rgb(0 0 0 / 25%);
+    }
+    .auth-icon {
+      width: 48px; height: 48px; display: grid; place-items: center;
+      border-radius: 13px; background: #fee4e2; color: var(--brand); font-size: 23px;
+    }
+    .auth-card h2 { margin-top: 20px; font-size: 25px; }
+    .auth-card p { color: var(--muted); line-height: 1.5; }
+    .auth-card .primary { width: 100%; margin-top: 14px; }
+    .auth-error { min-height: 20px; margin: 10px 0 0; color: #b42318; font-size: 13px; }
+
+    @media (max-width: 820px) {
+      .filters { grid-template-columns: 1fr 1fr; }
+      .stats { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .shell { width: min(100% - 22px, 1180px); }
+      main { padding-top: 28px; }
+      .filters { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat { padding: 15px; }
+      .stat-value { font-size: 27px; }
+      .chart-panel { padding: 17px; }
+      .leads-toolbar { align-items: stretch; flex-direction: column; }
+      .search { width: 100%; }
+      .brand-subtitle { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">IO</div>
+        <div>
+          <p class="brand-name">ImageOn</p>
+          <p class="brand-subtitle">Private reporting</p>
+        </div>
+      </div>
+      <button class="logout" id="logout" type="button" hidden="">Log out</button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <div class="intro">
+      <div>
+        <h1>Lead dashboard</h1>
+        <p>Website inquiries for Santee, Oceanside, and Downtown.</p>
+      </div>
+    </div>
+
+    <form class="panel filters" id="filters">
+      <label>
+        Start date
+        <input id="start-date" name="start" type="date" required="">
+      </label>
+      <label>
+        End date
+        <input id="end-date" name="end" type="date" required="">
+      </label>
+      <label>
+        Location
+        <select id="location" name="location">
+          <option value="All">All locations</option>
+          <option value="Santee">Santee</option>
+          <option value="Oceanside">Oceanside</option>
+          <option value="Downtown">Downtown</option>
+        </select>
+      </label>
+      <button class="primary" id="apply-filters" type="submit">Apply filters</button>
+    </form>
+
+    <div class="notice" id="notice" role="alert" hidden=""></div>
+    <p class="loading" id="loading" hidden="">Loading leads…</p>
+
+    <section id="dashboard-content" hidden="">
+      <div class="stats" id="stats">
+        <article class="panel stat" style="--stat-color:#111827" data-stat="All">
+          <span class="stat-label">Total leads</span>
+          <strong class="stat-value" id="total-count">0</strong>
+        </article>
+        <article class="panel stat" style="--stat-color:var(--santee)" data-stat="Santee">
+          <span class="stat-label">Santee</span>
+          <strong class="stat-value" id="santee-count">0</strong>
+        </article>
+        <article class="panel stat" style="--stat-color:var(--oceanside)" data-stat="Oceanside">
+          <span class="stat-label">Oceanside</span>
+          <strong class="stat-value" id="oceanside-count">0</strong>
+        </article>
+        <article class="panel stat" style="--stat-color:var(--downtown)" data-stat="Downtown">
+          <span class="stat-label">Downtown</span>
+          <strong class="stat-value" id="downtown-count">0</strong>
+        </article>
+      </div>
+
+      <section class="panel chart-panel">
+        <div class="panel-heading">
+          <h2>Leads over time</h2>
+          <span class="range-label" id="range-label"></span>
+        </div>
+        <div class="chart" id="chart" aria-label="Daily lead count chart"></div>
+      </section>
+
+      <section class="panel leads-panel">
+        <div class="leads-toolbar">
+          <div>
+            <h2>Lead details</h2>
+            <span class="range-label" id="result-count"></span>
+          </div>
+          <input class="search" id="search" type="search" placeholder="Search name, email, phone, or message">
+        </div>
+        <div class="table-wrap" id="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date received</th>
+                <th>Location</th>
+                <th>Contact</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody id="lead-rows"></tbody>
+          </table>
+        </div>
+        <div class="no-results" id="no-results" hidden="">No leads match this view.</div>
+      </section>
+    </section>
+  </main>
+
+  <div class="auth-backdrop" id="auth-backdrop">
+    <form class="auth-card" id="login-form">
+      <div class="auth-icon" aria-hidden="true">&#128274;</div>
+      <h2>Manager access</h2>
+      <p>Enter the dashboard password to view lead contact information.</p>
+      <label>
+        Password
+        <input id="password" name="password" type="password" autocomplete="current-password" required="" autofocus="">
+      </label>
+      <p class="auth-error" id="auth-error" role="alert"></p>
+      <button class="primary" id="login-button" type="submit">Open dashboard</button>
+    </form>
+  </div>
+
+  <script>
+    (() => {
+      const api = {
+        login: "/api/leads/login",
+        logout: "/api/leads/logout",
+        stats: "/api/leads/stats",
+      };
+      const state = { records: [], series: [] };
+      const elements = {
+        auth: document.getElementById("auth-backdrop"),
+        loginForm: document.getElementById("login-form"),
+        loginButton: document.getElementById("login-button"),
+        authError: document.getElementById("auth-error"),
+        password: document.getElementById("password"),
+        logout: document.getElementById("logout"),
+        filters: document.getElementById("filters"),
+        applyFilters: document.getElementById("apply-filters"),
+        start: document.getElementById("start-date"),
+        end: document.getElementById("end-date"),
+        location: document.getElementById("location"),
+        notice: document.getElementById("notice"),
+        loading: document.getElementById("loading"),
+        content: document.getElementById("dashboard-content"),
+        search: document.getElementById("search"),
+        rows: document.getElementById("lead-rows"),
+        noResults: document.getElementById("no-results"),
+        tableWrap: document.getElementById("table-wrap"),
+        resultCount: document.getElementById("result-count"),
+        chart: document.getElementById("chart"),
+        rangeLabel: document.getElementById("range-label"),
+      };
+
+      function pacificDateString(date) {
+        const parts = new Intl.DateTimeFormat("en-US", {
+          timeZone: "America/Los_Angeles",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).formatToParts(date);
+        const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+        return `${values.year}-${values.month}-${values.day}`;
+      }
+
+      function addDays(dateString, days) {
+        const [year, month, day] = dateString.split("-").map(Number);
+        const date = new Date(Date.UTC(year, month - 1, day + days));
+        return [date.getUTCFullYear(), String(date.getUTCMonth() + 1).padStart(2, "0"),
+          String(date.getUTCDate()).padStart(2, "0")].join("-");
+      }
+
+      function showLogin(message = "") {
+        elements.auth.hidden = false;
+        elements.logout.hidden = true;
+        elements.authError.textContent = message;
+        window.setTimeout(() => elements.password.focus(), 0);
+      }
+
+      function showNotice(message = "") {
+        elements.notice.textContent = message;
+        elements.notice.hidden = !message;
+      }
+
+      function setLoading(isLoading) {
+        elements.loading.hidden = !isLoading;
+        elements.applyFilters.disabled = isLoading;
+      }
+
+      function formatDateTime(isoDate) {
+        return new Intl.DateTimeFormat("en-US", {
+          timeZone: "America/Los_Angeles",
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+        }).format(new Date(isoDate));
+      }
+
+      function formatShortDate(dateString) {
+        return new Intl.DateTimeFormat("en-US", {
+          timeZone: "UTC", month: "short", day: "numeric",
+        }).format(new Date(`${dateString}T00:00:00Z`));
+      }
+
+      function setText(id, value) {
+        document.getElementById(id).textContent = String(value);
+      }
+
+      function renderStats(data) {
+        setText("total-count", data.total);
+        setText("santee-count", data.totals.Santee || 0);
+        setText("oceanside-count", data.totals.Oceanside || 0);
+        setText("downtown-count", data.totals.Downtown || 0);
+
+        document.querySelectorAll("[data-stat]").forEach((card) => {
+          const cardLocation = card.dataset.stat;
+          card.hidden = data.location !== "All" && cardLocation !== "All" &&
+            cardLocation !== data.location;
+        });
+        elements.rangeLabel.textContent = `${formatShortDate(data.start)} – ${formatShortDate(data.end)}`;
+      }
+
+      function svgElement(name, attributes = {}) {
+        const element = document.createElementNS("http://www.w3.org/2000/svg", name);
+        Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+        return element;
+      }
+
+      function renderChart(series) {
+        elements.chart.replaceChildren();
+        const values = series.map((point) => point.total);
+        const maximum = Math.max(1, ...values);
+        if (!values.some((value) => value > 0)) {
+          const empty = document.createElement("div");
+          empty.className = "empty-chart";
+          empty.textContent = "No leads were received during this date range.";
+          elements.chart.append(empty);
+          return;
+        }
+
+        const width = 960;
+        const height = 300;
+        const padding = { top: 18, right: 18, bottom: 40, left: 38 };
+        const plotWidth = width - padding.left - padding.right;
+        const plotHeight = height - padding.top - padding.bottom;
+        const svg = svgElement("svg", {
+          viewBox: `0 0 ${width} ${height}`,
+          role: "img",
+          "aria-label": "Daily lead totals",
+        });
+
+        for (let tick = 0; tick <= 4; tick += 1) {
+          const y = padding.top + (plotHeight * tick / 4);
+          const value = Math.round(maximum * (1 - tick / 4));
+          svg.append(svgElement("line", {
+            class: "grid-line", x1: padding.left, x2: width - padding.right, y1: y, y2: y,
+          }));
+          const label = svgElement("text", { x: padding.left - 9, y: y + 4, "text-anchor": "end" });
+          label.textContent = value;
+          svg.append(label);
+        }
+
+        const denominator = Math.max(series.length - 1, 1);
+        const points = series.map((point, index) => ({
+          x: padding.left + (plotWidth * index / denominator),
+          y: padding.top + plotHeight - (point.total / maximum * plotHeight),
+          value: point.total,
+          date: point.date,
+        }));
+        const pointString = points.map((point) => `${point.x},${point.y}`).join(" ");
+        const areaPoints = `${padding.left},${padding.top + plotHeight} ${pointString} ` +
+          `${points[points.length - 1].x},${padding.top + plotHeight}`;
+        svg.append(svgElement("polygon", { class: "area", points: areaPoints }));
+        svg.append(svgElement("polyline", { class: "line", points: pointString }));
+
+        if (series.length <= 31) {
+          points.forEach((point) => {
+            const dot = svgElement("circle", { class: "dot", cx: point.x, cy: point.y, r: 4 });
+            const title = svgElement("title");
+            title.textContent = `${formatShortDate(point.date)}: ${point.value} leads`;
+            dot.append(title);
+            svg.append(dot);
+          });
+        }
+
+        const firstLabel = svgElement("text", {
+          x: padding.left, y: height - 10, "text-anchor": "start",
+        });
+        firstLabel.textContent = formatShortDate(series[0].date);
+        svg.append(firstLabel);
+        const lastLabel = svgElement("text", {
+          x: width - padding.right, y: height - 10, "text-anchor": "end",
+        });
+        lastLabel.textContent = formatShortDate(series[series.length - 1].date);
+        svg.append(lastLabel);
+        elements.chart.append(svg);
+      }
+
+      function addCell(row, className = "") {
+        const cell = document.createElement("td");
+        cell.className = className;
+        row.append(cell);
+        return cell;
+      }
+
+      function renderRows(records) {
+        elements.rows.replaceChildren();
+        records.forEach((lead) => {
+          const row = document.createElement("tr");
+          addCell(row).textContent = formatDateTime(lead.receivedAt);
+
+          const locationCell = addCell(row);
+          const badge = document.createElement("span");
+          badge.className = "badge";
+          badge.textContent = lead.location;
+          locationCell.append(badge);
+
+          const contactCell = addCell(row);
+          const name = document.createElement("div");
+          name.className = "contact-name";
+          name.textContent = lead.name || "Name not available";
+          contactCell.append(name);
+          if (lead.email) {
+            const email = document.createElement("a");
+            email.className = "contact-link";
+            email.href = `mailto:${lead.email}`;
+            email.textContent = lead.email;
+            contactCell.append(email);
+          }
+          if (lead.phone) {
+            const phone = document.createElement("a");
+            phone.className = "contact-link";
+            phone.href = `tel:${lead.phone.replace(/[^+\d]/g, "")}`;
+            phone.textContent = lead.phone;
+            contactCell.append(phone);
+          }
+
+          addCell(row, "details").textContent = lead.details || "No message provided";
+          elements.rows.append(row);
+        });
+        elements.noResults.hidden = records.length > 0;
+        elements.tableWrap.hidden = records.length === 0;
+        elements.resultCount.textContent = `${records.length} lead${records.length === 1 ? "" : "s"}`;
+      }
+
+      function filterRows() {
+        const query = elements.search.value.toLowerCase().trim();
+        if (!query) {
+          renderRows(state.records);
+          return;
+        }
+        renderRows(state.records.filter((lead) =>
+          [lead.name, lead.email, lead.phone, lead.details, lead.location]
+            .some((value) => String(value || "").toLowerCase().includes(query))));
+      }
+
+      async function loadLeads() {
+        setLoading(true);
+        showNotice();
+        const parameters = new URLSearchParams({
+          start: elements.start.value,
+          end: elements.end.value,
+          location: elements.location.value,
+        });
+        try {
+          const response = await fetch(`${api.stats}?${parameters}`, {
+            credentials: "same-origin",
+            headers: { Accept: "application/json" },
+          });
+          if (response.status === 401) {
+            showLogin();
+            return;
+          }
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || "Unable to load leads");
+
+          elements.auth.hidden = true;
+          elements.logout.hidden = false;
+          elements.content.hidden = false;
+          state.records = data.records;
+          state.series = data.series;
+          renderStats(data);
+          renderChart(data.series);
+          elements.search.value = "";
+          renderRows(data.records);
+        } catch (error) {
+          showNotice(error.message || "Unable to load leads. Please try again.");
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      elements.loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        elements.loginButton.disabled = true;
+        elements.authError.textContent = "";
+        try {
+          const response = await fetch(api.login, {
+            method: "POST",
+            credentials: "same-origin",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({ password: elements.password.value }),
+          });
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || "Unable to sign in");
+          elements.password.value = "";
+          elements.auth.hidden = true;
+          await loadLeads();
+        } catch (error) {
+          elements.authError.textContent = error.message || "Unable to sign in";
+          elements.password.select();
+        } finally {
+          elements.loginButton.disabled = false;
+        }
+      });
+
+      elements.logout.addEventListener("click", async () => {
+        try {
+          await fetch(api.logout, { method: "POST", credentials: "same-origin" });
+        } finally {
+          elements.content.hidden = true;
+          showLogin();
+        }
+      });
+
+      elements.filters.addEventListener("submit", (event) => {
+        event.preventDefault();
+        loadLeads();
+      });
+      elements.search.addEventListener("input", filterRows);
+
+      const today = pacificDateString(new Date());
+      elements.end.value = today;
+      elements.start.value = addDays(today, -29);
+      elements.end.max = today;
+      loadLeads();
+    })();
+  </script>
+</body>
+</html>
