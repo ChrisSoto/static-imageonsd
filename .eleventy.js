@@ -121,7 +121,7 @@ function buildCityService(city, oService) {
     if ("heroImages" in city.fields && city.fields.heroImages.length > 0) {
       let imageData = getHeroImagesFromModifierData(
         city.fields.heroImages,
-        service.fields.name
+        service.fields.name,
       );
 
       // override hero images
@@ -165,7 +165,7 @@ function buildCityService(city, oService) {
   if ("gallerySection" in city.fields) {
     const galleryData = getGallerySectionFromModifierData(
       city.fields.gallerySection,
-      service.fields.name
+      service.fields.name,
     );
     cityService.gallerySection = galleryData;
   }
@@ -173,7 +173,7 @@ function buildCityService(city, oService) {
   if ("copySection" in city.fields) {
     const copyData = getCopySectionFromModifierData(
       city.fields.copySection,
-      service.fields.name
+      service.fields.name,
     );
     if (copyData) {
       cityService.copySection = copyData;
@@ -226,19 +226,19 @@ function findSectionsToReplaceCityName(data, city) {
     if ("h1" in data.heroSection.fields) {
       data.heroSection.fields.h1 = replaceCityName(
         data.heroSection.fields.h1,
-        city
+        city,
       );
     }
     if ("subHeading" in data.heroSection.fields) {
       data.heroSection.fields.subHeading = replaceCityName(
         data.heroSection.fields.subHeading,
-        city
+        city,
       );
     }
     if ("text" in data.heroSection.fields) {
       data.heroSection.fields.text = replaceCityName(
         data.heroSection.fields.text,
-        city
+        city,
       );
     }
   }
@@ -247,31 +247,31 @@ function findSectionsToReplaceCityName(data, city) {
     if ("title" in data.faqSection.fields) {
       data.faqSection.fields.title = replaceCityName(
         data.faqSection.fields.title,
-        city
+        city,
       );
     }
     if ("intro" in data.faqSection.fields) {
       data.faqSection.fields.intro = replaceCityName(
         data.faqSection.fields.intro,
-        city
+        city,
       );
     }
     if ("questions" in data.faqSection.fields) {
       for (let i = 0; i < data.faqSection.fields.questions.length; i++) {
         data.faqSection.fields.questions[i].fields.question = replaceCityName(
           data.faqSection.fields.questions[i].fields.question,
-          city
+          city,
         );
         data.faqSection.fields.questions[i].fields.faqAnswer = replaceCityName(
           data.faqSection.fields.questions[i].fields.faqAnswer,
-          city
+          city,
         );
       }
     }
     if ("outro" in data.faqSection.fields) {
       data.faqSection.fields.outro = replaceCityName(
         data.faqSection.fields.outro,
-        city
+        city,
       );
     }
   }
@@ -286,7 +286,7 @@ function replaceServiceForMeta(data, serviceName) {
   if ("metaDescription" in data) {
     data.metaDescription = replaceServiceName(
       data.metaDescription,
-      serviceName
+      serviceName,
     );
   }
 
@@ -308,7 +308,7 @@ function loadData(eleventyConfig) {
       .then((home) => {
         const data = findSectionsToReplaceCityName(
           home.items[0].fields,
-          "San Diego"
+          "San Diego",
         );
         return data;
       });
@@ -320,7 +320,7 @@ function loadData(eleventyConfig) {
       .then((services) => {
         const data = findSectionsToReplaceCityName(
           services.items[0].fields.pages,
-          "San Diego"
+          "San Diego",
         );
         return data;
       });
