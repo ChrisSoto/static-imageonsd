@@ -1,0 +1,32 @@
+{%- if cityService.city == "Santee" -%}
+  {%- set shopName = "Santee" -%}
+  {%- set shopSlug = "santee" -%}
+{%- elif cityService.city == "Downtown San Diego" -%}
+  {%- set shopName = "Downtown San Diego" -%}
+  {%- set shopSlug = "downtown-san-diego" -%}
+{%- elif cityService.city == "Oceanside" -%}
+  {%- set shopName = "Oceanside" -%}
+  {%- set shopSlug = "oceanside" -%}
+{%- elif cityService.city == "Carmel Mountain" or cityService.city == "Rancho Bernardo" -%}
+  {%- set servingShopName = "Oceanside" -%}
+  {%- set servingShopSlug = "oceanside" -%}
+{%- elif cityService.city == "El Cajon" or cityService.city == "Lakeside" or cityService.city == "Rancho San Diego" or cityService.city == "Spring Valley" -%}
+  {%- set servingShopName = "Santee" -%}
+  {%- set servingShopSlug = "santee" -%}
+{%- else -%}
+  {%- set servingShopName = "Downtown San Diego" -%}
+  {%- set servingShopSlug = "downtown-san-diego" -%}
+{%- endif -%}
+
+{%- if shopSlug -%}
+<section class="section mx-4 p-4 mb-16 bg-zinc-50 rounded border" aria-labelledby="{{ shopSlug }}-service-location">
+  <h2 id="{{ shopSlug }}-service-location">Visit our {{ shopName }} shop</h2>
+  <p>This service is available at our physical {{ shopName }} location. Visit the <a href="/city/{{ shopSlug }}/">{{ shopName }} shop page</a> for its address, hours, phone number, directions, same-day information, and links to other services offered there.</p>
+</section>
+{%- elif servingShopSlug -%}
+<section class="section mx-4 p-4 mb-16 bg-zinc-50 rounded border" aria-labelledby="{{ cityService.city | slugify }}-service-location">
+  <h2 id="{{ cityService.city | slugify }}-service-location">Serving {{ cityService.city }} from our {{ servingShopName }} shop</h2>
+  <p>Image On does not operate a storefront in {{ cityService.city }}. This area is served by our <a href="/city/{{ servingShopSlug }}/">{{ servingShopName }} shop</a>, where customers can get production help and pick up completed orders.</p>
+  <p>Review <a href="/services/{{ cityService.serviceSlug }}/{{ servingShopSlug }}/">{{ cityService.service }} at the {{ servingShopName }} shop</a> for location-specific details, or call the shop before visiting when you have a same-day deadline.</p>
+</section>
+{%- endif -%}

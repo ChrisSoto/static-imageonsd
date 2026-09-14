@@ -756,6 +756,10 @@ video {
   display: block;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 .flex {
   display: flex;
 }
@@ -1436,6 +1440,10 @@ video {
 
 .italic {
   font-style: italic;
+}
+
+.not-italic {
+  font-style: normal;
 }
 
 .tracking-widest {

@@ -1,0 +1,18 @@
+{%- if city.city == "Carmel Mountain" or city.city == "Rancho Bernardo" -%}
+  {%- set servingShopName = "Oceanside" -%}
+  {%- set servingShopSlug = "oceanside" -%}
+{%- elif city.city == "El Cajon" or city.city == "Lakeside" or city.city == "Rancho San Diego" or city.city == "Spring Valley" -%}
+  {%- set servingShopName = "Santee" -%}
+  {%- set servingShopSlug = "santee" -%}
+{%- elif city.city != "Santee" and city.city != "Downtown San Diego" and city.city != "Oceanside" -%}
+  {%- set servingShopName = "Downtown San Diego" -%}
+  {%- set servingShopSlug = "downtown-san-diego" -%}
+{%- endif -%}
+
+{%- if servingShopSlug -%}
+<section class="section mx-4 p-4 mb-16 bg-zinc-50 rounded border" aria-labelledby="{{ city.city | slugify }}-service-area">
+  <h2 id="{{ city.city | slugify }}-service-area">Serving {{ city.city }} from our {{ servingShopName }} shop</h2>
+  <p>Image On does not operate a storefront in {{ city.city }}. Customers in this area are served by our <a href="/city/{{ servingShopSlug }}/">{{ servingShopName }} shop</a>, where our team provides custom apparel production, artwork assistance, and order pickup.</p>
+  <p>Explore <a href="/services/custom-t-shirts/{{ servingShopSlug }}/">custom T-shirt printing</a> or <a href="/services/embroidery/{{ servingShopSlug }}/">custom embroidery</a> at that location, and review the shop page for its address, hours, phone number, and directions.</p>
+</section>
+{%- endif -%}
