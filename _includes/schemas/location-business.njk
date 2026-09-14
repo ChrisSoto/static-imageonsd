@@ -1,0 +1,64 @@
+{%- if city.city == "Santee" -%}
+  {%- set locationName = "Image On Santee" -%}
+  {%- set locationDescription = "Custom T-shirt printing and embroidery shop in Santee, California." -%}
+  {%- set locationPhone = "+16193120941" -%}
+  {%- set streetAddress = "235 Town Center Parkway" -%}
+  {%- set addressLocality = "Santee" -%}
+  {%- set postalCode = "92071" -%}
+  {%- set mapUrl = "https://maps.app.goo.gl/wpLNPCe1UeuvVNkK7" -%}
+{%- elif city.city == "Downtown San Diego" -%}
+  {%- set locationName = "Image On Downtown San Diego" -%}
+  {%- set locationDescription = "Custom T-shirt printing and embroidery shop in Downtown San Diego, California." -%}
+  {%- set locationPhone = "+16192554644" -%}
+  {%- set streetAddress = "1071 Market Street" -%}
+  {%- set addressLocality = "San Diego" -%}
+  {%- set postalCode = "92101" -%}
+  {%- set mapUrl = "https://maps.app.goo.gl/NAqmFpmknkUDgm7t9" -%}
+{%- elif city.city == "Oceanside" -%}
+  {%- set locationName = "Image On Oceanside" -%}
+  {%- set locationDescription = "Custom T-shirt printing and embroidery shop in Oceanside, California." -%}
+  {%- set locationPhone = "+17605219422" -%}
+  {%- set streetAddress = "1837 South Coast Highway, Suite A" -%}
+  {%- set addressLocality = "Oceanside" -%}
+  {%- set postalCode = "92054" -%}
+  {%- set mapUrl = "https://maps.app.goo.gl/4sBx49M1Qb1Jvtr18" -%}
+{%- endif -%}
+
+{%- if locationName -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "{{ site.url }}{{ page.url }}#localBusiness",
+  "name": "{{ locationName }}",
+  "description": "{{ locationDescription }}",
+  "url": "{{ site.url }}{{ page.url }}",
+  "image": "{{ site.url }}/assets/imageon-custom-t-shirts-and-embroidery.webp",
+  "telephone": "{{ locationPhone }}",
+  "priceRange": "$$",
+  "hasMap": "{{ mapUrl }}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{ streetAddress }}",
+    "addressLocality": "{{ addressLocality }}",
+    "addressRegion": "CA",
+    "postalCode": "{{ postalCode }}",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "19:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "09:00",
+      "closes": "16:30"
+    }
+  ]
+}
+</script>
+{%- endif -%}

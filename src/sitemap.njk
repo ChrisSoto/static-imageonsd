@@ -26,9 +26,27 @@ eleventyExcludeFromCollections: true
 
 
 {% for page in seoPages %}
+  {% set seoPageSlug = page.fields.title | slugify %}
+  {% if seoPageSlug != 'custom-embroidery-services' and seoPageSlug != 'custom-t-shirt-printing' %}
   <url>
-      <loc>{{ site.url }}/{{ page.fields.title | slugify }}/</loc>
+      <loc>{{ site.url }}/{{ seoPageSlug }}/</loc>
       <lastmod>{{ page.sys.updatedAt | w3c }}</lastmod>
+  </url>
+  {% endif %}
+{% endfor %}
+
+{% set localSeoPages = [
+  '/custom-t-shirt-printing-in-santee-ca/',
+  '/dtf-work-shirt-printing-in-santee-ca/',
+  '/dtg-photo-t-shirt-printing-in-santee-ca/',
+  '/custom-hat-embroidery-in-santee-ca/',
+  '/custom-team-shirts-and-hats-in-santee-ca/',
+  '/dtg-dtf-vs-screen-printing/'
+] %}
+{% for localPage in localSeoPages %}
+  <url>
+      <loc>{{ site.url }}{{ localPage }}</loc>
+      <lastmod>{{ site.time }}</lastmod>
   </url>
 {% endfor %}
 

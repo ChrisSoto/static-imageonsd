@@ -1,0 +1,240 @@
+---
+permalink: "/dtg-dtf-vs-screen-printing/"
+layout: base.njk
+h1: "Need Screen Printing? Here's Why DTG & DTF Might Be Better"
+seoTitle: "DTG & DTF vs Screen Printing: Same-Day Custom Shirts in San Diego | Image On"
+seoDescription: "Compare DTG, DTF and screen printing for price, speed, detail, fabric feel and durability. Explore same-day custom shirts at three San Diego shops."
+eleventyComputed:
+  title: "{{ seoTitle }}"
+  description: "{{ seoDescription }}"
+socialImage: "/assets/seo-2/dtf-work-shirt-printing-santee.webp"
+imageAlt: "Full-color DTF transfer being placed on a black custom t-shirt"
+---
+
+<style>
+  .compare-page { color: #172033; background: #fff; }
+  .compare-wrap { width: min(1120px, calc(100% - 2rem)); margin-inline: auto; }
+  .compare-breadcrumbs { padding: 1rem 0; color: #5e687a; font-size: .9rem; }
+  .compare-breadcrumbs a { color: #a91f2a; text-decoration: underline; text-underline-offset: 3px; }
+  .compare-hero { padding: clamp(3rem, 7vw, 6rem) 0; background: linear-gradient(140deg, #101827 0%, #1d293c 58%, #4a1d26 100%); color: #fff; }
+  .compare-hero-grid { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .compare-eyebrow { margin: 0 0 .85rem; color: #ffd18a; font-size: .78rem; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; }
+  .compare-page h1 { max-width: 760px; margin: 0; color: #fff; font-size: clamp(2.35rem, 5.7vw, 4.4rem); line-height: 1; letter-spacing: -.045em; }
+  .compare-lead { max-width: 700px; margin: 1.35rem 0 0; color: #e2e8f0; font-size: clamp(1.05rem, 2vw, 1.24rem); line-height: 1.72; }
+  .compare-callout { margin-top: 1.4rem; padding: 1rem 1.1rem; border-left: 4px solid #ffd18a; border-radius: .25rem .75rem .75rem .25rem; background: rgba(255,255,255,.09); color: #fff; line-height: 1.6; }
+  .compare-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }
+  .compare-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: .75rem 1.15rem; border: 2px solid #ef5b63; border-radius: 999px; background: #ef5b63; color: #151b28; font-weight: 850; text-decoration: none; }
+  .compare-btn:hover { background: #fff; color: #8f1821; transform: translateY(-1px); }
+  .compare-btn--light { border-color: #fff; background: transparent; color: #fff; }
+  .compare-hero img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 1.25rem; box-shadow: 0 26px 70px rgba(0,0,0,.35); }
+  .compare-section { padding: clamp(3.5rem, 7vw, 6rem) 0; }
+  .compare-section--soft { background: #f4f6f8; }
+  .compare-section--dark { background: #121a2b; color: #fff; }
+  .compare-kicker { color: #a91f2a; font-size: .76rem; font-weight: 850; letter-spacing: .11em; text-transform: uppercase; }
+  .compare-section--dark .compare-kicker { color: #ffd18a; }
+  .compare-page h2 { max-width: 830px; margin: .5rem 0 1.1rem; color: #111827; font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.1; letter-spacing: -.03em; }
+  .compare-section--dark h2 { color: #fff; }
+  .compare-intro { max-width: 820px; color: #4f5b6f; font-size: 1.08rem; line-height: 1.78; }
+  .compare-section--dark .compare-intro { color: #d6deea; }
+  .compare-table-scroll { margin-top: 2rem; overflow-x: auto; border: 1px solid #d9dee6; border-radius: 1rem; background: #fff; box-shadow: 0 14px 35px rgba(17,24,39,.07); }
+  .compare-table { width: 100%; min-width: 820px; border-collapse: collapse; font-size: .94rem; }
+  .compare-table caption { padding: 1rem; text-align: left; color: #536075; font-size: .84rem; }
+  .compare-table th, .compare-table td { padding: .9rem 1rem; border-bottom: 1px solid #e4e7ec; text-align: left; vertical-align: top; line-height: 1.55; }
+  .compare-table thead th { background: #121a2b; color: #fff; font-size: 1rem; }
+  .compare-table thead th:first-child { border-radius: .9rem 0 0 0; }
+  .compare-table thead th:last-child { border-radius: 0 .9rem 0 0; }
+  .compare-table tbody th { width: 22%; background: #f7f8fa; color: #273248; font-weight: 800; }
+  .compare-table tr:last-child th, .compare-table tr:last-child td { border-bottom: 0; }
+  .compare-best { color: #8f1821; font-weight: 800; }
+  .compare-note { max-width: 900px; margin-top: 1rem; color: #5b6576; font-size: .83rem; line-height: 1.65; }
+  .compare-methods { display: grid; gap: 1rem; margin-top: 2rem; }
+  .compare-card { padding: 1.55rem; border: 1px solid #dce2e9; border-radius: 1rem; background: #fff; box-shadow: 0 10px 28px rgba(17,24,39,.055); }
+  .compare-card h3 { margin: 0 0 .7rem; color: #172033; font-size: 1.4rem; }
+  .compare-card p { color: #566176; line-height: 1.7; }
+  .compare-card ul { margin: 1rem 0 0; padding-left: 1.2rem; color: #4e596c; line-height: 1.75; }
+  .compare-balanced { display: grid; gap: 2rem; align-items: center; }
+  .compare-balanced img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 1rem; }
+  .compare-shop-grid { display: grid; gap: 1rem; margin-top: 2rem; }
+  .compare-shop { padding: 1.35rem; border: 1px solid rgba(255,255,255,.16); border-radius: 1rem; background: rgba(255,255,255,.06); }
+  .compare-shop h3 { margin: 0 0 .45rem; color: #fff; font-size: 1.25rem; }
+  .compare-shop p { color: #cbd5e1; line-height: 1.6; }
+  .compare-shop a { color: #ffd18a; font-weight: 800; text-underline-offset: 3px; }
+  .compare-faqs { display: grid; gap: .75rem; margin-top: 2rem; }
+  .compare-faqs details { padding: 1.1rem 1.2rem; border: 1px solid #dce2e9; border-radius: .8rem; background: #fff; }
+  .compare-faqs summary { cursor: pointer; color: #172033; font-weight: 850; }
+  .compare-faqs p { margin: .75rem 0 .1rem; color: #536075; line-height: 1.7; }
+  .compare-cta { display: grid; gap: 1.5rem; align-items: center; padding: clamp(1.6rem, 5vw, 2.7rem); border-radius: 1.25rem; background: linear-gradient(135deg, #f7e7e8, #fff5e6); }
+  .compare-cta h2 { margin-top: 0; }
+  .compare-cta p { color: #4e596c; line-height: 1.7; }
+  .compare-contact { padding: 0 0 .5rem; }
+  @media (min-width: 760px) {
+    .compare-hero-grid, .compare-balanced { grid-template-columns: 1.08fr .92fr; }
+    .compare-methods, .compare-shop-grid { grid-template-columns: repeat(3, 1fr); }
+    .compare-cta { grid-template-columns: 1fr auto; }
+  }
+</style>
+
+<article class="compare-page">
+  <div class="compare-wrap compare-breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a> <span aria-hidden="true">/</span> <span>DTG &amp; DTF vs Screen Printing</span>
+  </div>
+
+  <header class="compare-hero">
+    <div class="compare-wrap compare-hero-grid">
+      <div>
+        <p class="compare-eyebrow">A clear custom-shirt comparison</p>
+        <h1>{{ h1 }}</h1>
+        <p class="compare-lead">Image On does not offer screen printing. For most orders under about 50 pieces, DTG or DTF is typically faster and less expensive because there are no separate screens to prepare for each ink color.</p>
+        <p class="compare-callout"><strong>Need shirts today?</strong> Same-day service may be available at our Santee, Downtown San Diego, and Oceanside shops. Artwork readiness, blank-garment availability, quantity, and current production capacity all affect timing, so contact your preferred shop first.</p>
+        <div class="compare-actions">
+          <a class="compare-btn" href="#quote">Request a quote</a>
+          <a class="compare-btn compare-btn--light" href="/designer/">Start your design</a>
+        </div>
+      </div>
+      <img src="/assets/seo-2/dtf-work-shirt-printing-santee.webp" width="1440" height="811" alt="Full-color DTF transfer positioned on a custom black t-shirt" loading="eager" fetchpriority="high" decoding="async">
+    </div>
+  </header>
+
+  <section class="compare-section" id="comparison">
+    <div class="compare-wrap">
+      <span class="compare-kicker">Side-by-side</span>
+      <h2>DTG vs. DTF vs. screen printing</h2>
+      <p class="compare-intro">There is no single best method for every job. Quantity, artwork, garment fabric, deadline, and desired feel determine which process makes the most sense.</p>
+
+      <div class="compare-table-scroll">
+        <table class="compare-table">
+          <caption>General comparison for custom apparel. Exact results and pricing vary by artwork, garment, placement, and production requirements.</caption>
+          <thead>
+            <tr><th scope="col">Factor</th><th scope="col">DTG</th><th scope="col">DTF</th><th scope="col">Screen printing</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Minimum order</th><td class="compare-best">No minimum</td><td class="compare-best">No minimum</td><td>Often has a practical minimum because of setup</td></tr>
+            <tr><th scope="row">Setup fees</th><td>Usually low</td><td>Usually low</td><td>Commonly charged by design and color</td></tr>
+            <tr><th scope="row">Turnaround</th><td class="compare-best">Same-day may be available</td><td class="compare-best">Same-day may be available</td><td>Usually requires more setup time</td></tr>
+            <tr><th scope="row">Colors and photo detail</th><td>Full color, gradients, and fine photo detail</td><td>Full color, bright whites, gradients, and fine detail</td><td>Excellent spot colors; photo work needs more complex separations and setup</td></tr>
+            <tr><th scope="row">Estimated cost at 1 piece*</th><td class="compare-best">About $25</td><td class="compare-best">About $25</td><td>Usually not economical for one shirt</td></tr>
+            <tr><th scope="row">Estimated cost at 12 pieces*</th><td class="compare-best">About $18 each</td><td class="compare-best">About $18 each</td><td>Setup can keep the per-shirt price higher, especially with multiple colors</td></tr>
+            <tr><th scope="row">Estimated cost at 100 pieces*</th><td>About $15 each</td><td>About $15 each</td><td class="compare-best">Can be the lowest-cost choice for a simple one- or two-color design</td></tr>
+            <tr><th scope="row">Feel on fabric</th><td>Soft and breathable, especially on light cotton garments</td><td>Smooth, slightly raised transfer feel; large solid areas feel less breathable</td><td>Varies by ink and coverage, from soft water-based prints to a heavier ink layer</td></tr>
+            <tr><th scope="row">Durability</th><td>Good when properly cured and cared for</td><td>Very good when properly applied and cared for</td><td>Excellent when properly printed and cured</td></tr>
+            <tr><th scope="row">Best fabric matches</th><td>Cotton and cotton-rich blends</td><td>Cotton, polyester, blends, and many heat-compatible items</td><td>Many fabrics when the correct ink system is used</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="compare-note" id="pricing-note">*Illustrative Image On estimates use the site's current pricing model for a standard $8 shirt with one large decoration: $25 at one piece, $18 each at 12, and $15 each at 100. Dark garments, extra placements, premium blanks, oversized artwork, special handling, taxes, and other project details can change the final quote. Image On does not quote or provide screen printing.</p>
+    </div>
+  </section>
+
+  <section class="compare-section compare-section--soft">
+    <div class="compare-wrap">
+      <span class="compare-kicker">Digital apparel options</span>
+      <h2>Choose the method that fits the artwork and garment</h2>
+      <div class="compare-methods">
+        <article class="compare-card">
+          <h3>What is DTG?</h3>
+          <p>Direct-to-garment printing applies textile ink directly to the shirt. It is especially effective for cotton and cotton-rich garments when you want a soft print with full color, shading, gradients, or photo-quality detail.</p>
+          <ul><li>No minimum order</li><li>Soft feel on cotton</li><li>Strong choice for photographs and detailed art</li></ul>
+        </article>
+        <article class="compare-card">
+          <h3>What is DTF?</h3>
+          <p>Direct-to-film printing creates the design on transfer film, then applies it with heat. It produces bright, durable artwork and works across more material types than a typical DTG project.</p>
+          <ul><li>Cotton, polyester, and blends</li><li>Useful for shirts, compatible bags, and pressable hat styles</li><li>Full color with no minimum order</li></ul>
+        </article>
+        <article class="compare-card">
+          <h3>Which is better for my order?</h3>
+          <p>Choose based on the shirt fabric, graphic, placement, quantity, and deadline. DTG often wins for a soft photo print on cotton; DTF often wins when you need fabric flexibility, bright opacity, or unusual placement options.</p>
+          <ul><li>Send the artwork first</li><li>Choose garments after discussing the process</li><li>Confirm timing before placing a rush order</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="compare-section">
+    <div class="compare-wrap compare-balanced">
+      <div>
+        <span class="compare-kicker">The honest answer</span>
+        <h2>When screen printing makes more sense</h2>
+        <p class="compare-intro">Screen printing can be the better production method for a very large run using one or two solid ink colors. Once the screens are prepared, repeating the same simple design across hundreds of identical garments can bring the unit price down.</p>
+        <p class="compare-intro">It can also be a strong fit when a project requires a particular specialty ink or a traditional printed finish. Image On does not provide that process, but we would rather explain the tradeoff clearly than recommend the wrong method for your order.</p>
+        <p><a href="/services/custom-t-shirts/">Explore Image On's custom T-shirt printing services →</a></p>
+      </div>
+      <img src="/assets/seo-2/dtg-photo-t-shirt-printing-santee.webp" width="1440" height="960" alt="Detailed full-color artwork printed directly onto a cotton t-shirt" loading="lazy" decoding="async">
+    </div>
+  </section>
+
+  <section class="compare-section compare-section--dark" id="same-day">
+    <div class="compare-wrap">
+      <span class="compare-kicker">Need it today?</span>
+      <h2>Ask about same-day custom shirts in San Diego County</h2>
+      <p class="compare-intro">Call before visiting with a deadline. Same-day availability depends on print-ready artwork, in-stock garments, order size, decoration method, and the production queue at each location.</p>
+      <div class="compare-shop-grid">
+        <article class="compare-shop"><h3>Santee</h3><p>East County custom apparel support at Image On's Santee shop.</p><a href="/city/santee/">Visit the Santee shop page →</a></article>
+        <article class="compare-shop"><h3>Downtown San Diego</h3><p>A convenient option for central San Diego businesses, events, and visitors.</p><a href="/city/downtown-san-diego/">Visit the Downtown shop page →</a></article>
+        <article class="compare-shop"><h3>Oceanside</h3><p>Custom-shirt service for North County customers and coastal communities.</p><a href="/city/oceanside/">Visit the Oceanside shop page →</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="compare-section compare-section--soft">
+    <div class="compare-wrap">
+      <span class="compare-kicker">Frequently asked questions</span>
+      <h2>DTG, DTF, and same-day shirt questions</h2>
+      <div class="compare-faqs">
+        <details open><summary>Is DTG as good as screen printing?</summary><p>Yes, for the right project. DTG is an excellent choice for cotton shirts, small or medium quantities, photo-quality artwork, gradients, and a soft feel. Screen printing may be more economical for very large runs with one or two simple colors.</p></details>
+        <details><summary>Does DTF crack or peel?</summary><p>A properly applied DTF transfer is designed to be durable, but incorrect application, excessive heat, harsh chemicals, and repeated high-temperature drying can shorten its life. Wash inside out in cool water and follow the shop's care instructions.</p></details>
+        <details><summary>Can I get custom shirts same day in San Diego?</summary><p>Same-day DTG or DTF service may be available through Image On's Santee, Downtown San Diego, and Oceanside shops. Availability depends on artwork, garment stock, quantity, placement, and the current production schedule, so call the preferred location first.</p></details>
+        <details><summary>What's the minimum order?</summary><p>Image On does not require a minimum for DTG or DTF custom shirts. You can ask about one shirt, a dozen, or a larger group order. Pricing per shirt generally improves as quantity increases.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="compare-section">
+    <div class="compare-wrap">
+      <div class="compare-cta">
+        <div><h2>Ready to make your shirts?</h2><p>Build your artwork in the online designer, or share the design, garment, quantity, placement, and deadline for a project quote.</p></div>
+        <div class="compare-actions"><a class="compare-btn" href="/designer/">Open the designer</a><a class="compare-btn compare-btn--light" style="color:#8f1821;border-color:#8f1821" href="#quote">Request a quote</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="compare-contact" id="quote">
+    <div class="compare-wrap">{% include "partials/contact-form-skinny.njk" %}</div>
+  </section>
+</article>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Is DTG as good as screen printing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, for the right project. DTG is an excellent choice for cotton shirts, small or medium quantities, photo-quality artwork, gradients, and a soft feel. Screen printing may be more economical for very large runs with one or two simple colors." } },
+    { "@type": "Question", "name": "Does DTF crack or peel?", "acceptedAnswer": { "@type": "Answer", "text": "A properly applied DTF transfer is designed to be durable, but incorrect application, excessive heat, harsh chemicals, and repeated high-temperature drying can shorten its life. Wash inside out in cool water and follow the shop's care instructions." } },
+    { "@type": "Question", "name": "Can I get custom shirts same day in San Diego?", "acceptedAnswer": { "@type": "Answer", "text": "Same-day DTG or DTF service may be available through Image On's Santee, Downtown San Diego, and Oceanside shops. Availability depends on artwork, garment stock, quantity, placement, and the current production schedule, so call the preferred location first." } },
+    { "@type": "Question", "name": "What's the minimum order?", "acceptedAnswer": { "@type": "Answer", "text": "Image On does not require a minimum for DTG or DTF custom shirts. You can ask about one shirt, a dozen, or a larger group order. Pricing per shirt generally improves as quantity increases." } }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "DTG and DTF Custom Shirt Printing",
+  "serviceType": "DTG and DTF custom T-shirt printing",
+  "url": "{{ site.url }}{{ page.url }}",
+  "image": "{{ site.url }}{{ socialImage }}",
+  "provider": { "@type": "LocalBusiness", "@id": "{{ site.url }}/#localBusiness", "name": "ImageOn Custom T-shirts and Embroidery", "telephone": "+16193120941" },
+  "areaServed": { "@type": "AdministrativeArea", "name": "San Diego County, California" }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site.url }}/" },
+    { "@type": "ListItem", "position": 2, "name": "DTG & DTF vs Screen Printing", "item": "{{ site.url }}{{ page.url }}" }
+  ]
+}
+</script>

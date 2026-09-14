@@ -1,0 +1,217 @@
+<style>
+  .seo2-page { color: #172033; background: #fff; }
+  .seo2-wrap { width: min(1120px, calc(100% - 2rem)); margin-inline: auto; }
+  .seo2-breadcrumbs { padding: 1rem 0; color: #596579; font-size: .9rem; }
+  .seo2-breadcrumbs a { color: #b4232d; text-decoration: underline; text-underline-offset: 3px; }
+  .seo2-hero { padding: clamp(2.5rem, 7vw, 5.5rem) 0; background: linear-gradient(135deg, #f8f3ed 0%, #fff 50%, #edf4f7 100%); overflow: hidden; }
+  .seo2-hero-grid { display: grid; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+  .seo2-eyebrow { margin: 0 0 .8rem; color: #b4232d; font-size: .78rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+  .seo2-page h1 { max-width: 760px; margin: 0; color: #111827; font-size: clamp(2.35rem, 6vw, 4.6rem); line-height: .98; letter-spacing: -.045em; }
+  .seo2-lead { max-width: 650px; margin: 1.35rem 0 0; color: #465166; font-size: clamp(1.05rem, 2vw, 1.25rem); line-height: 1.7; }
+  .seo2-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.75rem; }
+  .seo2-button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: .75rem 1.15rem; border: 2px solid #b4232d; border-radius: 999px; background: #b4232d; color: #fff; font-weight: 800; text-decoration: none; transition: transform .2s ease, background .2s ease; }
+  .seo2-button:hover { transform: translateY(-2px); background: #8f1821; }
+  .seo2-button--ghost { background: transparent; color: #8f1821; }
+  .seo2-button--ghost:hover { background: #fff; }
+  .seo2-hero-media { position: relative; }
+  .seo2-hero-media::before { content: ""; position: absolute; inset: -14px 18px 18px -14px; border: 2px solid #d6a64a; border-radius: 1.5rem; }
+  .seo2-hero-media img { position: relative; display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 1.25rem; box-shadow: 0 24px 60px rgba(17,24,39,.2); }
+  .seo2-trust { background: #121a2b; color: #fff; }
+  .seo2-trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .seo2-trust-item { padding: 1.1rem .7rem; text-align: center; border-right: 1px solid rgba(255,255,255,.14); }
+  .seo2-trust-item:last-child { border-right: 0; }
+  .seo2-trust-item b { display: block; font-size: .96rem; }
+  .seo2-trust-item span { color: #cbd5e1; font-size: .78rem; }
+  .seo2-section { padding: clamp(3.5rem, 7vw, 6rem) 0; }
+  .seo2-section--soft { background: #f5f7f9; }
+  .seo2-kicker { color: #b4232d; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; font-size: .75rem; }
+  .seo2-page h2 { max-width: 780px; margin: .55rem 0 1.2rem; color: #111827; font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.1; letter-spacing: -.03em; }
+  .seo2-intro { max-width: 790px; color: #4b5563; font-size: 1.08rem; line-height: 1.78; }
+  .seo2-card-grid { display: grid; gap: 1rem; margin-top: 2rem; }
+  .seo2-card { padding: 1.5rem; border: 1px solid #dfe4ea; border-radius: 1rem; background: #fff; box-shadow: 0 10px 30px rgba(17,24,39,.055); }
+  .seo2-card-number { display: inline-grid; place-items: center; width: 2.1rem; height: 2.1rem; margin-bottom: 1rem; border-radius: 50%; background: #f9e8e9; color: #9d1d27; font-weight: 900; }
+  .seo2-card h3 { margin: 0 0 .65rem; color: #182235; font-size: 1.22rem; }
+  .seo2-card p, .seo2-card li { color: #566176; line-height: 1.67; }
+  .seo2-card ul { padding-left: 1.1rem; margin: .75rem 0 0; }
+  .seo2-split { display: grid; gap: 2rem; align-items: start; }
+  .seo2-checks { display: grid; gap: .75rem; padding: 0; margin: 1.5rem 0 0; list-style: none; }
+  .seo2-checks li { position: relative; padding-left: 1.8rem; color: #455166; line-height: 1.6; }
+  .seo2-checks li::before { content: "✓"; position: absolute; left: 0; top: 0; color: #b4232d; font-weight: 900; }
+  .seo2-local { padding: 1.65rem; border-radius: 1.25rem; background: #121a2b; color: #fff; }
+  .seo2-local h3 { margin: 0 0 .75rem; font-size: 1.4rem; }
+  .seo2-local p { color: #d8dee8; line-height: 1.7; }
+  .seo2-local a { color: #ffd482; }
+  .seo2-faqs { display: grid; gap: .75rem; margin-top: 2rem; }
+  .seo2-faqs details { padding: 1.1rem 1.2rem; border: 1px solid #dfe4ea; border-radius: .8rem; background: #fff; }
+  .seo2-faqs summary { cursor: pointer; color: #182235; font-weight: 800; }
+  .seo2-faqs p { margin: .8rem 0 .15rem; color: #556176; line-height: 1.7; }
+  .seo2-related { display: grid; gap: .8rem; margin-top: 1.5rem; }
+  .seo2-related a { display: block; padding: 1rem 1.1rem; border-left: 4px solid #b4232d; background: #fff; color: #253047; font-weight: 750; text-decoration: none; box-shadow: 0 8px 20px rgba(17,24,39,.05); }
+  .seo2-related a:hover { color: #9d1d27; }
+  .seo2-contact { padding: clamp(3.5rem, 7vw, 5rem) 0 .5rem; background: #fff; }
+  @media (min-width: 760px) {
+    .seo2-hero-grid, .seo2-split { grid-template-columns: 1.02fr .98fr; }
+    .seo2-card-grid { grid-template-columns: repeat(3, 1fr); }
+    .seo2-related { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .seo2-trust-grid { grid-template-columns: 1fr; }
+    .seo2-trust-item { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.14); }
+    .seo2-trust-item:last-child { border-bottom: 0; }
+  }
+</style>
+
+<article class="seo2-page">
+  <div class="seo2-wrap seo2-breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a> <span aria-hidden="true">/</span> <span>{{ h1 }}</span>
+  </div>
+
+  <header class="seo2-hero">
+    <div class="seo2-wrap seo2-hero-grid">
+      <div>
+        <p class="seo2-eyebrow">Local custom apparel · Santee, California</p>
+        <h1>{{ h1 }}</h1>
+        <p class="seo2-lead">{{ heroLead }}</p>
+        <div class="seo2-actions">
+          <a class="seo2-button" href="#quote">Request a free quote</a>
+          <a class="seo2-button seo2-button--ghost" href="tel:+16193120941">Call (619) 312-0941</a>
+        </div>
+      </div>
+      <div class="seo2-hero-media">
+        <img src="{{ socialImage }}" width="1440" height="900" alt="{{ imageAlt }}" loading="eager" fetchpriority="high" decoding="async">
+      </div>
+    </div>
+  </header>
+
+  <div class="seo2-trust" aria-label="Available services">
+    <div class="seo2-wrap seo2-trust-grid">
+      {% for item in trustItems %}
+      <div class="seo2-trust-item"><b>{{ item.title }}</b><span>{{ item.text }}</span></div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <section class="seo2-section">
+    <div class="seo2-wrap">
+      <span class="seo2-kicker">Made for your project</span>
+      <h2>{{ introHeading }}</h2>
+      <p class="seo2-intro">{{ introText }}</p>
+      <div class="seo2-card-grid">
+        {% for card in cards %}
+        <div class="seo2-card">
+          <span class="seo2-card-number">{{ loop.index }}</span>
+          <h3>{{ card.title }}</h3>
+          <p>{{ card.text }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="seo2-section seo2-section--soft">
+    <div class="seo2-wrap seo2-split">
+      <div>
+        <span class="seo2-kicker">A straightforward process</span>
+        <h2>{{ processHeading }}</h2>
+        <p class="seo2-intro">{{ processText }}</p>
+        <ul class="seo2-checks">
+          {% for step in processSteps %}<li>{{ step }}</li>{% endfor %}
+        </ul>
+      </div>
+      <aside class="seo2-local">
+        <h3>Visit Image On in Santee</h3>
+        <p>Bring your artwork, idea, or garment list to our local shop. We can talk through the right decoration method, placement, apparel choices, and project details.</p>
+        <p><a href="https://maps.app.goo.gl/wpLNPCe1UeuvVNkK7">235 Town Center Parkway, Santee, CA 92071</a><br><a href="tel:+16193120941">(619) 312-0941</a></p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="seo2-section">
+    <div class="seo2-wrap">
+      <span class="seo2-kicker">Questions before you order</span>
+      <h2>{{ faqHeading }}</h2>
+      <div class="seo2-faqs">
+        {% for faq in faqs %}
+        <details{% if loop.first %} open{% endif %}>
+          <summary>{{ faq.question }}</summary>
+          <p>{{ faq.answer }}</p>
+        </details>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="seo2-section seo2-section--soft">
+    <div class="seo2-wrap">
+      <span class="seo2-kicker">Explore related services</span>
+      <h2>More custom apparel options in Santee</h2>
+      <div class="seo2-related">
+        {% set relatedPages = [
+          { url: '/custom-t-shirt-printing-in-santee-ca/', label: 'Custom T-Shirt Printing in Santee, CA' },
+          { url: '/dtf-work-shirt-printing-in-santee-ca/', label: 'DTF Work Shirt Printing in Santee, CA' },
+          { url: '/dtg-photo-t-shirt-printing-in-santee-ca/', label: 'DTG Photo T-Shirt Printing in Santee, CA' },
+          { url: '/custom-hat-embroidery-in-santee-ca/', label: 'Custom Hat Embroidery in Santee, CA' },
+          { url: '/custom-team-shirts-and-hats-in-santee-ca/', label: 'Custom Team Shirts and Hats in Santee, CA' }
+        ] %}
+        {% for related in relatedPages %}{% if related.url != page.url %}<a href="{{ related.url }}">{{ related.label }} →</a>{% endif %}{% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="seo2-contact" id="quote">
+    <div class="seo2-wrap">
+      {% include "partials/contact-form-skinny.njk" %}
+    </div>
+  </section>
+</article>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "{{ h1 }}",
+  "serviceType": "{{ schemaServiceType }}",
+  "url": "{{ site.url }}{{ page.url }}",
+  "image": "{{ site.url }}{{ socialImage }}",
+  "provider": {
+    "@type": "LocalBusiness",
+    "@id": "{{ site.url }}/#localBusiness",
+    "name": "ImageOn Custom T-shirts and Embroidery",
+    "telephone": "+16193120941",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "235 Town Center Parkway",
+      "addressLocality": "Santee",
+      "addressRegion": "CA",
+      "postalCode": "92071",
+      "addressCountry": "US"
+    }
+  },
+  "areaServed": { "@type": "City", "name": "Santee" }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for faq in faqs %}{
+      "@type": "Question",
+      "name": {{ faq.question | dump | safe }},
+      "acceptedAnswer": { "@type": "Answer", "text": {{ faq.answer | dump | safe }} }
+    }{% if not loop.last %},{% endif %}{% endfor %}
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site.url }}/" },
+    { "@type": "ListItem", "position": 2, "name": {{ h1 | dump | safe }}, "item": "{{ site.url }}{{ page.url }}" }
+  ]
+}
+</script>

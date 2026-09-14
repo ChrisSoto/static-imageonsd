@@ -25,6 +25,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <meta name="description" content="{{ description | safe }}">
   <title>{{ title | safe }}</title>
 
+{% if socialImage %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ title | safe }}">
+  <meta property="og:description" content="{{ description | safe }}">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:image" content="{{ site.url }}{{ socialImage }}">
+  <meta property="og:image:alt" content="{{ imageAlt | safe }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ title | safe }}">
+  <meta name="twitter:description" content="{{ description | safe }}">
+  <meta name="twitter:image" content="{{ site.url }}{{ socialImage }}">
+{% endif %}
+
   {% if '/blog/' in page.url %}
   <link rel="canonical" href="{{site.url}}/blog/" />
   {% else %}

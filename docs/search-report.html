@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image On Search Report, September 2026</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#f6f7f9; --surface:#ffffff; --ink:#17212c; --muted:#56616d; --line:#dde2e8;
+  --accent:#1f6f8b; --accent-soft:#e2eff4; --thread:#b07a1f; --bad:#b3413a; --good:#2e7d55;
+  --display:"Bricolage Grotesque",system-ui,sans-serif; --body:"Source Sans 3",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#12181f; --surface:#1a222b; --ink:#e6ebf0; --muted:#9aa6b2; --line:#2c3743;
+  --accent:#6cb8d3; --accent-soft:#1d3440; --thread:#e0ad55; --bad:#e3847c; --good:#6cc49a;}}
+:root[data-theme="dark"]{
+  --ground:#12181f; --surface:#1a222b; --ink:#e6ebf0; --muted:#9aa6b2; --line:#2c3743;
+  --accent:#6cb8d3; --accent-soft:#1d3440; --thread:#e0ad55; --bad:#e3847c; --good:#6cc49a;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font:17px/1.6 var(--body);padding:48px 20px 80px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(2rem,5vw,2.9rem)}
+h2{font-size:1.65rem}
+h3{font-size:1.15rem}
+p{margin:0;max-width:65ch}
+.eyebrow{font:500 .75rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--thread)}
+header{display:flex;flex-direction:column;gap:14px;border-bottom:2px solid var(--ink);padding-bottom:28px}
+.meta{font:.85rem var(--mono);color:var(--muted)}
+section{display:flex;flex-direction:column;gap:18px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.kpi{background:var(--surface);padding:16px 18px;display:flex;flex-direction:column;gap:2px}
+.kpi b{font:600 1.6rem var(--display);font-variant-numeric:tabular-nums}
+.kpi span{font-size:.85rem;color:var(--muted)}
+@media (max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.callout{background:var(--accent-soft);border-radius:6px;padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+.callout strong{color:var(--accent)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--ground)}
+tr:last-child td{border-bottom:0}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+th.n{text-align:right}
+.bad{color:var(--bad);font-weight:600}.good{color:var(--good);font-weight:600}
+code{font:.85em var(--mono);background:var(--accent-soft);padding:1px 5px;border-radius:3px;overflow-wrap:anywhere}
+ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:8px;max-width:68ch}
+.trend{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;align-items:end;height:170px;padding:10px 4px 0;border-bottom:1px solid var(--line)}
+.bar{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%}
+.bar i{display:block;width:100%;max-width:56px;background:var(--accent);border-radius:3px 3px 0 0}
+.bar small{font:.72rem var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.axis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;font:.75rem var(--mono);color:var(--muted);text-align:center}
+.plan{list-style:none;padding:0;counter-reset:s;gap:0;max-width:none}
+.plan li{counter-increment:s;display:grid;grid-template-columns:44px 1fr auto;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.plan li::before{content:counter(s);font:600 1.3rem var(--display);color:var(--thread)}
+.plan em{font:normal .75rem var(--mono);color:var(--muted);white-space:nowrap}
+@media (max-width:560px){.plan li{grid-template-columns:32px 1fr}.plan em{grid-column:2}}
+footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Google Search Console review</span>
+  <h1>How Image On shows up in Google Search</h1>
+  <p>How people find imageonsd.com on Google, where you're missing out, and the changes likely to bring in the most new customers for the least work.</p>
+  <span class="meta">Data: March 13 – September 12, 2026 · Web search · Prepared September 14, 2026</span>
+</header>
+
+<section>
+  <span class="eyebrow">At a glance</span>
+  <h2>People see you on Google. Few click, unless they already know you.</h2>
+  <div class="kpis">
+    <div class="kpi"><b>167k</b><span>times shown in Google</span></div>
+    <div class="kpi"><b>1,365</b><span>clicks to the site</span></div>
+    <div class="kpi"><b>0.8%</b><span>click-through rate</span></div>
+    <div class="kpi"><b>73%</b><span>of clicks land on the homepage</span></div>
+  </div>
+  <p>Most clicks come from people searching your name, like “image on santee”. They clicked about 1 time in 9. People searching for a service, like “embroidery near me”, saw you about <strong>100,000 times</strong> but clicked only about 270 times. That second group is where the growth is.</p>
+  <div class="tbl"><table>
+    <tr><th>Search type</th><th class="n">Shown</th><th class="n">Clicks</th></tr>
+    <tr><td>Your name (“image on”, “imageon santee”…)</td><td class="n">2,237</td><td class="n">244</td></tr>
+    <tr><td>A service (“embroidery san diego”, “t shirt printing”…)</td><td class="n">99,766</td><td class="n">270</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <span class="eyebrow">Trend</span>
+  <h2>Google is showing you more often, but lower on the page</h2>
+  <p>Monthly impressions doubled over six months, but your average position slipped from about 21 to 34, and clicks have been flat since April. Google is trying the site out on more searches. The pages aren't strong enough yet to hold a spot near the top.</p>
+  <div>
+    <div class="trend" role="img" aria-label="Monthly impressions, March to August 2026">
+      <div class="bar"><small>16.3k</small><i style="height:44%"></i></div>
+      <div class="bar"><small>22.4k</small><i style="height:60%"></i></div>
+      <div class="bar"><small>26.7k</small><i style="height:72%"></i></div>
+      <div class="bar"><small>27.5k</small><i style="height:74%"></i></div>
+      <div class="bar"><small>26.3k</small><i style="height:71%"></i></div>
+      <div class="bar"><small>33.6k</small><i style="height:90%"></i></div>
+    </div>
+    <div class="axis"><span>Mar*</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span></div>
+  </div>
+  <div class="tbl"><table>
+    <tr><th>Month</th><th class="n">Shown</th><th class="n">Clicks</th><th class="n">Avg. position</th></tr>
+    <tr><td>March*</td><td class="n">16,345</td><td class="n">141</td><td class="n">21.4</td></tr>
+    <tr><td>April</td><td class="n">22,353</td><td class="n">228</td><td class="n">24.7</td></tr>
+    <tr><td>May</td><td class="n">26,673</td><td class="n">267</td><td class="n">28.1</td></tr>
+    <tr><td>June</td><td class="n">27,466</td><td class="n">186</td><td class="n">30.9</td></tr>
+    <tr><td>July</td><td class="n">26,340</td><td class="n">217</td><td class="n">30.4</td></tr>
+    <tr><td>August</td><td class="n">33,559</td><td class="n">240</td><td class="n">34.4</td></tr>
+  </table></div>
+  <p class="meta">* March starts on the 13th. Position 1–10 is page one of Google; lower numbers are better.</p>
+  <div class="callout">
+    <strong>Why desktop shows twice the impressions of mobile, with the same clicks</strong>
+    <p>Desktop: 113k impressions at an average position of 34. Mobile: 54k impressions at position 19. Both got about 675 clicks. On desktop, Google counts it as an impression even when you appear far down the results (pages 3–7), where almost nobody looks. Mobile better reflects how you really rank, and there it does fine. Nothing is broken.</p>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Keyword focus · Embroidery</span>
+  <h2>Embroidery: your own pages compete with each other</h2>
+  <div class="kpis">
+    <div class="kpi"><b>34.2k</b><span>times shown</span></div>
+    <div class="kpi"><b>98</b><span>clicks</span></div>
+    <div class="kpi"><b>0.29%</b><span>click-through rate</span></div>
+    <div class="kpi"><b>37</b><span>avg. position</span></div>
+  </div>
+  <p>The site has <strong>two general embroidery pages</strong> that compete for the same searches, and Google ranks neither well. Your homepage ends up standing in for embroidery instead of the page built for it.</p>
+  <div class="tbl"><table>
+    <tr><th>Page</th><th class="n">Shown</th><th class="n">Position</th><th class="n">Clicks</th></tr>
+    <tr><td>Homepage</td><td class="n">8,623</td><td class="n good">15.7</td><td class="n">62</td></tr>
+    <tr><td><code>/custom-hat-embroidery-san-diego/</code></td><td class="n">7,093</td><td class="n">22.2</td><td class="n">21</td></tr>
+    <tr><td><code>/services/embroidery/</code></td><td class="n">11,637</td><td class="n bad">60.7</td><td class="n">4</td></tr>
+    <tr><td><code>/custom-embroidery-services/</code></td><td class="n">3,480</td><td class="n bad">65.8</td><td class="n">1</td></tr>
+    <tr><td><code>/services/embroidery/santee/</code></td><td class="n">272</td><td class="n good">9.8</td><td class="n">2</td></tr>
+    <tr><td><code>/services/embroidery/downtown-san-diego/</code></td><td class="n">4,903</td><td class="n bad">48.0</td><td class="n">1</td></tr>
+    <tr><td><code>/services/embroidery/oceanside/</code></td><td class="n">1,642</td><td class="n bad">51.4</td><td class="n">1</td></tr>
+  </table></div>
+  <h3>Searches close to page one</h3>
+  <div class="tbl"><table>
+    <tr><th>Search</th><th class="n">Shown</th><th class="n">Position</th><th>What to do</th></tr>
+    <tr><td>where can i get a hat customized with embroidery near me?</td><td class="n">2,093</td><td class="n">10.1</td><td>Add this exact question as an FAQ on the hat page</td></tr>
+    <tr><td>same day embroidery san diego</td><td class="n">313</td><td class="n">7.1</td><td>Your best converter. Say “same-day” in page titles</td></tr>
+    <tr><td>hat embroidery san diego (+ variant)</td><td class="n">639</td><td class="n">11–13</td><td>Strengthen the hat page</td></tr>
+    <tr><td>embroidery san diego / custom / services (variants)</td><td class="n">~2,700</td><td class="n">14–18</td><td>Target with the merged embroidery page</td></tr>
+    <tr><td>san diego embroidery and printing</td><td class="n">343</td><td class="n">23.1</td><td>Use this wording in the homepage title</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <span class="eyebrow">Keyword focus · Custom t-shirts</span>
+  <h2>Custom t-shirts: Google barely connects you to the topic</h2>
+  <div class="kpis">
+    <div class="kpi"><b>1,182</b><span>times shown*</span></div>
+    <div class="kpi"><b>2</b><span>clicks</span></div>
+    <div class="kpi"><b>10.8 → 32</b><span>position, Mar → Aug</span></div>
+    <div class="kpi"><b>45</b><span>times the t-shirt page was shown</span></div>
+  </div>
+  <p>The same duplicate problem again: <code>/services/custom-t-shirts/</code> and <code>/custom-t-shirt-printing/</code> split the topic, and both rank around 55. The main t-shirt page was shown only 45 times in six months. The homepage and even the Oceanside page get picked instead.</p>
+  <p>Several searches already reach page one but <strong>get no clicks</strong>, which usually means the page title doesn't match what people want. People searching “store” or “shop” want a place they can walk into, and you have three.</p>
+  <div class="tbl"><table>
+    <tr><th>Search</th><th class="n">Shown</th><th class="n">Position</th><th class="n">Clicks</th></tr>
+    <tr><td>best custom t-shirt store san diego</td><td class="n">79</td><td class="n good">6.6</td><td class="n bad">0</td></tr>
+    <tr><td>custom t-shirt store san diego</td><td class="n">68</td><td class="n good">8.1</td><td class="n bad">0</td></tr>
+    <tr><td>custom t-shirt printing services near me</td><td class="n">67</td><td class="n good">8.4</td><td class="n bad">0</td></tr>
+    <tr><td>same day custom t-shirts near me</td><td class="n">7</td><td class="n good">7.6</td><td class="n bad">0</td></tr>
+  </table></div>
+  <p class="meta">* Counts searches containing “custom t-shirt” with a hyphen. Spellings like “custom t shirts san diego” (359 more impressions) aren't included.</p>
+</section>
+
+<section>
+  <span class="eyebrow">Locations</span>
+  <h2>Santee ranks well; Downtown and Oceanside should too</h2>
+  <p>Santee pages land on page one or two. Downtown and Oceanside pages sit around position 40–57, even though both are real shops. <code>/city/oceanside/</code> was shown 33,500 times at position 45.7 and got almost no clicks. Santee likely has the stronger Google Business Profile. Downtown and Oceanside need the same setup.</p>
+  <ul>
+    <li>Give each shop its own Google Business Profile, linked to <em>its own</em> page on the site.</li>
+    <li>On each shop page, show the address, hours, phone number, a map and photos of that shop, matching the profile exactly.</li>
+    <li>Make each shop's city page its main page, and link the service pages for that city (embroidery, engraving…) to it.</li>
+    <li>For areas without a shop (La Jolla, Chula Vista, Coronado…), say “served from our Downtown shop” and link there. Improve or hide the thinnest ones. They rank 59–72 and get no clicks.</li>
+  </ul>
+</section>
+
+<section>
+  <span class="eyebrow">Housekeeping</span>
+  <h2>Technical cleanup</h2>
+  <ul>
+    <li><strong>Test and extra versions of the site are in Google.</strong> <code>staging.</code>, <code>mail.</code> and <code>design.imageonsd.com</code> are competing with the real site. Hide them from Google or password-protect them.</li>
+    <li><strong>Duplicate addresses:</strong> some pages load both with and without a trailing slash (<code>/services/engraving</code> vs <code>/services/engraving/</code>). Redirect one to the other.</li>
+    <li><strong>Stray keyword tags:</strong> Google is matching the site to “embroidery san diego #local #geo #san-diego #high-priority”. Some tool or page is publishing internal keyword notes, and they should be removed.</li>
+    <li><strong>New page in progress:</strong> “DTG &amp; DTF vs. Screen Printing” for people searching screen printing (about 2,200 impressions over six months, some already near page one).</li>
+  </ul>
+</section>
+
+<section>
+  <span class="eyebrow">Action plan</span>
+  <h2>What we'll do, in order</h2>
+  <ol class="plan">
+    <li><span><strong>Merge duplicate pages.</strong> Redirect <code>/custom-embroidery-services/</code> to <code>/services/embroidery/</code>, and <code>/custom-t-shirt-printing/</code> to <code>/services/custom-t-shirts/</code>.</span><em>~1 hr</em></li>
+    <li><span><strong>Remove staging and extra versions from Google</strong>, and fix the duplicate addresses and the stray tags.</span><em>~1 hr</em></li>
+    <li><span><strong>Rewrite page titles and descriptions</strong> with “Same-Day”, “Shop/Store” and “San Diego” wording on the homepage, embroidery, hat and t-shirt pages.</span><em>1–2 hrs</em></li>
+    <li><span><strong>Add the hat embroidery FAQ</strong> for the question shown 2,093 times.</span><em>30 min</em></li>
+    <li><span><strong>Strengthen the embroidery and t-shirt pages</strong> with photos, turnaround times, FAQs and links to all three shops.</span><em>half day</em></li>
+    <li><span><strong>Publish the DTG &amp; DTF vs. Screen Printing page.</strong></span><em>in progress</em></li>
+    <li><span><strong>Set up Google Business Profiles</strong> for Downtown and Oceanside, and update those shop pages.</span><em>ongoing</em></li>
+    <li><span><strong>Improve or hide</strong> the thin pages for areas without a shop.</span><em>ongoing</em></li>
+  </ol>
+  <div class="callout">
+    <strong>How we'll measure it</strong>
+    <p>Give Google 4–6 weeks after the changes. The main signal to watch is <code>/services/embroidery/</code> moving from position ~60 toward the teens, with non-branded clicks rising from the current ~45 a month.</p>
+  </div>
+</section>
+
+<footer>Source: Google Search Console exports for imageonsd.com (full site, plus searches containing “embroidery” and “custom t-shirt”), last 6 months.</footer>
+</div>
+</body>
+</html>
