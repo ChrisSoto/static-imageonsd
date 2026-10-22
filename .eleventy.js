@@ -380,7 +380,13 @@ function loadData(eleventyConfig) {
     return client
       .getEntries({ include: 3, "sys.id": process.env.SEO_LIST_ID })
       .then((page) => {
-        return page.items[0].fields.pages;
+        const mergedPages = new Set([
+          "Custom Embroidery Services",
+          "Custom T-Shirt Printing",
+        ]);
+        return page.items[0].fields.pages.filter(
+          (seoPage) => !mergedPages.has(seoPage.fields.title),
+        );
       });
   });
 }

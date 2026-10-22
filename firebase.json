@@ -18,6 +18,28 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "redirects": [
+      {
+        "source": "/custom-embroidery-services",
+        "destination": "/services/embroidery/",
+        "type": 301
+      },
+      {
+        "source": "/custom-embroidery-services/",
+        "destination": "/services/embroidery/",
+        "type": 301
+      },
+      {
+        "source": "/custom-t-shirt-printing",
+        "destination": "/services/custom-t-shirts/",
+        "type": 301
+      },
+      {
+        "source": "/custom-t-shirt-printing/",
+        "destination": "/services/custom-t-shirts/",
+        "type": 301
+      }
+    ],
     "rewrites": [
       {
         "source": "/api/leads/login",

@@ -4,9 +4,10 @@ permalink: /robots.txt
 
 User-agent: *
 {% if site.env == 'staging' or site.env == 'development' %}
-Disallow: /
+Allow: /
 {% else %}
 Allow: /
 Disallow: /x/*
-{% endif %}
+
 Sitemap: https://imageonsd.com/sitemap.xml
+{%- endif -%}

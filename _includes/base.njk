@@ -21,7 +21,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   {% endif %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+{% if site.env == "staging" or site.env == "development" %}  <meta name="robots" content="noindex, nofollow">
+{% endif %}
   <meta name="description" content="{{ description | safe }}">
   <title>{{ title | safe }}</title>
 

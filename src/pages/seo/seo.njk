@@ -19,3 +19,10 @@ eleventyComputed:
     gallery=page.fields.gallerySection.fields,
     faq=page.fields.faqSection.fields)
 }}
+
+{%- if page.fields.title == "Custom Hat Embroidery San Diego" -%}
+<section class="section mx-4 p-4 mb-16 bg-zinc-50 rounded border" aria-labelledby="hat-shop-locations">
+  <h2 id="hat-shop-locations">Where to get a hat embroidered near you</h2>
+  <p>Discuss hat styles, artwork, and turnaround at our <a href="/city/santee/">Santee</a>, <a href="/city/downtown-san-diego/">Downtown San Diego</a>, or <a href="/city/oceanside/">Oceanside</a> shop. Call first for same-day requests so the team can check stock and production availability.</p>
+</section>
+{%- endif -%}

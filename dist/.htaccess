@@ -53,3 +53,11 @@
     Redirect 301 /san-diego-t-shirt-printing/ https://imageonsd.com/services/custom-t-shirts/san-diego
     
 </IfModule>
+
+# Keep preview and auxiliary hosts out of search results when they share this document root.
+<IfModule mod_setenvif.c>
+    SetEnvIfNoCase Host "^(staging|mail|design)\.imageonsd\.com(:[0-9]+)?$" noncanonical_host=1
+</IfModule>
+<IfModule mod_headers.c>
+    Header always set X-Robots-Tag "noindex, nofollow" env=noncanonical_host
+</IfModule>

@@ -20,19 +20,20 @@ eleventyExcludeFromCollections: true
 {% for page in cityServices %}
   <url>
       <loc>{{ site.url }}/services/{{ page.serviceSlug }}/{{ page.city | slugify }}/</loc>
-      <lastmod>{{ page.sys.updatedAt | w3c }}</lastmod>
   </url>
 {% endfor %}
 
+{% for shopCity in ['Santee', 'Downtown San Diego', 'Oceanside'] %}
+  <url>
+      <loc>{{ site.url }}/city/{{ shopCity | slugify }}/</loc>
+  </url>
+{% endfor %}
 
 {% for page in seoPages %}
-  {% set seoPageSlug = page.fields.title | slugify %}
-  {% if seoPageSlug != 'custom-embroidery-services' and seoPageSlug != 'custom-t-shirt-printing' %}
   <url>
-      <loc>{{ site.url }}/{{ seoPageSlug }}/</loc>
+      <loc>{{ site.url }}/{{ page.fields.title | slugify }}/</loc>
       <lastmod>{{ page.sys.updatedAt | w3c }}</lastmod>
   </url>
-  {% endif %}
 {% endfor %}
 
 {% set localSeoPages = [
