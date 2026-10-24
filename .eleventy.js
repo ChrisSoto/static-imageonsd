@@ -336,7 +336,7 @@ function loadData(eleventyConfig) {
             let cityServices = [];
 
             for (const service of services.items[0].fields.pages) {
-              for (const city of cities.items[0].fields.pages) {
+              for (const city of cities.items[0].fields.pages.filter((city) => city.fields.name.toLowerCase() !== "oceanside")) {
                 cityServices.push(buildCityService(city, service));
               }
             }
@@ -359,7 +359,7 @@ function loadData(eleventyConfig) {
           .then((cities) => {
             let cityData = [];
 
-            for (const city of cities.items[0].fields.pages) {
+            for (const city of cities.items[0].fields.pages.filter((city) => city.fields.name.toLowerCase() !== "oceanside")) {
               cityData.push(buildCityService(city, home.items[0]));
             }
 

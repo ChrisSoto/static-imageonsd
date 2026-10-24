@@ -23,7 +23,7 @@ eleventyExcludeFromCollections: true
   </url>
 {% endfor %}
 
-{% for shopCity in ['Santee', 'Downtown San Diego', 'Oceanside'] %}
+{% for shopCity in ['Santee', 'Downtown San Diego'] %}
   <url>
       <loc>{{ site.url }}/city/{{ shopCity | slugify }}/</loc>
   </url>

@@ -4,12 +4,6 @@
 {%- elif cityService.city == "Downtown San Diego" -%}
   {%- set shopName = "Downtown San Diego" -%}
   {%- set shopSlug = "downtown-san-diego" -%}
-{%- elif cityService.city == "Oceanside" -%}
-  {%- set shopName = "Oceanside" -%}
-  {%- set shopSlug = "oceanside" -%}
-{%- elif cityService.city == "Carmel Mountain" or cityService.city == "Rancho Bernardo" -%}
-  {%- set servingShopName = "Oceanside" -%}
-  {%- set servingShopSlug = "oceanside" -%}
 {%- elif cityService.city == "El Cajon" or cityService.city == "Lakeside" or cityService.city == "Rancho San Diego" or cityService.city == "Spring Valley" -%}
   {%- set servingShopName = "Santee" -%}
   {%- set servingShopSlug = "santee" -%}
