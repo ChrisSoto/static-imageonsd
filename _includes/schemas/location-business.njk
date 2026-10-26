@@ -14,14 +14,6 @@
   {%- set addressLocality = "San Diego" -%}
   {%- set postalCode = "92101" -%}
   {%- set mapUrl = "https://maps.app.goo.gl/NAqmFpmknkUDgm7t9" -%}
-{%- elif city.city == "Oceanside" -%}
-  {%- set locationName = "Image On Oceanside" -%}
-  {%- set locationDescription = "Custom T-shirt printing and embroidery shop in Oceanside, California." -%}
-  {%- set locationPhone = "+17605219422" -%}
-  {%- set streetAddress = "1837 South Coast Highway, Suite A" -%}
-  {%- set addressLocality = "Oceanside" -%}
-  {%- set postalCode = "92054" -%}
-  {%- set mapUrl = "https://maps.app.goo.gl/4sBx49M1Qb1Jvtr18" -%}
 {%- endif -%}
 
 {%- if locationName -%}
@@ -50,13 +42,13 @@
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       "opens": "09:00",
-      "closes": "19:00"
+      "closes": "18:00"
     },
     {
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": "Saturday",
       "opens": "09:00",
-      "closes": "16:30"
+      "closes": "16:00"
     }
   ]
 }

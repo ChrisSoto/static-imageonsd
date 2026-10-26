@@ -8,11 +8,6 @@
   {%- set shopName = "Downtown San Diego" -%}
   {%- set shopIntro = "Image On’s Downtown San Diego shop serves local businesses, conventions, events, teams, and residents from its Market Street location. It is a convenient central shop for one-off custom pieces and larger apparel orders." -%}
   {%- set visitNote = "The shop is on Market Street near Park & Market in the East Village. Downtown street and garage parking availability varies, so allow extra time before a scheduled pickup." -%}
-{%- elif city.city == "Oceanside" -%}
-  {%- set shopSlug = "oceanside" -%}
-  {%- set shopName = "Oceanside" -%}
-  {%- set shopIntro = "Image On’s Oceanside shop serves North County businesses, schools, teams, events, and individuals from its South Coast Highway location. Customers can work directly with the local team on artwork, garment choices, and production timing." -%}
-  {%- set visitNote = "The shop is on South Coast Highway in South Oceanside. Use the directions link to plan your route and check parking access before your visit." -%}
 {%- endif -%}
 
 {%- if shopSlug -%}
@@ -33,7 +28,7 @@
         <a href="{{ googleMap }}">{{ address }}</a><br>
         <a href="tel:{{ phoneNumber }}">{{ phoneNumber }}</a>
       </address>
-      <p><strong>Hours:</strong><br>Monday–Friday: 9:00 AM–7:00 PM<br>Saturday: 9:00 AM–4:30 PM</p>
+      <p><strong>Hours:</strong><br>Monday–Friday: 9:00 AM–6:00 PM<br>Saturday: 9:00 AM–4:00 PM</p>
       <a class="inline-block bg-red-500 text-white font-bold rounded p-3" href="{{ googleMap }}">Get directions to the {{ shopName }} shop</a>
     </div>
   </div>

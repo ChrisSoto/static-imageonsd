@@ -20,7 +20,7 @@ const crypto = require("crypto");
 initializeApp();
 
 const leadsDashboardPassword = defineSecret("LEADS_DASHBOARD_PASSWORD");
-const leadLocations = ["Santee", "Oceanside", "Downtown"];
+const leadLocations = ["Santee", "Downtown"];
 const leadsDashboardOrigins = [
   "https://imageonsd.com",
   "https://www.imageonsd.com",
@@ -261,7 +261,7 @@ function parseLeadFields(message = {}) {
 
 function getLeadLocation(data) {
   const subject = String(data.message && data.message.subject || "");
-  const subjectMatch = subject.match(/@\s*(Santee|Oceanside|Downtown)\s*$/i);
+  const subjectMatch = subject.match(/@\s*(Santee|Downtown)\s*$/i);
   if (subjectMatch) {
     return leadLocations.find((location) =>
       location.toLowerCase() === subjectMatch[1].toLowerCase());
@@ -269,7 +269,6 @@ function getLeadLocation(data) {
 
   const recipients = String(data.to || "").toLowerCase();
   if (recipients.includes("imageonsantee")) return "Santee";
-  if (recipients.includes("imageon.sandiego")) return "Oceanside";
   if (recipients.includes("imageondowntown")) return "Downtown";
   return null;
 }
@@ -287,8 +286,7 @@ exports.addContact = onRequest(
         let emails = "";
         if (location == "Santee") {
           emails = "imageonsantee@gmail.com, admin@imageonsd.com";
-        } else if (location == "Oceanside") {
-          emails = "imageon.sandiego@gmail.com, admin@imageonsd.com";
+
         } else if (location == "Downtown") {
           emails = "imageondowntown@gmail.com, admin@imageonsd.com";
         } else {
