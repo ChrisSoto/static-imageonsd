@@ -1,0 +1,68 @@
+---
+layout: base.njk
+permalink: /services/screen-printing/
+seoTitle: "Screen Printing San Diego & Santee | Image On"
+seoDescription: "Custom screen printing for business shirts, team apparel, events, and merchandise in San Diego. Contact Image On in Santee or Downtown San Diego for a quote."
+eleventyComputed:
+  title: "{{ seoTitle }}"
+  description: "{{ seoDescription }}"
+  cityMap: "{{ home.cityMap }}"
+socialImage: /assets/imageon-custom-t-shirts-and-embroidery.webp
+imageAlt: "Image On custom apparel"
+---
+<article class="screen-page">
+  <nav class="screen-wrap screen-crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span aria-current="page">Screen printing</span></nav>
+  <header class="screen-hero">
+    <div class="screen-wrap screen-hero-grid">
+      <div>
+        <p class="screen-eyebrow">Custom apparel for your next big idea</p>
+        <h1>Screen printing in San Diego &amp; Santee</h1>
+        <p>Make your business, team, or event stand out. Image On offers custom screen printing for T-shirts and apparel, with project support through our Santee and Downtown San Diego shops.</p>
+        <a class="screen-button" href="#quote">Get a screen printing quote <span aria-hidden="true">→</span></a>
+      </div>
+      <img src="/assets/imageon-custom-t-shirts-and-embroidery.webp" alt="Image On custom apparel" width="800" height="800" fetchpriority="high" decoding="async">
+    </div>
+  </header>
+  <section class="screen-section"><div class="screen-wrap">
+    <p class="screen-eyebrow">One design. A whole group.</p>
+    <h2>Custom screen printed shirts that bring people together</h2>
+    <p>Screen printing pushes ink through a prepared mesh screen onto a garment. It is a strong option for repeating bold designs, logos, and lettering across a group order. Share your artwork, garment preferences, and quantity so we can recommend a production approach that fits.</p>
+    <div class="screen-grid">
+      <div class="screen-card"><h3>Business &amp; work shirts</h3><p>Put your logo on apparel for employees, customer-facing crews, promotions, and company events.</p></div>
+      <div class="screen-card"><h3>Teams &amp; community groups</h3><p>Create a coordinated look for clubs, school groups, volunteers, and team supporters.</p></div>
+      <div class="screen-card"><h3>Events &amp; merchandise</h3><p>Turn your design into shirts for reunions, fundraisers, local events, and brand merchandise.</p></div>
+    </div>
+  </div></section>
+  <section class="screen-section screen-soft"><div class="screen-wrap">
+    <h2>How to start your screen printing order</h2>
+    <ol>
+      <li><strong>Send your design and order details.</strong> Include the number of garments, sizes, preferred colors, print locations, and your deadline.</li>
+      <li><strong>Review the project with our team.</strong> We’ll discuss artwork, garment compatibility, print colors, pricing, any minimum quantity, and production timing before you order.</li>
+      <li><strong>Confirm the details.</strong> Finalize your artwork and order specifications with Image On before production begins.</li>
+    </ol>
+    <p>Have a photograph, a small order, or a tight deadline? We also offer <a href="/services/custom-t-shirts/">DTG and DTF custom T-shirt printing</a>. Our <a href="/dtg-dtf-vs-screen-printing/">printing method comparison</a> explains the options.</p>
+  </div></section>
+  <section class="screen-section"><div class="screen-wrap">
+    <h2>Talk screen printing with a local Image On shop</h2>
+    <p>Visit or contact our Santee or Downtown San Diego shop to discuss your custom apparel project. Confirm your order’s turnaround and pickup arrangements with our team.</p>
+    <div class="screen-shop-links"><a href="/city/santee/">Santee shop &amp; contact details →</a><a href="/city/downtown-san-diego/">Downtown San Diego shop &amp; contact details →</a><a href="/services/embroidery/">Explore embroidery →</a></div>
+  </div></section>
+  <section class="screen-section screen-soft"><div class="screen-wrap">
+    <h2>Screen printing questions</h2>
+    <details><summary>Does Image On offer screen printing?</summary><p>Yes. Image On offers custom screen printing for T-shirts and apparel. Contact our Santee or Downtown San Diego shop with your artwork, quantity, and deadline for a project quote.</p></details>
+    <details><summary>What is the minimum order for screen printing?</summary><p>Contact Image On to confirm the minimum quantity for your design and garment choice. Screen preparation affects the cost, so quantity and the number of print colors help determine the right approach.</p></details>
+    <details><summary>How much does custom screen printing cost?</summary><p>Pricing depends on garment type, quantity, artwork, ink colors, and print locations. Send your project details for a quote specific to your order.</p></details>
+    <details><summary>Can I get screen printed shirts the same day?</summary><p>Screen printing turnaround must be confirmed for your project. If you need shirts urgently, ask about DTG or DTF printing; same-day availability depends on artwork, stock, quantity, and the production schedule.</p></details>
+  </div></section>
+  <section class="screen-section" id="quote"><div class="screen-wrap">
+    <h2>Let’s print something for your crew</h2>
+    <p>Tell us you’re interested in screen printing and include your quantity, artwork details, and deadline in the message.</p>
+    {% include "partials/contact-form-skinny.njk" %}
+  </div></section>
+</article>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Service","name":"Custom Screen Printing","serviceType":"Custom screen printing for T-shirts and apparel","url":"{{ site.url }}{{ page.url }}","description":"Custom screen printing for businesses, teams, events, and merchandise in San Diego County.","provider":{"@type":"LocalBusiness","@id":"{{ site.url }}/#localBusiness","name":"Image On"},"areaServed":{"@type":"AdministrativeArea","name":"San Diego County, California"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"{{ site.url }}/"},{"@type":"ListItem","position":2,"name":"Screen Printing","item":"{{ site.url }}{{ page.url }}"}]}
+</script>
